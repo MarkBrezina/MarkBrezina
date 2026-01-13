@@ -1,16 +1,17 @@
-## Hi there 👋
+## Mark Brezina – Projects Overview
 
-<!--
-**MarkBrezina/MarkBrezina** is a ✨ _special_ ✨ repository because its `README.md` (this file) appears on your GitHub profile.
+This GitHub contains work across two domains.
 
-Here are some ideas to get you started:
+### 🔹 Data Analytics / BI / Engineering
+Repositories focused on analytics, reporting, and data quality:
+- repo_A – Power BI / KPI frameworks
+- repo_B – SQL / ETL pipelines
+- repo_C – Data validation & governance tools
 
-- 🔭 I’m currently working on ...
-- 🌱 I’m currently learning ...
-- 👯 I’m looking to collaborate on ...
-- 🤔 I’m looking for help with ...
-- 💬 Ask me about ...
-- 📫 How to reach me: ...
-- 😄 Pronouns: ...
-- ⚡ Fun fact: ...
--->
+### 🔹 Quantitative Research / Trading Systems
+Repositories focused on modelling, strategy, and risk:
+- repo_D – Market state detection (HMMs, regimes)
+- repo_E – Strategy selection & backtesting
+- repo_F – Risk & simulation frameworks
+
+Each repository is self-contained and documented.
