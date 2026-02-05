@@ -11,7 +11,7 @@ Repositories focused on analytics, reporting, and data quality:
 ### 🔹 Quant Research & Trading Systems
 Core building blocks for systematic trading — research → portfolio construction → execution.
 
-- **Foundational Quantitative Research** — *(Start here)* — <a href="https://github.com/MarkBrezina/Market-States-Regimes">Repo link</a>   
+- **Foundational Quantitative Research** — *(Start here)* — <a href="https://github.com/MarkBrezina/Foundational-Quantitative-Research">Repo link</a>   
   Research notes and papers outlining a layered systematic trading framework (signals → portfolio construction → execution/risk), with extensions to market-making and broader financial primitives (insurance, banking).
 
 - **Market States & Regimes** — *(market-states)* — <a href="https://github.com/MarkBrezina/Market-States-Regimes">Repo link</a>  
