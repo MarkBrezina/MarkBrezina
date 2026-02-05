@@ -8,10 +8,19 @@ Repositories focused on analytics, reporting, and data quality:
 - repo_B – SQL / ETL pipelines
 - repo_C – Data validation & governance tools
 
-### 🔹 Quantitative Research / Trading Systems
-Repositories focused on modelling, strategy, and risk:
-- repo_D – Market state detection (HMMs, regimes)
-- repo_E – Strategy selection & backtesting
-- repo_F – Risk & simulation frameworks
+### 🔹 Quant Research & Trading Systems
+Core building blocks for systematic trading — research → portfolio construction → execution.
 
-Each repository is self-contained and documented.
+- **Market States & Regimes** — *(market-states)*  
+  HMM/HSMM-style regime labeling, change-point / structural-break detection, volatility clustering, transition probabilities, regime-conditioned features.
+
+- **Alpha Research & Backtesting** — *(backtest-engine)*  
+  Signal library + walk-forward validation, portfolio-level simulation, transaction cost + turnover constraints, performance attribution & experiment tracking.
+
+- **Portfolio Construction & Risk** — *(portfolio-risk)*  
+  Covariance/risk models (EWMA/shrinkage), vol targeting, factor exposures, VaR/CVaR, stress & scenario analysis, leverage/liquidity/concentration constraints.
+
+- **Execution & Microstructure Simulation** — *(execution-sim)*  
+  Slippage/spread/impact models, participation logic, order simulation, and robustness checks bridging research ↔ production.
+
+Each repository is modular, documented, and includes reproducible examples (notebooks/scripts) plus tests.
