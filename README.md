@@ -1,6 +1,7 @@
 ## Mark Brezina – Projects Overview
 
-This GitHub contains work across two domains.
+This is my personal github, usually used for job applications and general work.
+Repos may be sporadically updated, as I proceed forward with one of my many pastime projects.
 
 ### 🔹 Data Analytics / BI / Engineering
 Repositories focused on analytics, reporting, and data quality:
