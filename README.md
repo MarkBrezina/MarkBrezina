@@ -27,3 +27,12 @@ Core building blocks for systematic trading — research → portfolio construct
   Slippage/spread/impact models, participation logic, order simulation, and robustness checks bridging research ↔ production.
 
 Each repository is modular, documented, and includes reproducible examples (notebooks/scripts) plus tests.
+
+
+### 🧪 Curiosity Lab (for fun)
+Side experiments that sharpen my intuition for complex systems — physics, markets, and populations.
+
+- **N-Body Astrophysics** — gravitational multi-body simulations (stability, orbits, emergent structure)
+- **Particle Streams** — interacting particle flows; noise, clustering, boundary effects
+- **Virtual Economies** — auction-house microstructure experiments in :contentReference[oaicite:0]{index=0} and :contentReference[oaicite:1]{index=1} (liquidity, information asymmetry, price impact)
+- **Population Dynamics** — agent-based models (wealth/skill/luck, resource constraints, epidemic SIR-style dynamics)
