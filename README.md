@@ -32,3 +32,7 @@ Side experiments that sharpen my intuition for complex systems — physics, mark
 - **Particle Streams** — interacting particle flows; noise, clustering, boundary effects
 - **Virtual Economies** — auction-house microstructure experiments in World of Warcraft and New World (liquidity, information asymmetry, price impact)
 - **Population Dynamics** — agent-based models (wealth/skill/luck, resource constraints, epidemic SIR-style dynamics)
+
+
+
+_* 1 _ 2 _ 3 _ 4 _ 5
