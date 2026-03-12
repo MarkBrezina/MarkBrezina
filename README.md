@@ -2,6 +2,7 @@
 
 This is my personal github, usually used for job applications and general work.
 Repos may be sporadically updated, as I proceed forward with one of my many pastime projects.
+You can also find my quant-related portfolio [here](https://github.com/MarkBrezina/quant-research-portfolio)
 
 ### 🔹 Quant Research & Trading Systems
 Core building blocks for systematic trading — research → portfolio construction → execution.
