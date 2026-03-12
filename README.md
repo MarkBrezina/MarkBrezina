@@ -7,19 +7,19 @@ You can also find my quant-related portfolio [here](https://github.com/MarkBrezi
 ### 🔹 Quant Research & Trading Systems
 Core building blocks for systematic trading — research → portfolio construction → execution.
 
-- **Foundational Quantitative Research** — [*(Start here)*](https://github.com/MarkBrezina/Foundational-Quantitative-Research) — <a href="https://github.com/MarkBrezina/Foundational-Quantitative-Research">Repo link</a>  
+- **Foundational Quantitative Research** — [*(Start here)*](https://github.com/MarkBrezina/Foundational-Quantitative-Research)
   Research notes and papers outlining a layered systematic trading framework (signals → portfolio construction → execution/risk), with extensions to market-making and broader financial primitives (insurance, banking).
 
-- **Market States & Regimes** — *(market-states)* — <a href="https://github.com/MarkBrezina/Market-States-Regimes">Repo link</a>  
+- **Market States & Regimes** — [*(market-states)*](https://github.com/MarkBrezina/Market-States-Regimes) 
   HMM/HSMM-style regime labeling, change-point / structural-break detection, volatility clustering, transition probabilities, regime-conditioned features.
 
-- **Alpha Research & Backtesting** — *(backtest-engine)* — <a href="https://github.com/MarkBrezina/Alpha-Research-Backtesting">Repo link</a>   
+- **Alpha Research & Backtesting** — [*(backtest-engine)*](https://github.com/MarkBrezina/Alpha-Research-Backtesting)
   Signal library + walk-forward validation, portfolio-level simulation, transaction cost + turnover constraints, performance attribution & experiment tracking.
 
-- **Portfolio Construction & Risk** — *(portfolio-risk)* — <a href="https://github.com/MarkBrezina/Portfolio-Construction-Risk">Repo link</a>   
+- **Portfolio Construction & Risk** — [*(portfolio-risk)*](https://github.com/MarkBrezina/Portfolio-Construction-Risk) 
   Covariance/risk models (EWMA/shrinkage), vol targeting, factor exposures, VaR/CVaR, stress & scenario analysis, leverage/liquidity/concentration constraints.
 
-- **Execution & Microstructure Simulation** — *(execution-sim)* — <a href="https://github.com/MarkBrezina/Execution-Microstructure-Simulation">Repo link</a>   
+- **Execution & Microstructure Simulation** — [*(execution-sim)*](https://github.com/MarkBrezina/Execution-Microstructure-Simulation) 
   Slippage/spread/impact models, participation logic, order simulation, and robustness checks bridging research ↔ production.
 
 Each repository is modular, documented, and includes reproducible examples (notebooks/scripts) plus tests.
