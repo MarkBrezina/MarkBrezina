@@ -15,7 +15,7 @@ Core building blocks for systematic trading — research → portfolio construct
 - **Alpha Research & Backtesting** — *(backtest-engine)* — <a href="https://github.com/MarkBrezina/Alpha-Research-Backtesting">Repo link</a>   
   Signal library + walk-forward validation, portfolio-level simulation, transaction cost + turnover constraints, performance attribution & experiment tracking.
 
-- **Portfolio Construction & Risk** — *(portfolio-risk)* — <a href="https://github.com/MarkBrezina/Portfolio-Construction-Risk">Repo link</a>   
+- **Portfolio Construction & Risk** — *(portfolio-risk)* — <a href="https://github.com/MarkBrezina/Portfolio-Construction-Risk">Repo_link</a>   
   Covariance/risk models (EWMA/shrinkage), vol targeting, factor exposures, VaR/CVaR, stress & scenario analysis, leverage/liquidity/concentration constraints.
 
 - **Execution & Microstructure Simulation** — *(execution-sim)* — <a href="https://github.com/MarkBrezina/Execution-Microstructure-Simulation">Repo_link</a>   
