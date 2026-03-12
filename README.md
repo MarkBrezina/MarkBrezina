@@ -3,12 +3,6 @@
 This is my personal github, usually used for job applications and general work.
 Repos may be sporadically updated, as I proceed forward with one of my many pastime projects.
 
-### 🔹 Data Analytics / BI / Engineering
-Repositories focused on analytics, reporting, and data quality:
-- repo_A – Power BI / KPI frameworks
-- repo_B – SQL / ETL pipelines
-- repo_C – Data validation & governance tools
-
 ### 🔹 Quant Research & Trading Systems
 Core building blocks for systematic trading — research → portfolio construction → execution.
 
