@@ -9,7 +9,8 @@
     - [ ] algo setup
     - [ ] alpha research
     - [ ] infrastructure setup
-  - [ ] Improve notes on 
+  - [x] Improve notes on extracurricular activities
+    - [ ] Find additional courses
 - [ ] Set up work portfolio
   - [ ] physics simulations
   - [ ] population simulations
