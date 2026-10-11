@@ -2,7 +2,7 @@
 
 
 
-
+- [ ] Setup basic run for WunderFund RNN prediction of prices
 - [ ]  Search out new job opportunities
 - [ ] Improve Extensive CV
   - [ ] Improve notes on tomorrow capital research work
