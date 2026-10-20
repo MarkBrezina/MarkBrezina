@@ -5,6 +5,7 @@
 - [ ] Setup basic run for WunderFund RNN prediction of prices
 - [ ]  Search out new job opportunities
 - [ ] Improve Extensive CV
+  - [ ] Added writeup for Konecta
   - [ ] Improve notes on tomorrow capital research work
     - [ ] algo setup
     - [ ] alpha research
