@@ -2,10 +2,11 @@
 
 
 
-- [ ] Setup basic run for WunderFund RNN prediction of prices
-- [ ]  Search out new job opportunities
+- [x] Setup basic run for WunderFund RNN prediction of prices
+- [ ] Reach top 10% for WunderFund RNN
+- [ ] Search out new job opportunities
 - [ ] Improve Extensive CV
-  - [ ] Added writeup for Konecta
+  - [x] Added writeup for Konecta
   - [ ] Improve notes on tomorrow capital research work
     - [ ] algo setup
     - [ ] alpha research
