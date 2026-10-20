@@ -12,7 +12,8 @@
     - [ ] alpha research
     - [ ] infrastructure setup
   - [x] Improve notes on extracurricular activities
-    - [ ] Find additional courses
+    - [ ] Consider whether spending for ECAs would be useful?
+    - [ ] If so Find additional ECAs
 - [ ] Set up work portfolio
   - [ ] physics simulations
   - [ ] population simulations
