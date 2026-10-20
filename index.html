@@ -20,6 +20,22 @@ Management information and reporting automation (self-initiated)
 • Earlier tools. Complaint-logging click-tool and dashboard; multilingual Danish/Dutch booking-tracking workbook used by the team.
 • Validated each tool before go-live against simulated test environments and independent recalculation in Python.
 Tools: Google Apps Script (JavaScript) · Google Sheets / Slides / Forms automation · Python · AS400 / IBM i (5250) · data reconciliation and QA · KPI design · Bayesian modelling · client and stakeholder reporting
+
+Konecta – Customer Service Advisor, Danish Market (Center Parcs account) | London | [dates]
+Alongside the phone role, designed and built the account’s management information and reporting automation (Google Apps Script, Sheets, Slides).
+
+KPI reporting pipeline: Replaced an AI-based reporting process (NotebookLM) that was producing unreliable figures with a script-based pipeline that produces exactly the same output from the same data. It reads six raw BI exports (daily, week-to-date and month-to-date; sales and service), builds agent-level KPI reports for the Benelux and Danish markets, benchmarks them against peer sites, and scores conversion against target with red/amber/green flags.
+Data quality controls: Every figure is checked against the source files’ own totals, and daily, weekly and monthly numbers are cross-checked against each other. Missing or outdated files are flagged directly on the reports, and the reports reset automatically when a new week or month starts.
+First-call-resolution tracking (Danish market): Designed a tool for logging why customers call back. Agents click a reason in their app; access is restricted to the team and misclicks can be undone. The clicks feed a dashboard of reasons, trends and per-agent patterns, used to find the root causes of repeat calls.
+Welcome-call MI and client reporting: Automated the daily import of the client’s Excel extract from Gmail, with duplicate removal and phone numbers formatted for dialling. It feeds team and per-agent KPI tables and a weekly auto-generated slide used in client presentations to Center Parcs.
+Best-time-to-call model: Built a Bayesian model (Dirichlet–multinomial) of call outcomes by weekday and hour. Older months gradually count less, and time slots are ranked by expected value (pickup versus negative customer reaction) to schedule outbound calls.
+Validated each tool before go-live with simulated test environments and an independent recalculation in Python.
+
+Skills: Google Apps Script (JavaScript) · Google Sheets / Slides / Forms automation · Python · data reconciliation and QA · KPI design · Bayesian modelling · stakeholder and client reporting
+
+
+
+
 Portfolio write-up
 Building the management information layer for a multi-market contact centre
 I was hired as a phone advisor and ended up building the reporting layer the account runs on: a daily pipeline with its own reconciliation controls, a set of capture tools that instrument things the telephony platform does not measure, and a Bayesian model for scheduling outbound calls.
