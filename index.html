@@ -53,3 +53,96 @@ Most of the engineering is not in the metrics. It is in everything around them:
 Why the controls matter more than the metrics. A reporting tool that is right ninety-five percent of the time is worse than no tool, because the wrong five percent is indistinguishable from the rest and people act on it anyway. The rule I settled on is that the pipeline should fail visibly rather than publish a plausible number. In practice that means a missing source file produces a flagged gap, not a quiet zero, and a figure that will not reconcile against its own source stops the figure, not the check.
 The call-timing model. Outbound welcome calls need a schedule, and the naive answer — call when past calls were answered most — overfits badly when each weekday-hour cell holds only a handful of observations. I modelled outcomes per cell as Dirichlet–multinomial, which shrinks sparse cells toward the overall rate, with exponential decay so older months count for less as calling patterns drift. Slots are then ranked by expected value, weighing contact likelihood against the cost of reaching someone at a bad moment, rather than by raw contact rate.
 What this work is. It is analytics engineering: building and owning the pipeline, the data model and the controls that stand between raw operational exports and a figure somebody makes a decision on. It sits close to the model validation work I have done elsewhere, and for the same reason — the discipline is not building the thing, it is being able to say precisely why you trust its output, and being willing to publish nothing when you cannot.
+
+
+
+
+Contact-Centre Analytics & Reporting Automation
+
+Write-up of the combined complaints / first-call-resolution / outbound-calls reporting system, in two forms: short bullets for a CV, and a longer README for a portfolio repository.
+
+Part 1 — CV
+Role header
+
+Keep the official job title and carry the engineering work in a subtitle line, so the title matches what a background check returns:
+
+Customer Service Advisor (Danish Market) — Konecta, London Management-information and reporting development alongside the advisor role
+
+Bullets (full version)
+Built and maintain the contact-centre's management-information layer in Google Apps Script: KPI ingestion, complaint and repeat-call analytics, and an automated daily export of client-facing slides — roughly 2,000 lines of tested, documented code across four modules.
+Consolidated three separate reporting tools into one project with a shared menu, a single idempotent setup routine, and isolated refresh triggers, so a rebuild of one dashboard cannot stall or corrupt another.
+Designed an idempotent slide generator that tags its own output and redraws it in place: repeated, retried or partially-failed runs never duplicate slides, and slides stay stable when the audience reorders the deck.
+Rebuilt the complaints dashboard around a single parameterised refresh with period-over-period comparison, replacing four duplicated macro functions and a row of drawn buttons.
+Hardened ingestion against real-world spreadsheet data: locale-misparsed dates recovered by cross-checking a second timestamp column, category names grouped case-insensitively, and unmapped market codes surfaced rather than silently dropped.
+Validated the system against a strict mock of the Google Apps Script API — 74 assertions over 8 scenarios — plus an independent recalculation of every published figure from the raw rows, and headless-browser rendering to check layout before release.
+Bullets (short version, 3 lines)
+Built the contact-centre's management-information layer in Google Apps Script (~2,000 lines): complaint and repeat-call analytics dashboards plus an automated daily export of client-facing slides.
+Designed the export to be idempotent and self-locating, so repeated or failed runs never duplicate output and slides survive being reordered by their reader.
+Tested against a strict mock of the Google Apps Script API (74 assertions, 8 scenarios), with every published figure independently recalculated from the raw data.
+Skills line
+
+Google Apps Script · JavaScript · Python · Google Sheets / Slides APIs · Data pipeline design · Data quality & reconciliation · Test design · Dashboard & report design
+
+Part 2 — Portfolio README
+
+Written generically. See Before you publish at the end.
+
+Reporting automation for a contact-centre operation
+
+An analytics layer for a multi-market contact centre, built entirely inside Google Workspace. Three separate logging tools feed two self-refreshing dashboards and one automated daily export into the slide deck used for client reviews.
+
+The problem
+
+Three tools had grown up independently: a complaint logger, a repeat-call (first-call-resolution) logger, and an outbound-call tracker. Each wrote to its own tab and drew its own dashboard, and the reporting line out of them was manual — someone rebuilt the same tables and charts into slides before every client review.
+
+Three constraints shaped the design:
+
+Google Workspace only. No external hosting, no database, no direct connection to the telephony or booking systems. Apps Script and Sheets.
+The audience is the client. The exported slides may contain operational figures, but no agent-level statistics.
+One maintainer. Anything that needs babysitting after a failed run will not get babysat. Correct-on-rerun was a hard requirement, not a nicety.
+What it does
+Module	Responsibility
+Main.gs	Single menu, one-click idempotent setup, trigger installation
+Complaints.gs	Complaint ingestion, aggregation and dashboard
+FCR_Analytics.gs	Repeat-call logging form, aggregation and dashboard
+SlidesExport.gs	Daily export of four slides into the client deck
+
+Dashboards refresh on new submissions, on a period change, and hourly, so "Today" rolls over without anyone touching the sheet. Each one offers six reporting periods and compares against the matching earlier window — month to date against the same days of the previous month, not the whole of it.
+
+The daily export writes four slides per run: a complaints overview, a per-market breakdown, a first-call-resolution summary, and a copy of the latest outbound-calls slide. It runs on a timer after the shift ends.
+
+Design decisions worth calling out
+
+Idempotent, self-locating output. The generator writes a hidden tag into the alt-text of each slide's title element and finds its own slides by that tag on the next run. So a rerun redraws in place rather than appending; a slide the reader has moved is still found; a slide the reader has deleted is recreated in its correct position. The alternative — tracking slide IDs in script properties — breaks the moment anyone edits the deck by hand, which they will.
+
+Shapes rather than native tables. Google Slides pads every table row to a minimum height and will not size columns, so a 13-row table does not fit on one slide. The tables are drawn as positioned shapes and grouped, so each block still moves as one piece when the reader edits it. Layout is expressed in points against a 720×405 page and scaled at draw time, so the same code renders correctly on a widescreen deck.
+
+Separate locks per concern. The export takes a different lock from the dashboard refreshes, so a slow export does not block an agent's submission from updating a dashboard.
+
+Backwards compatibility as a first-class requirement. The rewrite kept every previously-exposed function name, tolerated both old and new tab names, and removed the superseded triggers and drawn buttons as part of setup. The system stayed live throughout; nobody had to be told to stop using it for a day.
+
+Data quality. Three failure modes seen in the real data, all handled at ingestion:
+
+Dates entered as DD/MM/YYYY but interpreted by the sheet as MM/DD/YYYY. Detected by cross-checking against the submission timestamp and swapping the components back when the two disagree by more than two days.
+The same category typed with different casing or spacing, which split one category into several rows. Grouped case-insensitively, keeping the first spelling seen.
+Market codes outside the configured set, which the previous version dropped silently. Now collected into an explicit "Other" column, so a miscoded entry is visible rather than invisible.
+Testing
+
+The interesting part, and the reason the rewrite could be delivered against a live system I could not run locally.
+
+A strict mock of the Apps Script API. Every service used — Spreadsheet, Slides, Properties, Lock, Script, Utilities — is reimplemented in Node.js behind a proxy that throws on any property that is not implemented. Calling a method that does not exist in the real API fails loudly in testing instead of passing silently and breaking in production. The mock also enforces the real API's constraints: range bounds, matching dimensions on bulk writes, overlapping merges, valid colour and enum values.
+
+74 assertions across 8 scenarios, covering first-time setup, repeated setup, dashboard interactions, old tab names, malformed rows, repeated exports in a single day, multi-day sequences, deleted and reordered slides, month rollover, an empty reporting period, missing source tabs, a widescreen deck, and execution with no UI available (as a timed trigger runs). The suite runs in both module load orders, to catch dependencies on declaration order.
+
+Independent recalculation. A separate Python script recomputes every published figure — counts per category and market, period-over-period deltas, weekly and monthly series, percentages — directly from the raw rows, using its own date parsing, and compares against what the scripts actually wrote. It caught one genuine discrepancy: a half-up rounding convention in the display layer that the checker had implemented as round-half-even.
+
+Visual rendering. Recorded slide and dashboard geometry is replayed as HTML and screenshotted with headless Chromium, so layout is reviewed before release rather than discovered in the client deck. This caught label-to-bar association errors and an overflow that no assertion was looking for.
+
+What I would do differently with fewer constraints
+
+A warehouse and a BI tool rather than Sheets; the spreadsheet is the integration point here only because it is the one surface the organisation already has. The design would survive the move largely intact: ingestion, aggregation and presentation are already separate, and the aggregation functions are pure functions over plain rows with no platform calls in them — which is precisely what made them testable.
+
+
+
+
+
