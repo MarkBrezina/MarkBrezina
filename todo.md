@@ -3,8 +3,7 @@
 
 
 - [x] Setup basic run for WunderFund RNN prediction of prices
-- [ ] Reach top 10% for WunderFund RNN
-- [ ] Search out new job opportunities
+- [ ] Reach top 10%(500), 0.6539 WP for WunderFund RNN
 - [ ] Improve Extensive CV
   - [x] Added writeup for Konecta
   - [ ] Improve notes on tomorrow capital research work
@@ -25,6 +24,7 @@
   - [ ] Run mean reversion test
   - [ ] Run breakout test
   - [ ] Run main hypothesis
+- [ ] Search out new job opportunities
 - [ ] Set up quant archive
 - [ ] Improve [Tomorrow Markets](https://github.com/TomorrowMarkets/tomorrowmarkets.github.io)
   - [ ] Bot improvements
