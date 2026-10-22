@@ -13,14 +13,18 @@
   - [x] Improve notes on extracurricular activities
     - [ ] Consider whether spending for ECAs would be useful?
     - [ ] If so Find additional ECAs
-- [ ] Set up work portfolio
+- [ ] Setup work portfolio
   - [x] simulation library - Concursus
     - [x] physics simulations
     - [x] population simulations
     - [x] LOB simulations
     - [x] Market Simulations
   - [ ] risk metrics setup
-  - [ ] Tomorrow Markets
+  - [ ] Improve [Tomorrow Markets](https://github.com/TomorrowMarkets/tomorrowmarkets.github.io)
+    - [ ] Bot improvements
+    - [ ] Algorithmic trading setup improvements
+    - [ ] Multiple game modes.
+    - [ ] Tie Tomorrow Markets into Concursus
   - [ ] Tomorrow Archive
 - [ ] Set up algorithmic trading
   - [ ] Run mean reversion test
@@ -28,10 +32,6 @@
   - [ ] Run main hypothesis
 - [ ] Search out new job opportunities
 - [ ] Set up quant archive
-- [ ] Improve [Tomorrow Markets](https://github.com/TomorrowMarkets/tomorrowmarkets.github.io)
-  - [ ] Bot improvements
-  - [ ] Algorithmic trading setup improvements
-  - [ ] Multiple game modes.
 - [ ] streamline documents and social media
   - [ ] notion pages, google docs, etc.
   - [ ] linkedin, instagram, websites.
