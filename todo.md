@@ -22,9 +22,13 @@
   - [ ] risk metrics setup
   - [ ] Improve [Tomorrow Markets](https://github.com/TomorrowMarkets/tomorrowmarkets.github.io)
     - [ ] Bot improvements
+      - [ ] Tie Concursus into Tomorrow Markets
+      - [ ] Do research into processes that approach market behaviors better
+      - [ ] Do a swarm implementation with agent behaviors.
+      - [ ] Do a history implementation with a Stochastic process.
     - [ ] Algorithmic trading setup improvements
     - [ ] Multiple game modes.
-    - [ ] Tie Tomorrow Markets into Concursus
+    
   - [ ] Tomorrow Archive
 - [ ] Set up algorithmic trading
   - [ ] Run mean reversion test
