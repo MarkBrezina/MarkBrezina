@@ -19,7 +19,10 @@
     - [x] population simulations
     - [x] LOB simulations
     - [x] Market Simulations
-  - [ ] risk metrics setup
+  - [ ] Initial TMRW Terminal setup
+    - [ ] Portfolio Management initial setup
+    - [ ] Risk management initial setup
+    - [ ] Trading integration
   - [ ] Improve [Tomorrow Markets](https://github.com/TomorrowMarkets/tomorrowmarkets.github.io)
     - [ ] Bot improvements
       - [ ] Tie Concursus into Tomorrow Markets
