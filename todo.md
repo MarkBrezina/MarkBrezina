@@ -14,11 +14,11 @@
     - [ ] Consider whether spending for ECAs would be useful?
     - [ ] If so Find additional ECAs
 - [ ] Set up work portfolio
-  - [ ] simulation library
+  - [x] simulation library - Concursus
     - [x] physics simulations
-    - [ ] population simulations
-    - [ ] LOB simulations
-    - [ ] Market Simulations
+    - [x] population simulations
+    - [x] LOB simulations
+    - [x] Market Simulations
   - [ ] risk metrics setup
   - [ ] Tomorrow Markets
   - [ ] Tomorrow Archive
