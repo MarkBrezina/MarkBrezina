@@ -28,7 +28,6 @@
       - [ ] Do a history implementation with a Stochastic process.
     - [ ] Algorithmic trading setup improvements
     - [ ] Multiple game modes.
-    
   - [ ] Tomorrow Archive
 - [ ] Set up algorithmic trading
   - [ ] Run mean reversion test
