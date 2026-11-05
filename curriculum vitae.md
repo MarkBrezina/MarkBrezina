@@ -485,7 +485,7 @@ Ranked in the top 1% (107 out of more than 12,000 teams) in the IMF Prosperity 3
 Ranked in the top 1% (468 out of an average of 47,000 participants) in Børsen stock-picking challenge 2024
 Ranked in the top 6.3% (1809 out of an average of 28,500 participants) in Børsen stock-picking challenge 2026
 Ranked in the top 11.4% (741 out of 6,500 active teams, 22,000 registered teams) in the IMC Prosperity 4 algorithmic trading challenge
-Ranked in the top 20% (890 out of 5,500 active teams) In the Wunderfund RNN challenge 2026
+Ranked in the top 20% (920 out of 5,700 active teams) In the Wunderfund RNN challenge 2026: Connectome
 MENSA member (2018-present), Membership No. 2018170 with assessed IQ≥158
 Active Chess player elo(330), Team fight tactics (gold player) and High achiever in real-time strategy game Starcraft II (Mid masters player).
 Member of Willmotts forum, CQF institute, ML-quant and Quantpedia
