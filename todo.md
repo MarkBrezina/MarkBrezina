@@ -56,3 +56,5 @@ than a page where we could add or have an AI add new postings, such that we coul
 Than we could go through the interview process to check off which round we reached and notes on the process
 Than we could have a rule saying, if no new updates for 2 weeks, we conclude that as failed and move on.
 
+What about some dumbass app, where you get "stars" compared to how well you are doing in your life.
+You set reminders for yourself to do stuff, like vacuum, apply jobs, etc. You get stars for each time you complete your task, you lose stars for each time you don't do your task.
