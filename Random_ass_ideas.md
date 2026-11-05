@@ -14,3 +14,9 @@ As well as map to my day to day productivity, to show me if I have increased my 
 
 Say for example I set out to do vacuum every saturday, go to the farmers market and go for a walk of 5km. If I accomplish all of those + something more, than I have essentially reached above my 100% goal for that day.
 If I don't do any of those on my saturday deadline, I have reached 0% of my goal. In that way I can track whether I am getting better or worse.
+
+
+
+Random websites
+[graphemica · l♥ve letters](https://graphemica.com/)
+[J∆ƒƒ∆Ǥ∆ʓ∆ɲI∆ɳ • Cool Characters & Symbols (tumblr.com)](https://jaffagazanian.tumblr.com/post/5528389956/cool-characters-symbols)
