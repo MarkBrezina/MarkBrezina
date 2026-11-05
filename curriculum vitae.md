@@ -63,7 +63,7 @@ Quantitative developer and researcher with experience in pension-fund risk analy
 
 ---
 
-### Tomorrow Capital Research — Founder, Quantitative Developer & Researcher
+### Tomorrow Capital Research — Founder, Quantitative Developer & Researcher *
 **Remote (Copenhagen, then London) · January 2024 – Present**
 *Independent research venture building systematic trading strategies, live execution infrastructure and the research behind them. Working towards a proprietary trading firm.*
 
