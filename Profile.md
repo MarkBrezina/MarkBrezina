@@ -1,4 +1,122 @@
-Help me consider and improve on these.&#x20;
+I need help with the next steps in my career.
+I have the following conditions, 
+
+1. I need to move up in real wage.
+2. I can't afford to spend more than 300£ per month extra to do so.
+3. It doesn't have to be finding a new job or career, it can be adding on side hustles, that can be done on weekends or in the periods of time my job is quiet.
+
+Current side-questions
+1. Is linkedin premium worth it for applying for jobs?
+2. Is going to events worth it and what strategy should I use? For example I am attending GSA Capital's event on Systematic investing next week. I regularly attend London Quant Group events, Will also participate in Financial Magnates summit in November, may attend CQF events online, may attend SP Global and LSEG events, along with Bloomberg summits in london.
+3. Is a subscription or setup for learning courses on say edx, coursera, etc. worth my while if I have very little active work, but can connect and disconnect from courses as needed. I could do diplomas, certificates, courses online while I do my phone service job, this could be effective use of "wait time".
+
+Here is the background information that may help make a judgement. Feel free to ask for more or propose anything you need in order to perform a task.
+
+Current status:
+I work at Konecta as a "Customer service representative", I have now been working with Konecta as a customer service rep for 6 months, slowly going from basic custoemr service into something more management information, data analysis oriented, but doing so as "shadow IT", I am effectively not being paid for it. My title and day to day is customer service on the phone for the Centerparcs EU campagin, but my manager uses me to build out IT, analysis, presentations, automations and more. 
+
+I am therefore now looking to move on to a job I could potentially fill out, do well, while earning more than 1860£ per month(after taxes). I live in London, don't mind travelling for 2 hours to somewhere with public transport, don't mind being in the office 0 or 5 days a week. Fully remote or fully office is no matter.
+
+I've always wanted to quantitative finance, either portfolio management or risk. If I don't get into a quant job, I am very satisfied as well just doing data science or data analysis, management information for some company and running my own trading on the side.
+I have spent a little bit of time compacting a few things recently and I am going to attempt to do more of that for my work to look spitzenklasse for my next rounds of interviews, applications and such.
+I have prompted on previous occasions about a best career path
+"Okay, now what we want to look at, is two separate pieces.
+
+1. What might be the best career path for me, this should simply be your opinion or estimation.
+2. How do we get there from where we are at."
+
+
+
+These 3 are websites I want to run for the Tomorrow Capital Research ecosystem.
+[Tomorrow Markets | Trading & portfolio challenges](https://tomorrowmarkets.github.io/)
+[Tomorrow Capital Research](https://tomorrowcapitalresearch.github.io/)
+[The quantitative reading room | Tomorrow Library](https://tomorrowlibrary.github.io/)
+My goal is simply to increase my effective outcome
+
+With their associated github repos
+[TomorrowCapitalResearch/TomorrowCapitalResearch.github.io](https://github.com/TomorrowCapitalResearch/TomorrowCapitalResearch.github.io/tree/main)
+[TomorrowMarkets/tomorrowmarkets.github.io ](https://github.com/TomorrowMarkets/tomorrowmarkets.github.io)  
+[tomorrowlibrary/tomorrowlibrary.github.io](https://github.com/tomorrowlibrary/tomorrowlibrary.github.io)
+
+Now in correlation with the TomorrowMarkets, I've been working on a python package and framework for simulating both markets, populations, physics and baseline stochastic processes.
+[MarkBrezina/Concursus: done for now](https://github.com/MarkBrezina/Concursus)
+
+I have participated in a range of algorithmic trading challenges, which at the moment aren't going as brilliantly as I would hope, there are reasonable excuses, but I think the summary is that they are not my full attention, despite it being important.
+
+Mark Brezina | LinkedIn - I currently have 1952 followers, and I am thinking of posting a lot in the next month, to get above 2000. I am also thinking about sharing my full work experience, or to simply tailor my linkedin for data analysis, quantitative trading. I am weighing between the "open book" approach and the "tailored for the career" approach. 
+
+I have got a range of repos, which are all mostly outdated by now and need either removing, refining, compacting or otherwise. Your Repositories
+
+
+
+Help me first set up what you would need to make a complete picture and help with the decision makings. [https://www.linkedin.com/in/markbrezina95/?isSelfProfile=false&locale=en](https://www.linkedin.com/in/markbrezina95/?isSelfProfile=false\&locale=en)
+
+[https://github.com/MarkBrezina](https://github.com/MarkBrezina)
+
+
+
+
+
+
+
+
+I now need to, want to finish up these, so I can get you the appropriate summary of my profile.
+
+
+
+But I find it hard to cram everything into one spot. I am unsure if Like with human beings, your memory and mind will simply stop after a certain amount of detail or at a certain level of complexity.
+
+There is a lot of information to be shared for jsut these two. The other things were mostly about constraints and initial conditions. But this is where the action happens and there is a lot going on.
+
+
+
+""4. Technical expertise and portfolio
+
+- Programming languages, frameworks, databases and infrastructure.
+
+I have worked with C++(2 years initially), C#(On and off for things in custom Excel workbooks) and very briefly with standard C.\
+I have worked with HTML, CSS, Javascript for website setups. Nothing interesting, mostly design oriented.\
+I have worked with Lua for world of warcraft setups, boss encounter designs, weapons designs, a more advanced setup for a teleporter, chatbot, quest setup. Than a little bit for addons, that was quite interesting.\
+Than I’ve worked with MATLAB extensively for studies, simulations data analysis and more.\
+Than I’ve worked with R extensively for studies as well, this was similar, data analysis, hypothesis testing, setups of some functions. The most extensive work I did was for my bachelor thesis, developing an R package in a combination of C++ and R, for pricing options with the heston model, volatility surface and so on.
+
+I have been using VBA, VBSCRIPT, SAS, SQL, Python in varying amounts on all of my work experiences and I have mostly been using Python, SQL for my own trading.\
+I have had very limited experience with Pinescript.\
+\
+I am intending on learning C++ again and keeping it going for development in the future for my algorithmic trading.\
+\
+I have used Azure, Databricks, very limited amounts of Docker, Kubernetes and such.\
+I have used SQL servers for multiple different things. Recently used Supabase for my website setup with Tomorrow Markets. 
+
+- Mathematics, statistics, financial modelling and quantitative research capabilities.
+- Two or three strongest technical projects.
+- Your exact contributions, complexity and verification methods.
+- Which projects are production-ready versus experimental.
+- Current GitHub repositories and which versions are authoritative.
+- Websites: Tomorrow Markets, Tomorrow Capital Research and Quant Archive.
+- How to present everything as one coherent professional identity.
+- Technical weaknesses and skills you want to develop.
+
+I am an ass at interviews and I generalise so much, that most of all the ideas or thoughts I’ve had which should have been performed with technical terminology and proper scientific expressions, just become blabber at this point. I want to get back to the point where I can clearly locate in my mind, which term to use and which arguments to present for, let us say false positives on the question about two tribes, one which always lies and the other that is always true. I know there is a test to run on the liar and to run on the truth teller, but I don’t have the bother in my mind to roam around for it, because I don’t know it on short hand.
+
+## 5. Trading research and TMRW
+
+- Long-term vision for Tomorrow Capital Research / TMRW.
+- Current status of each trading strategy and alpha family.
+- Backtesting periods, trades, Sharpe, drawdown, profitability and costs.
+- Paper trading versus actual live trading results.
+- Current trading capital and monthly contributions.
+- Data sources, execution infrastructure, broker/exchange access.
+- Main research hypotheses and intellectual contributions.
+- Remaining development, validation and operational work.
+- What constitutes convincing proof of an alpha or viable trading business.
+- Expected capital requirements and realistic scaling opportunities.
+- Whether TMRW should remain a side project or become your primary career.""
+
+
+
+
+
 
 
 
