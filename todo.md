@@ -47,3 +47,12 @@
 - [ ] streamline documents and social media
   - [ ] notion pages, google docs, etc.
   - [ ] linkedin, instagram, websites.
+     
+
+What if we made this dumbass app, for keeping track of my applications and the new jobs we see?
+
+Something like noting down companies, descriptions, links to their career pages.
+than a page where we could add or have an AI add new postings, such that we could press them and see the descriptions, match them with a CV and do the application process, note down changes from previous, to see what ATS systems pick up on?
+Than we could go through the interview process to check off which round we reached and notes on the process
+Than we could have a rule saying, if no new updates for 2 weeks, we conclude that as failed and move on.
+
