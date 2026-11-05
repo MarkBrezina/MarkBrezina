@@ -10,6 +10,13 @@ Current side-questions
 2. Is going to events worth it and what strategy should I use? For example I am attending GSA Capital's event on Systematic investing next week. I regularly attend London Quant Group events, Will also participate in Financial Magnates summit in November, may attend CQF events online, may attend SP Global and LSEG events, along with Bloomberg summits in london.
 3. Is a subscription or setup for learning courses on say edx, coursera, etc. worth my while if I have very little active work, but can connect and disconnect from courses as needed. I could do diplomas, certificates, courses online while I do my phone service job, this could be effective use of "wait time".
 
+In some ways I simply want help on what we should do next. Beyond simply sending off applications to companies, saying "Management information analyst, data analyst, quant(what kind of quant would I be best for?)"
+
+
+
+
+----------------------------------------------------------------------------------------------------------------------------------------------------
+
 Here is the background information that may help make a judgement. Feel free to ask for more or propose anything you need in order to perform a task.
 
 Current status:
@@ -39,53 +46,43 @@ With their associated github repos
 
 Now in correlation with the TomorrowMarkets, I've been working on a python package and framework for simulating both markets, populations, physics and baseline stochastic processes.
 [MarkBrezina/Concursus: done for now](https://github.com/MarkBrezina/Concursus)
+I am rather proud of the repo, as a large part of the thinking, reflecting, understanding of it, along with some very early setups were entirely my own work and that the majority of the AI help was on structuring and package building.
+
 
 I have participated in a range of algorithmic trading challenges, which at the moment aren't going as brilliantly as I would hope, there are reasonable excuses, but I think the summary is that they are not my full attention, despite it being important.
+As you will also find in the repos related to these, I often score quite highly in these competitions, IMC Prosperity 3 my team came in the top 1%, IMC Prosperity 4, I ended up rather lower though. For this one, Wunderfund RNN, I am in the top 20%, nothing big and cool. But I also have only spent a few days on it, with a bit of a half assed attitude, because I am working on genuine trading instead. For Børsen Aktiedyst, I have been in the top 10% for 3 years in a row now.
 
-Mark Brezina | LinkedIn - I currently have 1952 followers, and I am thinking of posting a lot in the next month, to get above 2000. I am also thinking about sharing my full work experience, or to simply tailor my linkedin for data analysis, quantitative trading. I am weighing between the "open book" approach and the "tailored for the career" approach. 
-
-I have got a range of repos, which are all mostly outdated by now and need either removing, refining, compacting or otherwise. Your Repositories
-
+I have got a range of repos, which are all mostly outdated by now and need either removing, refining, compacting or otherwise. IN that same way I have a collossal amount of notes, work and otherwise, which has sprawled and sprawled out, which needs refining and compacting, such that it can genuinely show its worth. I'll likely hit up another chat and refine those over the next little while. 
 
 
-Help me first set up what you would need to make a complete picture and help with the decision makings. [https://www.linkedin.com/in/markbrezina95/?isSelfProfile=false&locale=en](https://www.linkedin.com/in/markbrezina95/?isSelfProfile=false\&locale=en)
-
+Github profiles
 [https://github.com/MarkBrezina](https://github.com/MarkBrezina)
+https://github.com/TomorrowCapitalResearch
+https://github.com/TomorrowMarkets
+https://github.com/tomorrowlibrary
 
+linkedin profile
+https://www.linkedin.com/in/markbrezina95/
+Which as mentioned has 1954 followers and 1556 connections.I currently have 1952 followers, and I am thinking of posting a lot in the next month, to get above 2000. I am also thinking about sharing my full work experience, or to simply tailor my linkedin for data analysis, quantitative trading. I am weighing between the "open book" approach and the "tailored for the career" approach. Here I was considering whether premium or simply consistent posting would benefit me.
 
-
-
-
-
-
-
-I now need to, want to finish up these, so I can get you the appropriate summary of my profile.
-
-
-
-But I find it hard to cram everything into one spot. I am unsure if Like with human beings, your memory and mind will simply stop after a certain amount of detail or at a certain level of complexity.
-
-There is a lot of information to be shared for jsut these two. The other things were mostly about constraints and initial conditions. But this is where the action happens and there is a lot going on.
-
-
-
-""4. Technical expertise and portfolio
 
 - Programming languages, frameworks, databases and infrastructure.
 
 I have worked with C++(2 years initially), C#(On and off for things in custom Excel workbooks) and very briefly with standard C.\
-I have worked with HTML, CSS, Javascript for website setups. Nothing interesting, mostly design oriented.\
+I have worked with HTML, CSS, Javascript for website setups. Nothing interesting, mostly design oriented, but these days I get the change to utilise Javascript and HTML for various app designs at my workplace, Konecta. BEcause they have the constraint that they need to do everything in google drive, because it is free and cheap.\
 I have worked with Lua for world of warcraft setups, boss encounter designs, weapons designs, a more advanced setup for a teleporter, chatbot, quest setup. Than a little bit for addons, that was quite interesting.\
 Than I’ve worked with MATLAB extensively for studies, simulations data analysis and more.\
 Than I’ve worked with R extensively for studies as well, this was similar, data analysis, hypothesis testing, setups of some functions. The most extensive work I did was for my bachelor thesis, developing an R package in a combination of C++ and R, for pricing options with the heston model, volatility surface and so on.
 
 I have been using VBA, VBSCRIPT, SAS, SQL, Python in varying amounts on all of my work experiences and I have mostly been using Python, SQL for my own trading.\
-I have had very limited experience with Pinescript.\
+I have had very limited experience with Pinescript. But I did do a little bit of a trading tool for metatrader 4 or something, on a previous contract.\
 \
 I am intending on learning C++ again and keeping it going for development in the future for my algorithmic trading.\
 \
 I have used Azure, Databricks, very limited amounts of Docker, Kubernetes and such.\
 I have used SQL servers for multiple different things. Recently used Supabase for my website setup with Tomorrow Markets. 
+
+I don't know if you could find any interest in saying I've used PowerBI, with Python plug-ins developed, MDX and DAX for query, I've used Excel and now google sheets extensively, to the point I am sure I know everything, as well as how to develop custom workbooks with GS(googlescript, HTML) and VBScript, C# for customised workbook software setups. This to me, is complete BS, but it often seems to be the things my managers find most lovable about me.
 
 - Mathematics, statistics, financial modelling and quantitative research capabilities.
 - Two or three strongest technical projects.
@@ -97,8 +94,6 @@ I have used SQL servers for multiple different things. Recently used Supabase fo
 - Technical weaknesses and skills you want to develop.
 
 I am an ass at interviews and I generalise so much, that most of all the ideas or thoughts I’ve had which should have been performed with technical terminology and proper scientific expressions, just become blabber at this point. I want to get back to the point where I can clearly locate in my mind, which term to use and which arguments to present for, let us say false positives on the question about two tribes, one which always lies and the other that is always true. I know there is a test to run on the liar and to run on the truth teller, but I don’t have the bother in my mind to roam around for it, because I don’t know it on short hand.
-
-## 5. Trading research and TMRW
 
 - Long-term vision for Tomorrow Capital Research / TMRW.
 - Current status of each trading strategy and alpha family.
@@ -115,12 +110,12 @@ I am an ass at interviews and I generalise so much, that most of all the ideas o
 
 
 
+----------------------------------------------------------------------------------------------------------------------------------------------------
+
+Here is some additional information in no particular good order.
 
 
 
-
-X - 6. Personal finances and risk tolerance
-\
 Current gross salary and monthly net income.
 \
 I currently earn something like 27800£ per year before tax.
@@ -458,17 +453,6 @@ I want to either do quant research for a big company or to run my own algo tradi
 Ordinary things by now, I worked for a bit as a cleaner, and as a suit salesman, basic moral behaviour, pay me on time, don’t let me throw out my knee and pay me scraps for it. Being shouted at for failing something is bullshit, give me decent instructions and behave like a decent human being and all is good.""
 
 
-
-
-
-""X - 3. Current employment — Konecta
-
-Current title, customer service representative. My actual take home salary is approximately 1850£ per month.
-
-- Current title, salary, benefits and actual monthly take-home pay.
-- Contract conditions, notice period and working hours.
-- Daily responsibilities and workload.
-
 Daily responsibilities and workload is somewhat divided.\
 My actual only responsibilities as per contract are the workhours and phone responses with Konecta on Centerparcs. \
 \
@@ -477,9 +461,6 @@ For example, I have developed a setup for my boss, Henk, Henk has a folder where
 These aren’t actually my responsibilities, but Henk now uses me to build and maintain this dashboard, along with access to this, rights for running the MI implementations and more.
 
 - Internal tools, dashboards and automation projects developed.
-
-
-
 - Measurable business value from those projects.
 
 Speeding up agent calls, keeping track of KPIs, speeding up Management’s work with forwarding emails, setting up spreadsheets, slides and systems.\
@@ -501,24 +482,3 @@ I enjoy the salary, the rest is just a facade to make people enjoy my work and b
 - How long you are willing to remain.
 
 I would ideally leave as soon as possible, but I am willing to switch my strategy entirely if I simply can’t get a better job here in London. I would ideally look to save money and abandon everything, if I can’t get a better job within 1 year.
-
-## 4. Technical expertise and portfolio
-
-- Programming languages, frameworks, databases and infrastructure.
-
-I have worked with C++(2 years initially), C#(On and off for things in custom Excel workbooks) and very briefly with standard C.\
-I have worked with HTML, CSS, Javascript for website setups. Nothing interesting, mostly design oriented.\
-I have worked with Lua for world of warcraft setups, boss encounter designs, weapons designs, a more advanced setup for a teleporter, chatbot, quest setup. Than a little bit for addons, that was quite interesting.\
-Than I’ve worked with MATLAB extensively for studies, simulations data analysis and more.\
-Than I’ve worked with R extensively for studies as well, this was similar, data analysis, hypothesis testing, setups of some functions. The most extensive work I did was for my bachelor thesis, developing an R package in a combination of C++ and R, for pricing options with the heston model, volatility surface and so on.
-
-- Mathematics, statistics, financial modelling and quantitative research capabilities.
-- Two or three strongest technical projects.
-- Your exact contributions, complexity and verification methods.
-- Which projects are production-ready versus experimental.
-- Current GitHub repositories and which versions are authoritative.
-- Websites: Tomorrow Markets, Tomorrow Capital Research and Quant Archive.
-- How to present everything as one coherent professional identity.
-- Technical weaknesses and skills you want to develop.
-
-I am an ass at interviews and I generalise so much, that most of all the ideas or thoughts I’ve had which should have been performed with technical terminology and proper scientific expressions, just become blabber at this point. I want to get back to the point where I can clearly locate in my mind, which term to use and which arguments to present for, let us say false positives on the question about two tribes, one which always lies and the other that is always true. I know there is a test to run on the liar and to run on the truth teller, but I don’t have the bother in my mind to roam around for it, because I don’t know it on short hand.""
