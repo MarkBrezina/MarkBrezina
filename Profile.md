@@ -628,5 +628,364 @@ Decision trees
 
 Simpel NLP
  
+Explicitly state spouse visa, no need for sponsorship, right to work
+Immediate evidence you can solve their specialized problem.
+A track record of relevant, quantifiable accomplishments.
+
+Tailoring
+	- UK use Applicant Tracking Systems (ATS) 
+	- MATCH keywords and tailor experience for each role
+	- Tailor each CV to the job description, using keywords to pass applicant tracking systems.
+
+Concise (1-2 pages)
+	- Tailor CV to showcase the candidate’s specific technical contributions and results.
+	- using a clear, concise, professional format with standard fonts like Arial or Times New Roman, size 10-12.
+	- Only important stuff and ordered as most important first, Relevant skills only
+
+Achievement focus
+Use metrics, not responsibilities.
+UK important to highlight individual achievements and skills more explicitly​. 
+A resume that might be considered too modest in the UK could fail to impress.
+UK often advise to emphasize personal accomplishments ("I did X")
+
+Highlight your programming skills (e.g., Python, C++, SQL), financial modeling experience (e.g., Monte Carlo, ARIMA/GARCH), and any relevant projects or achievements. 
+
+Technical depth?
+Prioritize quant finance keywords (Python, C++, backtesting, stochastic models).
+
+
+
+In Denmark, it’s more common for an employer to trust that you’ll learn what’s needed.
+
+ If you have code samples, notebooks, or writeups that illustrate your multi-domain thinking, share them. UK employers and recruiters often check GitHub or personal websites. If they see well-documented, impressive projects, it can reassure them you have deep skill in certain areas—even if you consider yourself a generalist.
+
+
+huge teams, very narrow tasks. specialist who knows “everything” about that area. Companies are highly selective. (e.g. “2+ years of building options-pricing libraries in C++ for high-frequency trading”). 
+
+Demonstrable achievements in a relevant niche.. make clear you can deeply solve the problems they have today, and use broad creativity to solve problems of tomorrow.
+
+ appear specialized = reduces hiring risk.
+
+
+
+
+Smaller, fintech, innovation-oriented firms appreciate the multi-disciplinary approach
+• Startups and Scale-ups: Smaller fintechs or advanced technology labs (including certain proprietary trading shops) often value a “Swiss Army Knife” approach because every member of a small team wears multiple hats. If you can build an entire system (ETL pipeline, forecasting engine, backtesting logic, plus some front-end analytics), that can be far more valuable to them than someone who only codes a single piece.
+• Innovation Labs: Certain bigger banks (e.g., Barclays, HSBC, etc.) have “innovation labs” or “accelerators” where cross-disciplinary skills are prized. These groups experiment with new technologies (think blockchain, advanced AI, quantum-inspired algorithms) and appreciate big-picture thinking.
+
+
+Key Principles:
+• Conciseness: 1 page max. Remove fluff (e.g., retail jobs like Lidl).
+• Achievement-Focused: Use metrics, not responsibilities.
+• Technical Depth: Prioritize quant finance keywords (Python, C++, backtesting, stochastic models).
+
+From <https://chat.deepseek.com/a/chat/s/673b5249-075e-4c94-9d0e-5f49cf7e699d> 
+
+
+
+Selling yourself for a specific role
+
+	1. Concise and specialized
+	2. Contributions and results
+	3. Flexible to evolve?
+	
+	
+
+Quantitative developer	Specialized on equity, Crypto, risk, PM
+Quantitative analyst
+Data analyst	Investment, finance, …
+Data engineer
+VBA/Excel/Python developer	Investment, finance, økonomikontor
+Finance/economics/bookkeeping stuff
+
+
+
+Presentation & signalling
+	1. Public GitHub + comprehensive READMEs – mirror QRT/Two Sigma OSS style.
+	2. Technical blog posts & arXiv pre-prints – recruiters at these firms scout them.
+	3. Lightning talks / poster sessions – submit to Cornell FinML or SIGMICRO-LOB workshops.
+
+#	Project concept	Why it is “top-1 %” calibre	Key deliverables & stretch goals
+R-1 Order-book physics & RL market making	Build a fully parameterised limit-order-book simulator (Brownian + Hawkes + diffusive liquidity shocks), then train a deep-RL agent to quote under inventory, latency & adverse-selection constraints. Use Hamilton–Jacobi–Bellman or mean-field‐game approximations to show theoretical bounds before RL fine-tuning.	All three of Citadel Securities, Jane Street and Optiver mention “micro-structure models, RL and game-theoretic control” in recent postings and conference talks CitadelJane StreetJane Street. Pairing closed-form control with modern RL demonstrates the rare mix of maths, statistics and modern ML these firms screen for HAL ThesesSSRN.	• 10 µs tick-to-decision latency on a single core; <15 ms wall-clock loop in Python/C++ hybrid.
+			• Policy-gradient vs. ACER vs. SAC ablation; Sharpe & information ratio tracked.
+			• White-paper-level write-up & GitHub repo with 90 %+ unit-test coverage.
+R-2 Cross-asset statistical-arbitrage with alternative data†	Construct a research pipeline that joins spot FX, index futures, crypto perpetuals and options skew with “exogenous” data (e.g., satellite freight, GitHub developer counts, Reddit options flow). Apply sparse Bayesian VAR / state-space models to forecast 1 h → 3 d returns and stress-test in an inter-market lead–lag framework.	Citadel’s Global Fixed Income & Millennium’s multiple pods explicitly hire for cross-asset signal work that fuses macro + micro data eFinancialCareersquaxitas.com. Demonstrating robust signal stacking, collinearity control and walk-forward validation is what moves a CV from “interesting” to “interview now”.	• End-to-end DAG (Airflow / Prefect) that ingests, cleans and features 100 GB/day.
+			• Bayesian SHAP or causal-impact analysis to defend economic intuition.
+			• Out-of-sample PnL and capacity curves; code + 5-page “mini-paper”.
+
+From <https://chatgpt.com/g/g-p-67c5a8fb61a88191b7d774e5add49333-the-final-problem/c/6809645b-189c-8009-8f93-1c17c3b12496> 
+
+#	Project concept	Why it screams “senior-level craft”	Key deliverables & stretch goals
+D-1 Ultra-low-latency C++ 17/20 execution gateway	Write a modular FIX-/REST-/WebSocket router (ZeroMQ-backed) that achieves ≤ 5 µs intra-box hop and < 40 µs round-trip to a Coinbase/Deribit/Binance test-net.	The best funds measure PnL in µs; Citadel & JS explicitly benchmark 2–5 µs for internal hops Citadel SecuritiesGitHub. A public repo with reproducible perf counters is a golden ticket.	• Lock-free queues, cache-line padding, SIMD price parsing.
+			• On-device Prometheus/Grafana latency histograms.
+			• Docker-compose harness that replays L3 data at ≥ 5 MM msgs/s.
+D-2 Distributed back-test & risk cluster (Python + MPI)	Build a containerised grid that spins up hundreds of parameter sweeps (Monte-Carlo + historical) and streams VaR/CVaR/Kelly metrics to an HTML5 dashboard in real time.	Jane Street & Two Sigma highlight “statistically-sound back-tests at cluster scale” OpenQuant. Pairing MPI or Ray with a modern FE shows both HPC and product skills.	• Elastic scaling on local k8s or AWS spot.
+			• CI pipeline that validates PRs against regression baselines.
+			• Web UI (FastAPI + React) with live drill-downs.
+D-3 Feature-store & data-quality service	Produce a service that ingests raw exchange and alt-data, runs schema-version checks, computes 100 + engineered features per symbol and exposes them via Arrow/Parquet & gRPC.	“Data quality is alpha” is repeated across Millennium & DE Shaw job specs eFinancialCareersquaxitas.com. Shipping a production-ready feature store proves you can unblock researchers quickly.	• Partitioned time-series layout with <1 ms random-read.
+			• Bloomberg / Binance parsers + automated unit & property tests.
+			• Anomaly-detection micro-service (Isolation Forest + alerts).
+
+From <https://chatgpt.com/g/g-p-67c5a8fb61a88191b7d774e5add49333-the-final-problem/c/6809645b-189c-8009-8f93-1c17c3b12496> 
+
+
+Requirements:
+1 page and structured
+
+Introduction
+
+Interest and fit
+
+Relevant experiences
+
+Conclusion
+
+
+
+A cover letter is essential in the UK, as per How to Write a CV in the UK: Tips, Template & Example | LiveCareer, and should be personalized, concise (one page), and structured. For a quantitative developer role:
+
+
+	• Introduction: Address the hiring manager, e.g., “Dear [Name], I am excited to apply for the Junior Quantitative Developer role at [Company], given your leadership in systematic investing.”
+	• Interest and Fit: Express enthusiasm for quant finance, mentioning specific company aspects, e.g., “I admire Jane Street’s use of OCaml and am eager to contribute my Python expertise.”
+	• Relevant Experiences: Highlight key projects, e.g., “My TMRW project developed AI-driven trading strategies, aligning with your data-driven approach.”
+	• Conclusion: Invite further discussion, e.g., “I look forward to discussing how my skills can enhance your trading systems.”
+This approach, tailored to each company, increases interview chances, as seen in job listings emphasizing collaboration and technical fit.
+
+
+3. How to Write Your Cover Letter
+Structure:
+• Paragraph 1: Hook with a quant achievement.
+“I built a crypto trading bot that achieved 13% returns in 2 months by applying stochastic volatility models—this drives my passion for systematic trading at firms like [Company].”
+• Paragraph 2: Match skills to the job.
+“Your focus on [specific strategy, e.g., HFT/market-making] aligns with my experience building low-latency systems in C++ and Python. At LD Pensions, I reduced backtesting time by 30% via parallelized Monte Carlo simulations.”
+• Paragraph 3: Show cultural fit.
+“I thrive in environments that reward interdisciplinary innovation, like applying mean-field game theory to liquidity optimization—a principle I’d bring to [Company]’s R&D team.”
+Avoid:
+• Generic phrases like “I’m passionate about finance.”
+• Lengthy backstory. Keep it to 3–4 paragraphs.
+
+https://www.livecareer.co.uk/cv/how-to-write-a-cv
+
+The evidence leans toward networking in groups like the London Quant Group being useful for building connections and learning
+
+
+
+Writing direct, passionate letters to recruiters may be helpful if personalized and professional, but prioritize official applications.
+
+but in an interview, also mention your broader interests and capacity to innovate across different financial instruments.
+
+
+
+
+
+
+
+
+
+
+
+1. Quant developer/analyst/researcher in Equity/FX/Crypto mid, low or buy-side, risk
+2.  Dev/researcher in Equity/Crypto, low or systematic
+3. Researcher in Equity/Crypto in low or systematic
+4. Higher in research on Equity or crypto.
+5. Own hedgefund…
+
+Relevant Experiences, Projects, and Courses for Top 1%
+To be in the top 1%, emphasize the following:
+	Programming Skills: Showcase proficiency in Python, C++, and SQL, especially with libraries like NumPy, pandas, or TensorFlow. Mention your experience developing trading strategies and backtesting systems.
+	Financial Modeling: Highlight your thesis on the Heston model for option pricing, and your work with risk models like VaR/CVaR.
+	Projects: Detail your TMRW project, focusing on algorithmic trading and AI-driven market analysis, and your freelance high-frequency trading solutions for meme-coin IPOs.
+	Competitions and Achievements: Include your top 10% ranking in the IMC Prosperity challenge and top 2% in the Børsen stock-picking challenge to show competitive edge.
+	Courses: List relevant coursework like Stochastic Processes, Mathematical Statistics, and any finance-related courses from your B.Sc. in Mathematical Statistics.
+These elements demonstrate advanced technical and financial knowledge, setting you apart in a competitive field.
+
+
+2. Top 1% Experiences/Projects to Highlight
+Prioritize These:
+TMRW Trading System: Emphasize live trading results (13% returns), HFT infrastructure, Binance API integration.
+EnvisionRisk Library: Highlight real-world adoption (used by a fintech firm).
+IMC Prosperity Challenge: Top 10% ranking shows practical algo skills.
+Heston Model Thesis: Demonstrates mastery of stochastic calculus.
+Courses/Certifications to List:
+CQF (Certificate in Quantitative Finance): Gold standard for quant roles.
+Coursera: Machine Learning for Trading (Georgia Tech), Python for Finance (University of Michigan).
+Moocs: ARPM (Advanced Risk and Portfolio Management) Bootcamp.
+Skills to Master for Interviews:
+Coding Tests: LeetCode (focus on Python/C++), HackerRank (algorithmic puzzles).
+Math: Stochastic calculus, linear algebra, probability puzzles.
+Trading Knowledge: Market microstructure, order-book dynamics, volatility modeling.
+
+
+Based on Mark's extensive experience in quantitative finance, algorithmic trading, data analysis, and software development, here are relevant job opportunities in London, UK, tailored to his skill set:
+
+1. Quantitative Analyst/Risk Analyst
+Industries: Hedge Funds, Investment Banks, FinTech, Asset Management
+Key Skills Matched:
+• Expertise in VaR/CVaR, stress testing, and risk modeling (developed at LD Pensions).
+• Experience with stochastic processes, Heston model (thesis), Monte Carlo simulations, and GARCH/ARIMA.
+• Knowledge of ESG analytics and regulatory frameworks (e.g., IRB systems).
+London Employers:
+• Investment Banks: Barclays, HSBC, J.P. Morgan, Goldman Sachs.
+• Hedge Funds: Man Group, Millennium Management, Citadel, Aspect Capital.
+• FinTech: Revolut, Wise, Quantexa.
+
+2. Algorithmic Trading Developer/Quantitative Trader
+Industries: Proprietary Trading Firms, Crypto Exchanges, HFT Firms
+Key Skills Matched:
+• Proven work on market-making (Avelanda-Stoikov), pairs trading, and momentum strategies.
+• IMC Prosperity Challenge (top 10%) and live crypto trading (13% returns).
+• Proficiency in Python, C++, Pine Script, and low-latency systems (Raydium HFT solutions).
+London Employers:
+• HFT/Prop Trading: Optiver, IMC Trading, Jump Trading, XTX Markets.
+• Crypto: Coinbase, Binance, Wintermute, GSR.
+
+3. Data Scientist/Data Engineer
+Industries: Finance, Tech, Consulting
+Key Skills Matched:
+• ETL pipeline development (Python, SQL), Power BI dashboards, and SAS/SQL data quality analysis.
+• Machine learning (HMMs, Markov chains) and statistical arbitrage research.
+• Experience with Bloomberg, MSCI, and Sustainalytics data integration.
+London Employers:
+• Tech: Google DeepMind, Amazon, Palantir.
+• Consulting: McKinsey, BCG, Deloitte (quantitative analytics teams).
+• Finance: Bloomberg L.P., Two Sigma, Schonfeld.
+
+4. Quantitative Developer/Software Engineer
+Industries: FinTech, Asset Management, Trading Firms
+Key Skills Matched:
+• Backtesting frameworks, OOP/modular design, and C++/Python development.
+• Crypto exchange integrations (Binance API) and scalable infrastructure design.
+London Employers:
+• FinTech: Improbable, Monzo, Checkout.com.
+• Trading Tech: MetaQuotes (MetaTrader), Trading Technologies.
+
+5. ESG Analyst/Portfolio Manager
+Industries: Sustainable Finance, Asset Management
+Key Skills Matched:
+• ESG analytics (carbon intensity, financed emissions) and portfolio optimization.
+• Modular portfolio frameworks and MSCI/Bloomberg data integration.
+London Employers:
+• BlackRock (Sustainable Investing Team), Legal & General Investment Management (LGIM), MSCI ESG Research.
+
+6. Academic/Research Roles
+Industries: Universities, Think Tanks, Quantitative Research Firms
+Key Skills Matched:
+• Stochastic calculus, mathematical physics, and publications (SSRN, Medium).
+• Research on dark matter (astrophysics) and Heston model applications.
+London Employers:
+• Imperial College London, London School of Economics (LSE), Oxford-Man Institute.
+
+7. Product Manager (Quantitative Tools)
+Industries: FinTech, SaaS, Trading Platforms
+Key Skills Matched:
+• Built Python libraries for risk monitoring and Excel add-ins.
+• Teaching experience (VBA/Python curriculum design).
+London Employers:
+• Refinitiv, FactSet, Aladdin by BlackRock.
+
+Networking and Recruitment Tips for London
+1. Leverage Memberships: Engage with the London Quant Group, CQF Institute, and Oxford Mathematical and Computational Finance Network.
+2. Competitions/Conferences: Highlight IMC Prosperity Challenge and Børsen stock-picking success (top 2%) on LinkedIn/CV.
+3. Tailor Applications: Emphasize quant finance projects (TMRW.ai, Heston model thesis) and tools (Python/C++).
+4. Crypto Niche: Target London crypto firms given his Raydium and Binance API experience.
+
+Suggested Job Portals
+• Quant Finance: eFinancialCareers, Selby Jennings.
+• Tech: HackerRank Jobs, Stack Overflow Jobs.
+• Startups: AngelList, Otta.
+Mark’s blend of quantitative rigor, programming expertise, and real-world trading experience positions him strongly for roles in London’s competitive finance and tech sectors. Highlighting his TMRW project and IMC Prosperity ranking will make his profile stand out.
+
+From <https://chat.deepseek.com/a/chat/s/673b5249-075e-4c94-9d0e-5f49cf7e699d> 
+
+Key Points
+	• Research suggests that suitable positions in London, UK, include quantitative trader, data scientist in finance, and risk analyst, based on your extensive experience in algorithmic trading and data analysis.
+	• It seems likely that roles in fintech and proprietary trading firms, such as Jane Street and Citadel Securities, would value your programming skills in Python, SQL, and C++, as well as your educational background in mathematical statistics.
+	• The evidence leans toward opportunities in crypto trading firms like GSR Markets and XTX Markets, given your experience with crypto markets.
+Suitable Positions
+Given your resume, the following positions in London, UK, align well with your skills and experience:
+	• Quantitative Trader: Your work on algorithmic trading strategies and backtesting systems at TMRW and freelance projects makes this a strong fit.
+	• Quantitative Analyst: Your background in risk modeling (VaR, CVaR) and statistical analysis, especially from LD Pensions, is highly relevant.
+	• Data Scientist in Finance: Your data pipeline development and machine learning experience, such as with Hidden Markov Models, suit roles at firms like Starling Bank.
+	• Financial Engineer: Your thesis on option pricing and work on forecasting engines align with this role.
+	• Risk Analyst: Experience in risk analytics and stress testing, particularly at LD Pensions, supports this position.
+	• Algorithmic Trading Developer: Your development of trading systems and use of Python, SQL, and C++ make you a candidate for this role.
+	• Machine Learning Engineer in Finance: Your use of Monte Carlo simulations and neural networks in trading strategies fits well here.
+	• Portfolio Analyst: Your work on portfolio frameworks and ROI monitoring at LD Pensions is applicable.
+	• Research Analyst (Quantitative): Your research in market state detection and trend analysis at TMRW is relevant.
+	• Trading Systems Developer: Your technical innovations, like ETL pipelines, support this role.
+	• Crypto Quantitative Trader: Your freelance work on meme-coin IPOs and crypto trading strategies align with firms like GSR Markets.
+	• Crypto Data Scientist: Your experience with crypto data and trading models suits roles at XTX Markets.
+Potential Employers
+Consider applying to:
+	• Investment banks and hedge funds like Goldman Sachs, J.P. Morgan, and Barclays, known for quantitative roles.
+	• Proprietary trading firms such as Jane Street Quantitative Trader Position and Citadel Securities Quantitative Trading – 2025 Intern.
+	• Fintech companies like Starling Bank and Revolut, which hire data scientists in finance.
+	• Crypto trading firms like GSR Markets Crypto Trading Firm & Liquidity Provider and XTX Markets Home, given your crypto experience.
+
+Survey Note: Detailed Analysis of Relevant Positions in London, UK
+This note provides a comprehensive analysis of potential job positions in London, UK, for Mark (Daniel Balle) Brezina, based on his detailed resume and the current job market as of April 10, 2025. The analysis considers his extensive experience in algorithmic trading, data analysis, software development, and education, aligning these with opportunities in finance, technology, and related fields.
+Background and Skills Assessment
+Mark's resume highlights a strong foundation in quantitative finance and data science, with a B.Sc. in Mathematical Statistics from the University of Copenhagen (ongoing, expected July 2025) and prior studies in Mathematical Physics. His thesis on "Option Pricing with Stochastic Volatility in the Heston Model" demonstrates advanced knowledge in financial mathematics, and his coursework includes stochastic processes, probability theory, and time series analysis. This educational background is complemented by practical experience in algorithmic trading, notably through his role at TMRW (January 2024 – Present, paused), where he developed market state detection methods, trend analysis, and strategy choice AI using tools like Python, SQL, and C++. His freelance work (May 2024 – January 2025) included high-frequency trading solutions for meme-coin IPOs, further showcasing his expertise in crypto markets.
+Additionally, Mark has significant data analysis experience, evidenced by roles at LD Pensions (August 2023 – May 2024) and Statistics Denmark (August 2021 – August 2023), where he built ETL pipelines, conducted risk modeling (VaR, CVaR), and developed Power BI dashboards. His programming proficiency spans Python, R, C++, SAS, VBA, and SQL, with notable projects like developing Excel add-ins and Python packages for quantitative analysis. Teaching experience as a VBA & Python Instructor (January 2023 – August 2023) and Mathematics & Physics Tutor (September 2017 – September 2021) highlights strong communication skills, which are valuable for client-facing roles.
+Job Market Analysis in London
+London, as a global financial hub, offers a robust market for quantitative and data science roles, particularly in finance and fintech. Research into job listings on platforms like Glassdoor, LinkedIn, and Indeed reveals a high demand for quantitative traders, data scientists, and related positions. For instance, Glassdoor lists 137 quantitative trader jobs in London, while LinkedIn shows over 1,000 finance data science jobs in the area. Proprietary trading firms and crypto exchanges also present opportunities, with firms like Jane Street, Citadel Securities, and GSR Markets actively hiring.
+Identified Relevant Positions
+Based on Mark's skills and the London job market, the following positions are recommended:
+	1. Quantitative Trader: This role aligns with his TMRW experience, where he developed trading strategies using Markov chains and backtesting systems. Listings on eFinancialCareers Quantitative Trader Jobs in London show 328 vacancies, with requirements including programming skills and market knowledge, which Mark possesses.
+	2. Quantitative Analyst: His work on risk analytics at LD Pensions, including VaR and CVaR calculations, fits this role. Companies like Citadel Securities Quantitative Trading – 2025 Intern seek candidates with statistical modeling skills, matching his background.
+	3. Data Scientist in Finance: Mark's experience with ETL pipelines and machine learning, such as Monte Carlo simulations, suits roles at fintech firms like Starling Bank. Indeed Data Science Finance Jobs in London lists positions requiring Python, R, and financial domain knowledge, all of which he has.
+	4. Financial Engineer: His thesis on option pricing and forecasting engine development at TMRW align with this role, which involves designing financial models. Investment banks like Goldman Sachs often hire for such positions, given their focus on quantitative methods.
+	5. Risk Analyst: Experience in stress testing and scenario simulations at LD Pensions supports this role, with firms like Barclays seeking candidates with risk modeling expertise.
+	6. Algorithmic Trading Developer: His technical innovations, like developing low-latency trading systems, fit roles at proprietary trading firms. Quant Capital Quantitative Developer Hybrid Working lists positions requiring Python and C++, matching his skills.
+	7. Machine Learning Engineer in Finance: Mark's use of Hidden Markov Models and neural networks in trading strategies aligns with this role, with opportunities at firms like XTX Markets Home, which uses machine learning for price forecasting.
+	8. Portfolio Analyst: His work on portfolio frameworks and ROI monitoring at LD Pensions is relevant, with asset management firms like abrdn plc hiring for such roles.
+	9. Research Analyst (Quantitative): His research in market state detection and trend analysis at TMRW fits this role, with hedge funds often seeking candidates with statistical research skills.
+	10. Trading Systems Developer: His ETL pipeline development and modular architecture experience support this role, with tech-focused finance firms like Revolut likely to have openings.
+	11. Crypto Quantitative Trader: His freelance work on meme-coin IPOs and crypto trading strategies align with firms like GSR Markets Crypto Trading Firm & Liquidity Provider, which specializes in crypto market making.
+	12. Crypto Data Scientist: Given his crypto experience, roles at XTX Markets Home, which trades crypto among other assets, are suitable, requiring data analysis and machine learning skills.
+Potential Employers and Industry Insights
+Mark should consider applying to:
+	• Investment Banks: Goldman Sachs, J.P. Morgan, Barclays, known for quantitative and data science roles.
+	• Proprietary Trading Firms: Jane Street Quantitative Trader Position, Citadel Securities, Amplify Trading, and others listed on Traders Log List of Proprietary Trading Firms, which include London-based firms like 3Red Partners and Bluefin Capital.
+	• Fintech Companies: Starling Bank, Revolut, and Wise, which hire data scientists for financial applications.
+	• Crypto Trading Firms: GSR Markets Crypto Trading Firm & Liquidity Provider, XTX Markets Home, and Archax Buy, Sell and Trade Cryptocurrency with Archax, given his crypto experience.
+Research into proprietary trading firms revealed a competitive landscape, with firms like Jane Street emphasizing collaborative problem-solving and programming comfort, as seen in their job description. Crypto firms like GSR Markets, with FCA approval in the UK, indicate a regulatory-compliant environment, aligning with Mark's experience in compliance-related data quality roles.
+Comparative Analysis of Requirements
+To illustrate the fit, here is a table comparing typical requirements for selected positions with Mark's skills:
+Position	Typical Requirements	Mark's Relevant Skills/Experience
+Quantitative Trader	Programming (Python, C++), market knowledge, quantitative skills	Algorithmic trading at TMRW, Python, C++, crypto trading experience
+Data Scientist in Finance	Python, R, machine learning, financial domain knowledge	ETL pipelines, Monte Carlo simulations, finance risk modeling
+Risk Analyst	Risk modeling (VaR, CVaR), statistical analysis, finance knowledge	VaR/CVaR at LD Pensions, statistical research at TMRW
+Crypto Quantitative Trader	Crypto trading experience, programming, quantitative analysis	Meme-coin IPOs, Python, statistical arbitrage in crypto markets
+This table highlights the strong alignment between Mark's resume and the job market demands in London.
+Additional Considerations
+Mark's teaching experience could open doors to roles like Quantitative Finance Instructor or Data Science Trainer, particularly with educational institutions or corporate training programs. His participation in competitions, such as ranking in the top 10% of the IMC Prosperity 3 challenge, and memberships in professional groups like Wilmott's Forum and Quantnet, enhance his profile for research-oriented roles. Additionally, his interest in fitness and art could be mentioned in applications to show well-roundedness, though it is less directly relevant to the positions.
+Given the dynamic nature of the London job market, Mark should regularly update his LinkedIn profile and leverage job simulations (e.g., Forage Citi - Markets Quantitative Analysis) to prepare for interviews. The current date, April 10, 2025, suggests a post-Brexit, post-COVID recovery phase, with fintech and crypto sectors particularly vibrant, offering opportunities for his diverse skill set.
+In conclusion, Mark's resume positions him well for a range of technical roles in London's finance and technology sectors, with a focus on quantitative trading, data science, and crypto-related positions, supported by a robust job market and his extensive experience.
+Key Citations
+	• Quantitative Trader Jobs in London Glassdoor Listing
+	• Jane Street Quantitative Trader Position Details
+	• Indeed Data Science Finance Jobs in London Listings
+	• Crunchbase London Cryptocurrency Companies Profile
+	• Traders Log List of Proprietary Trading Firms Guide
+	• GSR Markets Crypto Trading Firm and Liquidity Provider Page
+	• XTX Markets Home Page with Trading Information
+	• eFinancialCareers Quantitative Trader Jobs in London
+
+Great, I’ll start looking for entry-level roles in London that match your strong background in quantitative research, data analysis, and software development. I’ll explore opportunities across finance, fintech, data science, and related technical fields.
+I’ll get back to you shortly with a list of relevant positions you can consider applying for.
+Research completed in 8m · 28 sources
+Open Entry-Level Opportunities (London, UK) – April 2025
+Below is a curated list of entry-level positions in London relevant to the described background. Roles span quantitative analysis, data science, software engineering, risk analysis, and research. Each entry includes a brief summary, link to apply, and the posting date.
+Job Title	Company	Role Summary	Application Link	Posted
+Quantitative Fixed Income Strat, Analyst (AWM)	Goldman Sachs	Build quantitative models and tools to support fixed income portfolio management, working closely with portfolio managers in the Asset & Wealth Management team​uk.indeed.com.	Goldman Careers	1 day ago
+Junior Quant (Equity Derivatives)	CLSA	Entry-level quant role supporting the Equity Derivatives trading desk – develop pricing tools, conduct daily risk/P&L analysis, and collaborate with global quants to enhance trading strategies​uk.linkedin.com.	CLSA on LinkedIn	3 days ago
+Quantitative Analyst & Developer (Crypto/FX/Futures)	G-20 Strategies AG	Develop and maintain automated trading systems for cryptocurrency, FX, and futures markets at a global macro trading firm (focus on bond/FX derivatives and crypto market-making)​linkedin.com.	G-20 Careers	Today (4 hrs ago)
+Junior Data Scientist (FinTech)	Intellect Group*	Work with large-scale financial datasets to develop predictive models (e.g. for fraud detection, credit scoring, trading) and support data-driven decision-making in a fintech environment​talents.studysmarter.co.uk.	Job Posting	3 days ago
+Graduate Software Engineer	S&P Global	Design and implement software solutions for financial data (pricing & valuations), engage with stakeholders, and leverage cloud and machine learning to deliver analytics at scale​builtin.com.	S&P Careers	Posted Yesterday
+Credit Risk Analyst (Insurance & Fin. Institutions)	Bank of America	Analyze and underwrite credit exposures for insurance and diversified financial clients – perform financial analysis, assess risk ratings, and present industry research to support credit decisions​careers.bankofamerica.com.	BoA Careers	6 days ago
+Research Assistant – Leveraged Finance	S&P Global Ratings	Conduct financial statement analysis on leveraged loan issuers and produce Credit Estimates to support CLO (Collateralized Loan Obligation) ratings; work with senior analysts in a global team​totaljobs.com.	Job Listing	2 days ago
+*(Intellect Group is a recruiting firm posting on behalf of a fintech client.)
+Each of these roles aligns with a strong quantitative and programming background, and most are open to soon-to-be graduates or candidates with limited experience. Be sure to review each description for specific requirements and application details.
 
 
