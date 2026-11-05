@@ -621,6 +621,45 @@ Stage 3	HVIS UK JOB OG VISA	HVIS UK VISA AND NO JOB	HVIS NO UK VISA AND NO JOB. 
 	KEEP GOING, DROP SCHOOL	CONSIDER RETURNING or REMOTING
 
 
+Life is what you make it over and over again
+
+It's not how good you are, it's how good you want to be
+
+Everyone chooses their hill to die on. Find yours and never go there.
+
+Nothing worth having comes easy
+
+i'm only here to live up to MY expecations
+
+Better late than never.
+
+Digging yourself out of the deepest hole, takes you further than the tallest mountain
+
+Belief can move mountains
+
+You deserve what you tolerate
+
+Heaven and hell are places on earth
+
+No one is in charge of your happiness. Except you
+
+Compare yourself to who you were yesterday.
+
+Don't compare your life to others, and don't judge them, you have no idea what their journey is all about
+
+Stop thinking too much. It's alright not to know the answers. They will come to you when you least expect it.
+
+Smile. You don't own all the problems in the world.
+
+Make peace with your past, so it won't disturb your present
+
+What other people think of you is none of your business
+
+Time heals almost everything. Give it time.
+
+There are only two certainties in life, death and taxes
+
+6 doctors “sunshine, water, rest and air, exercise and diet."
 
 
 
