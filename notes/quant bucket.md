@@ -1,4 +1,1991 @@
+* 
 
+* Uses a cross / recent-book averaging approach
+* Stores old bids and asks
+* Computes weighted average bid and ask from recent cached books
+* Trades if the current book is favourable relative to these averages by some threshold
+* Uses EMA as a dynamic fair value
+* Adjusts quotes based on current inventory:
+   * flat position: symmetric around EMA
+   * long position: shifts quotes downward to encourage selling / reduce further buying
+   * short position: shifts quotes upward to encourage buying back
+
+So this team builds inventory-aware quoting directly into the pricing.
+
+* Uses a hard-coded regression forecast on recent cached mid-prices
+* Predicts next price from a rolling banana cache
+* Converts that forecast into lower/upper acceptable prices
+* Then trades and quotes around those bounds
+
+So BANANAS here is the most explicitly forecast-driven of the three.
+ 
+ 
+ 
+ 
+ 
+ 
+ Stable asset with a near 100% stable mid price around K.
+There will be occasional mispricings, where either bid or ask will move to meet the mid price at K.
+If we can assume that this is a simple asset utilised by IMC to get everyone started. The behaviour is simply continuously straightforward. We simply want to market make and market take on given opportunities.
+ 
+For future we want to do
+ 
+
+1. Market making
+2. Market taking in accordance with fair value
+3. Inventory skew to de-risk
+
+ 
+ 
+
+* Uses a fixed fair value of 10,000
+* Simply buys below fair value and sells above fair value
+* Very straightforward mean-reversion / fair-value taking logic
+* Posts both sides around the default price:
+   * buy at 9999
+   * sell at 10001
+* This is more of a pure market-making setup than the first team
+
+ 
+ 
+
+* Uses explicit acceptable bid/ask bounds around 10,000
+* Aggressively combines:
+   * market taking when quotes are favourable
+   * market making by undercutting current best price
+   * inventory-dependent quote adjustment
+
+This is much richer execution logic than the first two teams.
+ 
+ 
+ All of them store some form of historical information:
+
+* cached bids/asks
+* past prices
+* EMA
+* rolling banana price cache
+* PnL and trade history
+
+So they are not purely reactive to the current book; they are stateful strategies.
+
+* Tracks:
+   * positions
+   * PnL
+   * cash
+   * EMA prices
+   * past prices
+* Keeps extensive state:
+   * positions
+   * traded volume
+   * per-product cash PnL
+   * rolling caches
+   * signals from market participants
+   * multiple product-specific parameters
+
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ profit-seeking is always constrained by risk/inventory bounds.
+trading edge and breadth.
+ 
+ 
+ 
+ 
+Even the more advanced code is still built from understandable pieces:
+
+* fixed fair value
+* moving averages / EMA
+* short rolling regression / cached-price forecast
+* simple undercutting of current best bid/ask
+* inventory skew
+
+So the common style is practical and competition-oriented: simple models with direct execution rules.
+
+* Logic is split into reusable methods like:
+   * reset_from_state
+   * buy_product
+   * sell_product
+   * continuous_buy
+   * continuous_sell
+
+ Current position
+Inventory control.
+Every implementation keeps track of current position and ensures it does not exceed the allowed max long or short positionGoal
+Harvest relative mispricings while staying neutral to known risks (market, sector, style), controlling turnover, and being honest about costs.
+A. Universe & data hygiene (stat arb lives or dies here)
+
+* Liquid universe only (ADV, spread, borrow constraints if shorting).
+* Survivorship-bias-free data, corporate actions, delisting returns.
+* Intraday data helps, but you can do robust daily stat arb too.
+
+B. Risk model + neutralization (the “spine”)
+Build a factor model (daily or intraday):
+
+* Exposures BBB: market beta, sector/industry, size, value, momentum, quality, low-vol, plus custom microstructure factors if you have them.
+* Returns model: r=Bf+ϵr = B f + \epsilonr=Bf+ϵ
+
+Estimate:
+
+* Factor covariance Σf\Sigma_fΣf (shrinkage)
+* Specific risk Σϵ\Sigma_\epsilonΣϵ (diagonal / clustered)
+
+This lets you:
+
+* Neutralize to factors (target B⊤x≈0B^\top x \approx 0B⊤x≈0)
+* Size positions by predicted risk
+* Avoid hidden factor bets
+
+C. Alpha: residual mean reversion + “context signals”
+Start with residuals:
+
+* Fit returns (or prices) to factors and compute residual return ϵ^i(t)\hat{\epsilon}_i(t)ϵ^i(t).
+* Construct a mispricing score:
+   * zi(t)=EMA(ϵ^i,h1)−EMA(ϵ^i,h2)robust_scale(ϵ^i)z_i(t) = \frac{\text{EMA}(\hat{\epsilon}_i, h_1) - \text{EMA}(\hat{\epsilon}_i, h_2)}{\text{robust\_scale}(\hat{\epsilon}_i)}zi(t)=robust_scale(ϵ^i)EMA(ϵ^i,h1)−EMA(ϵ^i,h2)
+   * Or cointegration/Kalman for pairs/baskets (more below).
+
+Add context signals to avoid trading “cheap for a reason”:
+
+* Liquidity/volume shock filters
+* Vol regime filters (mean reversion dies in crisis correlation spikes)
+* Earnings/news blackout windows (if equities)
+* Short-term reversal + intraday microprice (if you have microstructure)
+
+Ensemble of stat-arb alphas
+
+* Cross-sectional residual reversion (broad)
+* Industry/sector relative value (within clusters)
+* Pairs/baskets (cointegration-based)
+* Event mean reversion (post-earnings drift is not mean reversion; avoid mixing)
+
+D. Structure: clustering + basket construction
+Instead of naive pairs:
+
+* Build clusters by industry + correlation of residual returns.
+* Within each cluster, define baskets via:
+   * PCA on residual returns
+   * Graph methods (minimum spanning tree / community detection)
+   * Or cointegration tests to find stationary spreads
+
+Advanced pairs/baskets (Kalman filter)
+Model spread state:
+
+* yt=βtxt+ϵty_t = \beta_t x_t + \epsilon_tyt=βtxt+ϵt, with βt\beta_tβt evolving slowly
+* Trade when the spread deviates from its filtered mean by a robust z-score.
+
+This adapts hedge ratios through time (critical in real markets).
+E. Portfolio construction: constrained mean-variance with costs
+Solve:
+max⁡x α⊤x − γ2x⊤Σx − κ⋅TC(Δx)\max_x \ \alpha^\top x \ - \ \frac{\gamma}{2} x^\top \Sigma x \ - \ \kappa \cdot \text{TC}(\Delta x)xmax α⊤x − 2γx⊤Σx − κ⋅TC(Δx)
+Subject to:
+
+* Dollar neutrality: ∑ixi=0\sum_i x_i = 0∑ixi=0
+* Beta neutrality: b⊤x=0b^\top x = 0b⊤x=0 (and sector/style neutrality)
+* Position bounds by liquidity / borrow
+* Turnover constraints
+* Gross exposure cap
+
+This optimizer is the stat-arb “engine”. Your alpha can be simple; the constraints and costs make it real.
+F. Execution: the hidden edge
+Stat arb is turnover-heavy, so execution is not optional:
+
+* Schedule trades to minimize impact (TWAP/VWAP with participation caps)
+* Spread-aware limit orders for passive fills when signal half-life allows
+* Cancel/replace logic to avoid adverse selection
+
+G. Risk controls that separate pros from backtests
+
+* Correlation spike detector: if cross-asset correlation jumps, reduce risk (stat arb correlation blowups are real).
+* Crowding proxy: if many names move together in your book, cut exposure.
+* Stop trading / widen entry bands in high vol regime.
+* Kill-switch for borrow cost spikes / short squeezes.Goal
+Harvest relative mispricings while staying neutral to known risks (market, sector, style), controlling turnover, and being honest about costs.
+A. Universe & data hygiene (stat arb lives or dies here)
+   * Liquid universe only (ADV, spread, borrow constraints if shorting).
+   * Survivorship-bias-free data, corporate actions, delisting returns.
+   * Intraday data helps, but you can do robust daily stat arb too.
+B. Risk model + neutralization (the “spine”)
+Build a factor model (daily or intraday):
+   * Exposures BBB: market beta, sector/industry, size, value, momentum, quality, low-vol, plus custom microstructure factors if you have them.
+   * Returns model: r=Bf+ϵr = B f + \epsilonr=Bf+ϵ
+Estimate:
+   * Factor covariance Σf\Sigma_fΣf (shrinkage)
+   * Specific risk Σϵ\Sigma_\epsilonΣϵ (diagonal / clustered)
+This lets you:
+   * Neutralize to factors (target B⊤x≈0B^\top x \approx 0B⊤x≈0)
+   * Size positions by predicted risk
+   * Avoid hidden factor bets
+C. Alpha: residual mean reversion + “context signals”
+Start with residuals:
+   * Fit returns (or prices) to factors and compute residual return ϵ^i(t)\hat{\epsilon}_i(t)ϵ^i(t).
+   * Construct a mispricing score:
+      * zi(t)=EMA(ϵ^i,h1)−EMA(ϵ^i,h2)robust_scale(ϵ^i)z_i(t) = \frac{\text{EMA}(\hat{\epsilon}_i, h_1) - \text{EMA}(\hat{\epsilon}_i, h_2)}{\text{robust\_scale}(\hat{\epsilon}_i)}zi(t)=robust_scale(ϵ^i)EMA(ϵ^i,h1)−EMA(ϵ^i,h2)
+      * Or cointegration/Kalman for pairs/baskets (more below).
+Add context signals to avoid trading “cheap for a reason”:
+   * Liquidity/volume shock filters
+   * Vol regime filters (mean reversion dies in crisis correlation spikes)
+   * Earnings/news blackout windows (if equities)
+   * Short-term reversal + intraday microprice (if you have microstructure)
+Ensemble of stat-arb alphas
+   * Cross-sectional residual reversion (broad)
+   * Industry/sector relative value (within clusters)
+   * Pairs/baskets (cointegration-based)
+   * Event mean reversion (post-earnings drift is not mean reversion; avoid mixing)
+D. Structure: clustering + basket construction
+Instead of naive pairs:
+   * Build clusters by industry + correlation of residual returns.
+   * Within each cluster, define baskets via:
+      * PCA on residual returns
+      * Graph methods (minimum spanning tree / community detection)
+      * Or cointegration tests to find stationary spreads
+Advanced pairs/baskets (Kalman filter)
+Model spread state:
+   * yt=βtxt+ϵty_t = \beta_t x_t + \epsilon_tyt=βtxt+ϵt, with βt\beta_tβt evolving slowly
+   * Trade when the spread deviates from its filtered mean by a robust z-score.
+This adapts hedge ratios through time (critical in real markets).
+E. Portfolio construction: constrained mean-variance with costs
+Solve:
+max⁡x α⊤x − γ2x⊤Σx − κ⋅TC(Δx)\max_x \ \alpha^\top x \ - \ \frac{\gamma}{2} x^\top \Sigma x \ - \ \kappa \cdot \text{TC}(\Delta x)xmax α⊤x − 2γx⊤Σx − κ⋅TC(Δx)
+Subject to:
+   * Dollar neutrality: ∑ixi=0\sum_i x_i = 0∑ixi=0
+   * Beta neutrality: b⊤x=0b^\top x = 0b⊤x=0 (and sector/style neutrality)
+   * Position bounds by liquidity / borrow
+   * Turnover constraints
+   * Gross exposure cap
+This optimizer is the stat-arb “engine”. Your alpha can be simple; the constraints and costs make it real.
+F. Execution: the hidden edge
+Stat arb is turnover-heavy, so execution is not optional:
+   * Schedule trades to minimize impact (TWAP/VWAP with participation caps)
+   * Spread-aware limit orders for passive fills when signal half-life allows
+   * Cancel/replace logic to avoid adverse selection
+G. Risk controls that separate pros from backtests
+   * Correlation spike detector: if cross-asset correlation jumps, reduce risk (stat arb correlation blowups are real).
+   * Crowding proxy: if many names move together in your book, cut exposure.
+   * Stop trading / widen entry bands in high vol regime.
+   * Kill-switch for borrow cost spikes / short squeezes.
+ 
+Assets	Cryptocurrencies vs Equities
+Horizon	Ultra-low latency(sub-ms), Medium-freq(hours to days)
+Exchanges	Binance, OKX, Coinbase, Robinhood
+Tech	Python, C++ for speed
+Finance	Leverage: flexible
+Features	moving averages, volatility, order-flow imbalances, on-chain indicators, Momentum, reversal, carry, post-earnings-drift and low-volatility effects, PCA factor rotation, breakout detectors, or ML predictors, RSI/oscillator-based signals, transaction volume, whale movements, staking rates
+
+Strategies	ULL
+	Mid-freq
+	• market making - quoting and rebalancing orders to capture bid-ask spreads and liquidity rebates. Position goals stay near zero.
+	• cross-exchange / triangular arb
+	• Order-Book Microstructure: Models that analyze order flow imbalance and momentum ignition to enter positions before large moves. Such strategies require sub-millisecond tick-by-tick processing.
+	• Statistical arbitrage - Avellaneda–Lee s-scores
+	• Pairs trading - ?
+	
+	
+	real-time level-2 order-book imbalance, expected‐fill price and implied spread as primary predictors for 5 min–1 h signals. 
+	
+Practitioners filter spoofing by conditioning on filled orders only or using Bookmap-style depth-surfaces.
+	
+	Transformer variants (Informer, Autoformer, TimeXer) are now favoured for 15 m–1 d price forecasting
+	
+	momentum/trend, mean-reversion, LSTM/Transformer predictors, DeFi arb.
+Long-term pairs trading, Machine Learning Models, Fundamental/On-Chain Signals, DeFi/DEX Arbitrage
+Methods	Execution Engine: A fast, event-driven order manager. It receives “send order” commands from strategies and handles all API-level details (rate-limits, retries, smart routing). Critical code (order serialization, nonce management, latency-critical paths) can be written in C++ with Python bindings (e.g. via PyBind11) for speed. The engine tracks outstanding orders and confirmations.
+	
+	- Deep-representation models (Transformers, T-GAT, FinGPT)
+	- Mean-field/broker games for order-flow toxicity
+	- RL execution agents, dynamic Kelly sizing, rough-vol surfaces, Chebyshev interp.
+	- Temporal Graph-Attention Networks better than GARCH at vol forecasts
+	
+	Machine Learning Module: Off-board model training (Python/TF or PyTorch) that updates predictive models online or at intervals. Examples: LSTM networks for short-term price movement​
+Modern reinforcement-learning approaches (e.g. deep Q-networks) may also be explored for strategy development, though robust financial RL remains cutting-edge.
+
+
+	• Graph-signal processing HAR-extensions embed realised-volatility vectors on a stock-correlation graph and transform them in the graph-spectral domain for next-day risk signals 
+
+	• On-chain analytics for crypto: desks scrape funding rates, NVT-style utilisation ratios and liquidation clusters; tutorials at PrimeXBT summarise the standard metric set PrimeXBT.
+Risk	Position Limits: No strategy can exceed its defined exposure.
+	Stop-Loss / Take-Profit: Pre-set thresholds automatically exit trades to cap losses/profits​
+	Portfolio-Level Checks: Monitors total drawdown and triggers system-wide safe modes if severe volatility occurs.
+	Real-Time Alerts: Automated alerts/notifications if any risk rule is violated.
+Architecture	data→ feature engine → strategy modules → C++ order manager → risk manager → monitoring/logging.
+Plan	prototype → paper-trade → C++ optimisation → staged release → live risk dashboards.
+Prototyping & Backtesting →Simulation & Paper Trading →C++ Optimization→Data Pipeline→Integration Testing→Monitoring Setup→Iterate & Tune
+
+
+
+
+A Beginner's Step-by-Step Guide to Exploring Quantitative Trading with £50
+Section 1: Introduction - Welcome to Quantitative Trading
+What is Quantitative Finance and Trading? (Simplified)
+Quantitative finance, often shortened to "quant finance," represents a field within finance that relies heavily on mathematical and statistical modeling to inform financial decisions. Instead of relying solely on intuition, news, or traditional financial analysis, quantitative approaches use data, algorithms, and computational power to identify opportunities, manage risk, and execute strategies. It's about applying scientific and mathematical rigor to the complexities of financial markets.   
+Quantitative trading is a specific application of these principles, focusing on the development and execution of trading strategies based on quantitative analysis. These strategies aim to buy and sell financial assets—such as stocks, bonds, commodities, or cryptocurrencies—often in an automated or semi-automated fashion. The core idea is to leverage mathematical models to detect patterns, statistical relationships, or market inefficiencies that can be systematically exploited for potential profit. This involves rigorous testing of ideas using historical data (backtesting) before deploying them in live markets.   
+What are High-Frequency (HFT) and Mid-Frequency Trading (MFT)?
+Within the realm of quantitative trading, strategies are often categorized by their trading frequency or holding period. High-Frequency Trading (HFT) sits at the extreme end of this spectrum. It is a form of algorithmic trading characterized by:
+	• Extraordinary Speed: Trades are executed in microseconds (millionths of a second) or milliseconds (thousandths of a second).   
+	• High Volume: A vast number of orders are generated and executed throughout the trading day.   
+	• Short Holding Periods: Positions are typically held for fractions of a second up to a few minutes, rarely overnight.   
+	• Sophisticated Technology: HFT relies on powerful computers, complex algorithms, and high-speed data connections.   
+A critical concept in HFT is latency. Latency refers to the time delay experienced when data travels from one point to another, such as from the exchange's matching engine to a trader's system, or the time taken for an order to travel to the exchange and be processed. HFT firms invest heavily to minimize latency, as even a tiny speed advantage can be crucial. This often involves co-location, which means placing their trading servers in the same physical data center as the exchange's servers to reduce the physical distance data needs to travel.   
+Mid-Frequency Trading (MFT) occupies a space between HFT and traditional, slower trading strategies. While still automated and faster than human traders, MFT typically involves holding periods that might range from minutes to hours or even across a trading day. MFT strategies may focus less on pure speed arbitrage and more on analyzing factors like order flow (the sequence and size of buy and sell orders hitting the market), identifying short-term predictive signals, or reacting to specific market events or HFT-driven patterns. MFT generally requires less extreme low-latency infrastructure compared to HFT, though speed and efficient execution remain important.   
+Setting Realistic Expectations: The £50 Journey
+It is absolutely crucial to understand the realities of HFT from the outset. Executing genuine HFT strategies requires immense capital investment in specialized hardware, ultra-fast software, direct data feeds from exchanges, co-location services, and skilled personnel. These costs run into millions of pounds, making HFT fundamentally inaccessible for retail traders, especially those starting with a budget of £50.   
+Therefore, the £50 budget allocated for this exploration should not be viewed as trading capital for HFT or even significant MFT participation. Instead, it should be considered a resource for learning and familiarization. This budget might cover access to an online course, purchase of an introductory book, or, much later, funding a tiny real-money account purely for understanding the psychological dynamics of trading.
+The primary goal of this journey, given the constraints, is to build foundational knowledge. This involves understanding the core concepts of quantitative finance, learning the necessary mathematical and programming tools, exploring market mechanics, and simulating trading strategies in a risk-free environment. The objective shifts from doing HFT, which is impossible under these circumstances, to learning about HFT and the broader field of quantitative trading. The significant financial and technological barriers mean that simulation and knowledge acquisition are the only practical avenues available. This constraint fundamentally shapes the approach outlined in this guide, prioritizing education and experimentation over any expectation of profit from HFT activities.   
+Section 2: Building Your Foundation
+Before diving into complex strategies or specific tools, establishing a solid foundation in market basics, essential mathematical concepts, and programming is paramount. Attempting to understand advanced quantitative trading without these prerequisites is unlikely to be productive.
+Essential Concepts: Markets, Assets, Orders
+	• Markets: Financial markets are platforms where assets are traded. Key examples include: 
+		○ Stock Markets: Exchanges like the New York Stock Exchange (NYSE) or London Stock Exchange (LSE) where shares representing ownership in publicly listed companies are bought and sold.   
+		○ Cryptocurrency Exchanges: Platforms like Binance, Coinbase, or OKX facilitate the trading of digital assets (cryptocurrencies) based on blockchain technology.   
+	• Assets: The items being traded. For this initial exploration, the focus will be on: 
+		○ Stocks (Equities): Represent partial ownership in a corporation. Owning stock may entitle the holder to dividends (a share of company profits) and capital appreciation if the stock price increases.   
+		○ Cryptocurrencies: Digital or virtual currencies secured by cryptography, operating on decentralized networks (like blockchains). Examples include Bitcoin (BTC) and Ethereum (ETH). While many other asset classes exist (e.g., commodities, derivatives ), stocks and crypto provide accessible starting points.   
+	• Order Types: Instructions given to a broker or exchange to execute a trade. Two fundamental types are: 
+		○ Market Order: An instruction to buy or sell immediately at the best currently available market price. It prioritizes speed of execution over the exact price achieved.   
+		○ Limit Order: An instruction to buy or sell only at a specified price or better. A buy limit order executes only at the limit price or lower, while a sell limit order executes only at the limit price or higher. Limit orders provide price control but do not guarantee execution if the market never reaches the specified price. They are essential tools in quantitative strategies for precise entry and exit points.   
+	• Limit Order Books (LOB): This is the electronic list maintained by an exchange showing all active limit orders for a specific asset. It displays the quantity of shares or tokens available to be bought (bids) and sold (asks/offers) at various price levels, ranked by price. The LOB provides transparency into market depth (supply and demand at different prices) and is a critical data source for many HFT and MFT strategies, such as market making, which involves simultaneously posting bid and ask orders.   
+	• Basic Trading Ideas: 
+		○ Long vs. Short: Going "long" means buying an asset hoping its price will rise. Going "short" involves selling an asset (often borrowed) expecting its price to fall, aiming to buy it back cheaper later. Short selling is more complex and carries different risks.   
+		○ Diversification: The principle of spreading investments across different assets or strategies to reduce overall risk. The idea is captured by the adage "don't put all your eggs in one basket".   
+Key Skills: Introduction to Probability & Statistics
+Quantitative trading is fundamentally based on mathematics. Understanding probability and statistics is not optional; it's essential for developing, testing, and understanding trading models.   
+	• Why Math Matters: Probability helps quantify the likelihood of future market movements or the success rate of a strategy. Statistics provides the tools to analyze historical data, identify patterns, measure risk, and determine if a strategy's performance is statistically significant or just due to luck.   
+	• Learning Resources: 
+		○ Khan Academy: Offers excellent, free introductory courses on basic probability (calculating probabilities, understanding independent and dependent events, sample spaces) and statistics (mean, variance, distributions like the Normal distribution, hypothesis testing). These resources are ideal for building foundational understanding without initial cost.   
+		○ Coursera: Provides more structured courses, often from universities, covering these topics within a financial context. Examples include the Wharton Quantitative Modeling course or other beginner-level finance specializations. These may involve costs but offer a more formal learning path.   
+Learning Python for Finance
+A programming language is needed to implement and test quantitative ideas. Python has become the dominant language in quantitative finance for several reasons:
+	• Extensive Libraries: Python boasts a rich ecosystem of libraries specifically designed for data analysis (Pandas), numerical computation (NumPy), machine learning (scikit-learn, TensorFlow, PyTorch), and visualization (Matplotlib, Seaborn), significantly speeding up development.   
+	• Readability and Ease of Learning: Python's syntax is generally considered cleaner and easier to learn compared to other languages like C++, making it more accessible for beginners.
+	• Community Support: A large and active community means ample resources, tutorials, and support are available online.
+The initial steps for learning Python specifically for finance typically involve :   
+	1. Python Fundamentals: Grasping core concepts like variables, data types (integers, floats, strings, booleans), basic operators (arithmetic, comparison, logical), and control flow (if-else statements, loops).
+	2. Data Structures: Learning to work with lists (ordered, mutable collections) and potentially dictionaries (key-value pairs).
+	3. NumPy: Understanding NumPy arrays, which are fundamental for efficient numerical operations on large datasets. This includes array creation, indexing, slicing, and mathematical functions.   
+	4. Pandas: This library is crucial for financial data analysis. Learning to use Pandas DataFrames for importing, cleaning, manipulating, and analyzing time-series data (like stock or crypto prices) is essential.   
+	5. Matplotlib: Acquiring basic data visualization skills using Matplotlib to create plots like line charts (for prices over time), histograms (for return distributions), and scatter plots to visually explore data and results.   
+Recommended Resources:
+	• DataCamp: Offers interactive courses tailored to finance, such as "Introduction to Python for Finance" and tutorials covering algorithmic trading basics using Pandas and Matplotlib. Interactive platforms can be effective for hands-on learning.   
+	• Other Platforms: Coursera , Udemy , Codecademy, freeCodeCamp, and numerous free online tutorials (e.g., official Python documentation, YouTube channels) provide alternative learning paths.   
+Developing proficiency in basic probability, statistics, and Python programming forms the bedrock upon which any understanding of quantitative trading, especially HFT/MFT, must be built. These skills are non-negotiable prerequisites. Without this foundation, attempting to decipher or implement complex strategies, including those hinted at in advanced resources, will be ineffective. The learning process must start here.   
+Section 3: Exploring the Landscape - Platforms and Tools
+Once the foundational concepts and skills are being developed, the next step is to become familiar with the trading environment. This involves understanding the specific exchanges available and utilizing practice tools like demo accounts.
+Introduction to Your Exchanges
+The query specified access to several platforms, each with its own characteristics:
+	• Binance, OKX, Coinbase: These are large, global cryptocurrency exchanges. They offer trading in a wide variety of cryptocurrencies (spot trading) and often provide access to more complex products like futures and options (derivatives). They are known for high liquidity (ease of trading without significantly impacting the price) and comprehensive Application Programming Interfaces (APIs) for automated trading. Coinbase also offers a platform called Coinbase Advanced, targeted at more experienced traders with features like advanced charting and lower fees.   
+	• Robinhood: This platform gained popularity, particularly in the US, for its commission-free trading model, primarily accessed via a mobile app. It offers stocks, Exchange-Traded Funds (ETFs), options, and some cryptocurrencies. While user-friendly for beginners, it's important to be aware of regulations like the Pattern Day Trading (PDT) rule in the US, which applies to margin accounts and can restrict frequent trading if account equity is below $25,000. * **Saxo Bank:** This is a more traditional online brokerage based in Denmark, offering access to a broader range of global markets and asset classes, including stocks, forex (foreign exchange), Contracts for Difference (CFDs), futures, options, and bonds. It provides multiple platform options (SaxoInvestor for beginners, SaxoTraderGO/PRO for advanced traders) and integrates with third-party tools like TradingView. Fee structures and account minimums may differ from crypto-native exchanges or commission-free brokers. ### The Power of Practice: Paper Trading / Demo Accounts Given the complexity and risks of trading, especially quantitative trading, practicing in a simulated environment is essential before committing real capital. This is achieved through paper trading or demo accounts. * **Definition:** A demo account provides a simulated trading environment that mimics live market conditions but uses virtual (fake) money. Trades are placed based on real-time or slightly delayed market data, allowing users to experience the trading process without financial risk. * **Essential Benefits:** * **Risk-Free Learning:** The most significant advantage is the ability to experiment and make mistakes without losing real money. * **Platform Familiarization:** Users can learn the layout and functionality of a trading platform, including how to place different order types (market, limit), use charting tools, monitor positions, and manage a virtual portfolio. * **Strategy Testing:** Demo accounts allow traders to test their strategies under realistic (though not perfect) market conditions to see how they might perform. * **Emotional Preparation (Limited):** While it cannot fully replicate the stress of real trading, paper trading can help users become accustomed to market volatility and the experience of winning and losing trades, albeit without the real emotional weight. * **Important Limitations:** It's crucial to understand that demo accounts are not perfect replicas of live trading: * **Execution Simulation:** They often don't accurately simulate the order book dynamics. Orders might fill instantly at the trigger price, ignoring factors like available liquidity (volume at a given price) or slippage (the difference between the expected fill price and the actual fill price), which are significant in real markets, especially for large orders or fast-moving conditions. * **Latency:** Demo systems may not replicate the real-world latencies involved in order routing and execution, making them unsuitable for testing true HFT strategies. * **Psychological Differences:** Trading without real money at stake removes the powerful emotions of fear and greed, which significantly influence decision-making in live trading. Success in a demo account doesn't guarantee success with real capital. * **System Priority:** Demo account performance might be de-prioritized compared to live trading systems during periods of high market activity. ### Table 3.1: Demo Account Availability on Specified Platforms To facilitate the choice of a platform for initial practice, the following table summarizes the demo account availability and features for the specified exchanges, based on the gathered information. This consolidation provides a quick reference to identify suitable starting points for risk-free exploration. | Platform | Demo Account Available? | How to Access | Asset Types Supported (in Demo) | Duration/Limits | Key Notes/Sources | | :------------ | :---------------------- | :---------------------------------------------------------------------------- | :------------------------------------- | :------------------------------------------------------- | :------------------------------------------------------------------------------------------------------------------------------------------------ | | **Binance** | Yes | Via Binance Spot Test Network (testnet.binance.vision); requires GitHub login | Crypto (Spot) | No explicit duration mentioned; uses separate API keys | Simulates spot trading; no real order book simulation; separate from main Binance account | | **OKX** | Yes | Via "Demo Trading" mode within the main platform interface | Crypto (Spot, Futures, Options likely) | Virtual funds provided ($ simulated); can add more | Designed to closely replicate real trading features; good for practicing various crypto instruments | | Coinbase | No (Directly) | N/A (Simulation possible via third-party platforms like QuantConnect) | Crypto (via external simulation) | N/A | Coinbase platform itself focuses on live trading; paper trading requires connecting API to external simulation environments | | Robinhood | No | N/A | N/A | N/A | Platform does not offer a paper trading or demo account feature | | Saxo Bank | Yes | Via specific Demo Account sign-up on their website | Stocks, Forex, CFDs, Futures (likely) | 20 days | Provides $100,000 virtual cash; uses SaxoTraderGO and SaxoTraderPRO platforms |   
+Based on this comparison, for practicing the cryptocurrency trading mentioned in the query, OKX and the Binance Spot Test Network appear to be the most suitable starting points among the listed options, as they offer dedicated crypto demo environments. Saxo Bank provides a demo account for traditional assets and derivatives but it is time-limited. Coinbase and Robinhood lack native paper trading functionalities, making them less ideal for initial risk-free learning and experimentation directly on their platforms. The choice between OKX and Binance Testnet might depend on user preference for interface or the desire to simulate futures trading (which OKX demo likely supports more directly).
+Section 4: Your £50 Action Plan: Getting Started
+This section outlines a practical, step-by-step plan designed for a beginner to start exploring quantitative trading concepts with a £50 budget, focusing on learning and simulation.
+Step 1: Choose a Foundational Learning Path
+	• Recommendation: Begin with freely available, high-quality resources to maximize the budget. 
+		○ Mathematics: Utilize Khan Academy for foundational understanding of probability and statistics. Work through modules covering basic probability rules, sample spaces, distributions, and descriptive statistics.   
+		○ Programming: Start learning Python basics using free online tutorials, documentation (python.org), or the free tiers of platforms like DataCamp or Codecademy. Focus initially on syntax, data types, control structures, and functions.   
+	• Structured Courses (Optional): If the budget allows after considering potential minimal real-trade exposure later, or if a more structured approach is preferred, consider enrolling in an introductory online course. Platforms like Coursera offer relevant beginner courses in finance, accounting, investing, or quantitative modeling. Prioritize courses that build a strong conceptual understanding rather than promising complex trading strategies immediately.   
+Step 2: Set Up a Demo Account
+	• Recommendation: Based on the analysis in Section 3, start with a platform offering accessible crypto paper trading. The OKX Demo Trading mode or the Binance Spot Test Network are recommended choices.   
+	• Access Instructions (Simplified): 
+		○ OKX: Log into the OKX platform, navigate to the "Assets" or equivalent menu, and select the "Demo Trading" option to switch to the simulated environment. Virtual funds should be automatically allocated.   
+		○ Binance Spot Test Network: Visit the testnet website (testnet.binance.vision), log in using GitHub credentials, navigate to the API key section, and generate a new HMAC_SHA256 key, saving the key and secret securely. This key pair would then be used to connect a compatible application (like potentially a self-written Python script later, or a platform like QuantConnect set to paper trading mode using Binance data).   
+Step 3: Make Your First Paper Trades
+	• Objective: The goal here is purely mechanical understanding and platform familiarization, not generating virtual profit.
+	• Exercises: 
+		○ Choose a major cryptocurrency like Bitcoin (BTC) or Ethereum (ETH).   
+		○ Practice placing a Market Order to buy a small virtual amount. Observe how quickly it fills and at what price.   
+		○ Practice placing a Limit Order to buy below the current market price. Observe if it sits in the order book and if it executes when/if the price drops to that level.   
+		○ Practice placing a Sell Limit Order above the current market price and observe its behavior.   
+		○ Familiarize yourself with the platform's interface for viewing open orders, trade history, and portfolio balance.   
+		○ Explore any available charting tools within the demo environment to view price history.
+Step 4: Basic Python Practice
+	• Integration: Apply the Python skills learned in Step 1 in parallel with paper trading exploration.
+	• Exercises: 
+		○ Find sample historical price data online (many sources offer free CSV files for major assets) or create simple Python lists representing price movements.
+		○ Use the Pandas library to load this data into a DataFrame.   
+		○ Calculate daily or hourly simple returns (e.g., (price_today - price_yesterday) / price_yesterday).
+		○ Use Matplotlib to create a basic line plot of the price data to visualize trends.   
+Step 5: (Optional & Cautious) Using the £50 for Real Exposure
+	• Important Disclaimer: This step should only be considered after significant practice in a demo account and a clear understanding of the risks involved. Reiterate that the £50 budget is insufficient for serious trading, especially HFT, and any funds used are at high risk of loss. This is an educational exercise in psychology, not an investment strategy.
+	• Recommendation: If deemed appropriate for learning, allocate a very small portion of the budget (e.g., £10 - £20) for this exercise. Choose a platform with low minimum deposit requirements and low trading fees (Binance or OKX might be suitable, but verify their current terms ).   
+	• Activity: 
+		○ Deposit the small amount into the chosen live account.
+		○ Select a major, highly liquid cryptocurrency (e.g., BTC or ETH).
+		○ Place one or two very small limit orders based on simple criteria learned during practice.
+		○ Observe: Pay close attention to the execution process, the fees charged, and, most importantly, the emotional response to having real money at stake. Note feelings of anxiety, excitement, fear, or greed.   
+		○ Treat any outcome (profit or loss) as an educational experience. The primary value is understanding the psychological dimension that paper trading cannot fully replicate. This bridge between simulation and reality, even on a micro-scale, provides a valuable lesson, reinforcing the need for discipline and risk management. However, this step must be approached as paying for a lesson, not as an attempt to generate returns.   
+Section 5: Understanding the Provided Resources (COPtoLON Repos)
+The query specifically requested incorporating information about four GitHub repositories associated with the user COPtoLON (Mark Brezina ). It's important to assess their content and relevance for a beginner embarking on this learning path.   
+Overview of the Repositories
+	• COPtoLON/WTech: This repository is explicitly labeled as an "Algorithmic trading repository". Its content, based on the README and file structure glimpses, includes notes and potential code related to: 
+		○ Strategy Development: Concepts like defining an "ideal state," detecting market states (trend, risk), matching tactics to states, and considering opponent positions.   
+		○ Execution: Notes on optimal execution considering market impact, timing, and cost.   
+		○ Advanced Topics: Mentions of leverage, options, futures, multi-asset trading, HFT market making, and medium-term horizons.   
+		○ Research Areas: Lists numerous advanced research topics, including Markov models, mean reversion analysis, convergence theorems, machine learning models (autoencoders, MLP, LightGBM, XGBoost, CatBoost), specific cross-validation techniques for time-series data, mean field games, and event-based HFT.   
+  
+	• COPtoLON/Knowledgebase: Pinned on the user's profile and described as "A collection of information for quantitative finance, insurance, mathematics and AI". This suggests it's a curated repository of notes, links, or documents relevant to these fields, likely Markdown files, similar in concept but distinct from GitHub's built-in organizational knowledge base feature.   
+	• COPtoLON/KB: Also pinned but lacks a description in the provided materials. Given the common use of "KB" for knowledge base and the existence of command-line knowledge base tools like kb-manager , this might be a personal system for organizing notes, possibly using such a tool, or related to the Knowledgebase repo. Its exact content requires direct exploration.   
+	• COPtoLON/TMRW: Pinned but no description or content details were available in the snippets. The name is ambiguous ("Tomorrow"? Acronym?). Its purpose and content need direct investigation on GitHub..   
+Relevance for a Beginner
+	• Assessment: The content visible, particularly in the WTech repository , clearly indicates that these resources are not designed as introductory educational material. They represent working notes, research ideas, and potentially code fragments from someone actively engaged in the field at a relatively advanced level.   
+	• The concepts mentioned (e.g., hidden Markov models, autoencoders for feature generation, specific time-series cross-validation methods, mean field games) require a significant prerequisite understanding of mathematics, statistics, machine learning, and financial markets, far beyond the scope of the foundational learning outlined in Sections 2 and 4.
+	• Conclusion: These specific GitHub repositories are unsuitable as starting points for a complete beginner with no prior background in quantitative finance or programming. Attempting to learn from them directly would likely lead to confusion and discouragement.
+How to Approach Them Later in Your Journey
+While not suitable for initial learning, these repositories can still hold value later in the educational process:
+	• Bookmark for Future Reference: Suggest saving the links to these repositories.
+	• Revisit After Foundational Learning: Once a solid grasp of Python programming, statistics, basic trading principles, and perhaps introductory quantitative finance concepts (potentially through courses like those on Coursera or DataCamp) is achieved, revisiting these repositories could be beneficial.
+	• Gain Context and Insight: WTech , in particular, can offer a glimpse into the types of problems, research questions, and techniques that practitioners in algorithmic trading explore. It illustrates the depth and complexity involved.   
+	• Explore Curated Information: The Knowledgebase repository might contain valuable summaries, links, or references that become understandable and useful once the necessary background knowledge is acquired.   
+These repositories should be viewed not as instructional guides but as potential aspirational examples or future exploration paths. They showcase the complexity and scope of quantitative and algorithmic trading. Their immediate value for a beginner lies in demonstrating the level of knowledge required in the field, rather than providing direct learning steps. They represent a destination one might work towards, not the starting line.   
+Section 6: Diving Deeper - HFT/MFT Resources
+After establishing foundational knowledge and gaining basic practical experience through simulation, the next phase involves delving deeper into the specific concepts relevant to High-Frequency and Mid-Frequency Trading.
+Key Concepts Revisited
+Understanding HFT and MFT requires familiarity with several core ideas:
+	• Latency and Co-location: As previously mentioned, minimizing the time delay (latency) in receiving market data and sending orders is paramount, especially in HFT. Co-location, placing servers within the exchange's data center, is a primary method used by HFT firms to achieve the lowest possible latency. Understanding the physical and technological aspects of speed is crucial.   
+	• Order Book Dynamics: HFT/MFT strategies often rely heavily on analyzing the Limit Order Book (LOB). This involves monitoring the flow of incoming orders, the depth of liquidity at different price levels, imbalances between bids and asks, and the bid-ask spread (the difference between the best bid and the best ask price). Strategies like market making directly interact with the LOB by posting simultaneous buy and sell limit orders to capture the spread. Order flow analysis attempts to predict short-term price movements based on the patterns of incoming orders.   
+	• Market Microstructure: This academic and practical field studies the processes and rules governing trading in financial markets. It examines how prices are formed, how trades are executed, the role of different market participants (like market makers), the impact of order types, and the effects of exchange architecture on trading outcomes. A solid understanding of market microstructure is essential for designing effective HFT/MFT strategies.   
+	• Common Strategy Archetypes (Brief Overview): 
+		○ Arbitrage: Exploiting temporary price discrepancies of the same or similar assets across different markets or forms (e.g., buying a stock on one exchange and simultaneously selling it for slightly more on another). HFT arbitrage often focuses on minute, fleeting discrepancies requiring high speed ("latency arbitrage" ).   
+		○ Market Making: Providing liquidity to the market by continuously quoting buy (bid) and sell (ask) prices for a security, aiming to profit from the bid-ask spread. This requires managing inventory risk.   
+		○ Statistical Arbitrage ("Stat Arb"): Using quantitative models to identify short-term mispricings between related assets based on historical correlations or patterns.
+		○ Event-Driven Trading: Designing strategies to react extremely quickly to specific news releases, economic data publications, or other market events.   
+		○ MFT-Specific Strategies: These might include analyzing tick data (individual trades) for order flow patterns, "stop hunting" (attempting to trigger stop-loss orders), or exploiting HFT behaviors like front-running countermeasures.   
+Recommended Reading/Learning
+To deepen understanding of these concepts, consider exploring resources such as:
+	• Investopedia: Provides accessible articles explaining key terminology and concepts related to HFT , latency , market making , arbitrage , and the limit order book.   
+	• QuantStart: This website focuses on quantitative trading and often features articles and learning paths covering strategy identification, backtesting, and execution systems, potentially including introductory material relevant to HFT/MFT concepts.   
+	• Quantra (QuantInsti): This platform offers specialized online courses in algorithmic and quantitative trading. Courses like "Trading in Milliseconds" specifically cover MFT topics such as market microstructure, latency types, order flow calculation (e.g., Lee-Ready algorithm), and MFT strategies. Be aware that such specialized courses typically involve costs.   
+Understanding the Challenges (Reiteration)
+While learning about HFT/MFT is valuable, it's vital to constantly remember the practical limitations for retail participation:
+	• Insurmountable Barriers: The high costs of technology and data, the need for co-location, the sophisticated algorithms, data access limitations, and regulatory hurdles effectively preclude retail traders from competing directly in the HFT space.   
+	• Technological Arms Race: HFT is characterized by a continuous "arms race," where firms constantly invest in faster technology and algorithms to maintain a competitive edge, making any advantage fleeting.   
+	• Market Impact Concerns: HFT has faced criticism regarding its potential to exacerbate market volatility, contribute to "flash crashes" (sudden, severe price drops followed by a quick recovery), and create an uneven playing field.   
+Given these realities, a retail trader's focus should adapt. Since direct participation in the ultra-low latency HFT game is not feasible, a more practical approach involves learning the concepts of HFT/MFT to understand market dynamics, but directing practical efforts towards areas where retail traders can potentially operate. This might involve developing algorithmic strategies on slightly longer timeframes (minutes, hours, days) where infrastructure costs and microsecond latency are less critical , or exploring MFT strategies that rely more on clever analysis (like order flow ) rather than pure speed, using the tools and platforms realistically available.   
+Section 7: Next Steps and Continuous Learning
+Embarking on the journey into quantitative trading is a marathon, not a sprint. It requires dedication, continuous learning, and a systematic approach.
+Recap of the Learning Path
+The recommended progression for a beginner starting with minimal capital and aiming to understand quantitative trading, including HFT/MFT, is as follows:
+	1. Build the Foundation: Master basic probability, statistics, and Python programming.   
+	2. Familiarize with Platforms: Use demo accounts (like OKX or Binance Testnet) to understand trading mechanics and platform interfaces risk-free.   
+	3. Understand Trading Mechanics: Practice placing different order types and observing market behavior in simulation.   
+	4. Apply Programming Skills: Use Python for basic financial data analysis and visualization.   
+	5. (Optional) Gain Psychological Insight: Consider a very small, controlled real-money trade to experience the emotional aspect, accepting the high likelihood of loss as an educational cost.   
+	6. Deepen Quant Knowledge: Study core quantitative finance concepts, market microstructure, and the theory behind different strategy types (including HFT/MFT) using resources like Investopedia, QuantStart, or specialized courses.   
+	7. Explore Advanced Topics: Once fundamentals are strong, revisit more complex resources like the COPtoLON repositories or academic papers for deeper insights.   
+Importance of Patience and Persistence
+Quantitative finance is an intellectually demanding field. Progress requires significant time investment, consistent effort, and the resilience to work through challenging concepts and inevitable setbacks. There are no shortcuts to expertise, and profitability (especially in algorithmic trading) is never guaranteed. Approach it as a continuous learning process.   
+Further Learning Avenues
+As foundational knowledge grows, consider exploring these avenues:
+	• Advanced Courses: Platforms like Coursera, edX, Quantra, and university programs offer more advanced courses in financial engineering, machine learning for trading, derivatives, and specific algorithmic trading techniques.   
+	• Online Communities: Engage thoughtfully with online communities focused on quantitative finance and algorithmic trading (e.g., forums on platforms like QuantConnect , specific subreddits, or sites like Elite Trader ). Be critical of information and focus on learning rather than seeking "get rich quick" signals.   
+	• Reputable Blogs and Research: Follow blogs from established quantitative finance professionals and researchers (some examples mentioned in ). Explore academic research repositories like SSRN or arXiv q-fin for cutting-edge ideas (though these are often highly technical).   
+	• Backtesting Platforms: Eventually, learning to use a dedicated backtesting platform (e.g., QuantConnect , Zipline, Backtrader) becomes crucial. These platforms allow rigorous testing of trading strategies on historical data to assess potential performance and identify flaws before considering live deployment.   
+Final Encouragement
+The path to understanding quantitative trading is challenging but intellectually rewarding. While direct participation in HFT might be out of reach for a retail beginner with limited capital, the process of learning the underlying mathematics, programming, market mechanics, and strategic thinking provides a deep and valuable understanding of how modern financial markets operate. Frame this journey as an opportunity for intellectual growth and skill development, focusing on the knowledge gained along the way.
+Conclusion
+This guide provides a structured, step-by-step approach for a beginner with a £50 budget to begin exploring the world of quantitative finance, with a particular interest in High-Frequency Trading (HFT) and Mid-Frequency Trading (MFT). The analysis underscores several key conclusions and recommendations:
+	1. HFT Accessibility: Direct participation in HFT is realistically impossible for a retail beginner with a £50 budget due to the prohibitive costs of technology, data feeds, and low-latency infrastructure.   
+	2. Focus on Foundational Learning: The primary goal must shift from doing HFT to learning about quantitative trading. The £50 budget is best utilized for educational resources and simulation, not significant trading capital. Mastery of foundational mathematics (probability, statistics) and programming (Python with libraries like Pandas, NumPy, Matplotlib) is the essential first step.   
+	3. Leverage Simulation: Paper trading (demo accounts) is a critical tool for risk-free learning of platform mechanics, order types, and basic strategy testing. Platforms like OKX and the Binance Spot Test Network offer suitable starting points for crypto simulation among the specified options.   
+	4. Provided Repositories (COPtoLON): The specified GitHub repositories contain advanced notes and research ideas. They are not suitable for beginners but can serve as aspirational examples or resources for future exploration once foundational knowledge is established.   
+	5. Realistic Path Forward: A practical progression involves building foundational skills, utilizing demo accounts extensively, potentially undertaking a minimal real-money trade for psychological insight (treating it as tuition), and then delving into deeper quantitative concepts and market microstructure. For applying algorithmic principles, focusing on MFT concepts or strategies on slower timeframes (minutes to days) is more realistic for retail participants than attempting HFT.   
+Quantitative trading is a complex and evolving field. Success requires patience, continuous learning, and a rigorous, data-driven approach. By following a structured learning path and maintaining realistic expectations, a beginner can gain valuable knowledge and skills, building a strong foundation for future exploration in this fascinating domain.   
+Sources used in the report
+
+
+
+I hindsight can man godt finde den optimale policy
+Lille Q læring, hvis appr. Af proces kan laves markov, hvis 7 sidste frame, så løses.
+
+Reinforcement learning I kontinuert tid og rum.
+
+Rough differential equations
+[2306.14258] A Neural RDE approach for continuous-time non-Markovian stochastic control problems
+Solving and Learning non-Markovian Stochastic Control problems in continuous-time with Neural RDEs | OpenReview
+[2207.00713] q-Learning in Continuous Time
+
+Fudan gruppe mht. Stoch control. Maximum principper, bellman ligner
+
+
+	1. Markov states for "hvor er vi ved"
+
+Model-baseret, forudse underlæggende dynamic - NN
+
+Model-fri, PPO, soft, critic metoder -simuleret
+
+Lille Q, regret bounds, kontinuert kalibrering og optimering, N^(3/4)
+Decision transformer, signature regression, path signature, signature transform, 
+Rough paths.
+Feedforward, test, der hvor du har en edge.
+
+Counter-factual learning, opdatere på det der skete og på det vi forventede ville ske med andre handlinger. Explainable AI.
+
+Ikke arg max
+Aksel Fristrup
+12:35 PM
+greedy policy
+exploration
+online learning
+Aksel Fristrup
+12:36 PM
+exploration-exploitation tradeoff
+
+From <https://meet.google.com/trr-ntbq-pcx> 
+
+Entropy
+Aksel Fristrup
+12:36 PM
+exploration-exploitation tradeoff
+entropy regularisation
+Aksel Fristrup
+12:37 PM
+renyi, tsallis
+Aksel Fristrup
+12:39 PM
+reward shaping
+
+From <https://meet.google.com/trr-ntbq-pcx> 
+
+Selv-eksiterende
+Neural-hawkes process
+Parametrisere
+
+hierarchical reinforcement learning
+Aksel Fristrup
+12:50 PM
+H-MARL
+
+From <https://meet.google.com/trr-ntbq-pcx> 
+
+Credit assignment, hvad gjorde at jeg fik reward
+
+onjecture 5 — The Final Problem
+Portfolio · Optimisation · Multiscale
+Modern financial firms are built as hierarchies of decision makers: firm → portfolio → strategy → execution. Each layer has its own objectives, constraints and key performance indicators, yet all of them act on the same underlying market and the same pool of capital.
+Fix a single firm-wide portfolio A, with total capital V, trading over a universe of assets with associated features (prices, returns, volatilities, liquidity, funding, fundamentals and microstructure attributes). The portfolio A is decomposed into internal components:
+	• strategy pods and sub-portfolios,
+	• risk and hedging books,
+	• execution and routing policies,
+	• and any further sub-components (desks, regions, time-horizons).
+Each component X in this hierarchy:
+	• controls a local state (positions, risk exposures, cash, inventory),
+	• faces its own constraints (risk limits, turnover, liquidity, leverage, drawdown, stealth, capital budget),
+	• and optimises a local objective functional (e.g. Sharpe, PnL, risk-adjusted return, tracking error, execution cost).
+At the same time, the firm as a whole optimises a global objective functional over the full configuration of all components: long-horizon risk–return, drawdown and survival probabilities, capital efficiency, and systemic risk.
+Problem.
+Specify a mathematical framework (objective, constraints and decision rules) that, given:
+	• the hierarchical decomposition of the firm (components and sub-components),
+	• the feature set of all traded assets and strategies, and
+	• the evolving market state and information flow,
+produces a configuration of decisions (capital allocations, positions, risk limits and execution policies) that is simultaneously:
+	• globally optimal for the firm-wide objective (risk–return, survival, capital efficiency), and
+	• locally optimal for every component and sub-component, given its constraints and its local view of the environment.
+In other words, the same capital and information must support a configuration where the whole portfolio A is optimal inside the market, and each internal piece of A is optimal inside its own local neighbourhood of constraints and interactions.
+The conjecture.
+There exists a principled, implementable multiscale optimisation principle — a single rule, or variational framework — that maps the full state of the market and the firm (prices, returns, risks, liquidity, fundamentals, correlations and hierarchical structure) into such a configuration of decisions, and that:
+	• applies uniformly across layers (firm, portfolio, strategy, execution),
+	• respects all local constraints and risk budgets, and
+	• yields configurations that are stable under feedback from market dynamics and from the actions of other agents.
+The challenge is to write down this multiscale principle explicitly and to show that, under realistic assumptions on markets and constraints, its solutions are indeed simultaneously globally and locally optimal in the above sense.
+
+
+
+
+
+I am formally proposing "Conjecture 5"—a challenge I view as the "Final Problem" of my work in market dynamics.
+
+The problem: Fix a firm-wide portfolio A. Decompose it into strategy pods, risk books, and execution policies. Each component optimizes a local functional (Sharpe, PnL, execution cost) under local constraints. Simultaneously, the firm optimizes a global functional (survival, capital efficiency).
+
+The Conjecture: There exists a principled multiscale framework—likely a variational principle akin to energy minimization —that yields a configuration of decisions that is simultaneously globally and locally optimal.
+
+This aligns with the multi-layer framework we have developed, integrating:
+
+Assets & Agents Graphs: To capture the diffusion of shocks and information.
+
+Hybrid Control: To handle regime switches and boundary conditions at "jumps".
+
+Risk-Aware Bellman Control: Driving action selection through a unified prediction-strategy-risk stack.
+
+I dub this "The Final Problem" because I believe it is the concluding issue in constructing a truly self-learning financial architecture.
+
+I’ve already proposed solutions internally that leverage these hybrid dynamics and layered value surfaces. I am curious to see who else is looking at the market through this lens.
+
+
+
+hashtag#QuantitativeAnalysis hashtag#ControlTheory hashtag#FinancialEngineering hashtag#HFT hashtag#MarketDynamics
+
+
+Goal
+Capture persistent directional drift across assets while surviving regime shifts (crashes, choppy ranges) through ensembles + dynamic risk control + cost-aware portfolio optimization.
+A. Data & universe
+	• Multi-asset universe: futures (rates, equity index, FX, commodities) is ideal; equities/crypto also works.
+	• Use continuous returns, robust rolls, corporate actions (if equities).
+	• Compute tradeable vol and liquidity proxies (bid-ask/spread estimates, ADV, realized intraday range if available).
+B. Trend signal: an ensemble of “trend estimators”
+Use multiple, partially redundant estimators; average them with dynamic weights.
+Core “trend strength” (risk-scaled)
+For each asset iii, horizon hhh:
+	• Price trend: mi,h(t)=EMAh(pi)(t)−EMAkh(pi)(t)σi,h(t)m_{i,h}(t) = \frac{\text{EMA}_h(p_i)(t) - \text{EMA}_{k h}(p_i)(t)}{\sigma_{i,h}(t)}mi,h​(t)=σi,h​(t)EMAh​(pi​)(t)−EMAkh​(pi​)(t)​
+		○ (EWMAC style, with k∈[2,8]k\in[2,8]k∈[2,8] depending on how slow you want the anchor)
+	• Or time-series momentum: mi,h(t)=ri(t−h,t)σi,h(t)m_{i,h}(t) = \frac{r_{i}(t-h,t)}{\sigma_{i,h}(t)}mi,h​(t)=σi,h​(t)ri​(t−h,t)​
+Then squash to avoid crazy leverage:
+	• si,h(t)=tanh⁡ ⁣(mi,h(t)c)s_{i,h}(t) = \tanh\!\left(\frac{m_{i,h}(t)}{c}\right)si,h​(t)=tanh(cmi,h​(t)​) with c≈2c\approx 2c≈2–4.
+Ensemble across horizons
+	• Typical horizons: 5–10, 20, 60, 120, 250 trading days (or equivalents).
+	• Base combo: si(t)=∑hwh(t) si,h(t)s_i(t) = \sum_h w_h(t)\, s_{i,h}(t)si​(t)=∑h​wh​(t)si,h​(t)
+C. Dynamic weighting of horizons (what makes it “advanced”)
+Instead of fixed whw_hwh​, learn them online:
+Option 1: Bayesian model averaging (fast + stable)
+	• Each horizon “expert” has recent performance PhP_{h}Ph​ measured after costs.
+	• wh(t)∝exp⁡(η Ph(t))w_h(t) \propto \exp(\eta\, P_h(t))wh​(t)∝exp(ηPh​(t)), with shrinkage toward equal weights.
+Option 2: Regime-conditioned weights
+	• Define a chop / trend regime using features like:
+		○ Hurst proxy, variance ratio, ADX-ish measures, autocorr of returns, drawdown slope, realized vol slope.
+	• If “choppy”: down-weight short horizons (they whipsaw); if “trend”: allow them.
+D. Position sizing: volatility targeting + drawdown governor
+Raw target risk per asset:
+	• posi(t)=Rbudgetσ^i(t)⋅si(t)\text{pos}_i(t) = \frac{R_{\text{budget}}}{\hat{\sigma}_i(t)} \cdot s_i(t)posi​(t)=σ^i​(t)Rbudget​​⋅si​(t)
+Then apply portfolio-level governors:
+	• Vol target: scale all positions to hit portfolio vol (e.g., 10% annualized).
+	• Drawdown control: when DD breaches thresholds, reduce risk smoothly:
+		○ λ(t)=clip(1−α⋅DD(t),λmin⁡,1)\lambda(t) = \text{clip}(1 - \alpha \cdot \text{DD}(t), \lambda_{\min}, 1)λ(t)=clip(1−α⋅DD(t),λmin​,1)
+	• Crisis overlay (optional): if equity vol spikes / correlation jumps, shift risk budget to diversifiers (rates, gold, FX) rather than “cash only”.
+E. Portfolio construction: cost-aware convex optimization
+This is where most “serious” systems differ from a toy trend model.
+Choose weights xxx to maximize expected utility:
+max⁡x μ⊤x − γ2x⊤Σx − κ⋅TC(x−xprev)\max_x \ \mu^\top x \ - \ \frac{\gamma}{2} x^\top \Sigma x \ - \ \kappa \cdot \text{TC}(x-x_{\text{prev}})xmax​ μ⊤x − 2γ​x⊤Σx − κ⋅TC(x−xprev​) 
+Subject to:
+	• Risk budget by asset class
+	• Leverage caps
+	• Concentration limits
+	• Turnover limits
+	• Optional: correlation-aware constraints (don’t double-load the same macro bet)
+Key: estimate Σ\SigmaΣ with a robust covariance (shrinkage, factor model, EWMA with jumps).
+F. Execution model (minimum needed for realism)
+	• Trade scheduling: spread trades across day; cap participation rate.
+	• Impact model: cost increases with ∣Δx∣/ADV|\Delta x|/\text{ADV}∣Δx∣/ADV and with volatility.
+	• Slippage: penalize turnover and avoid trading in illiquid times.
+G. Monitoring & kill-switches
+	• Live drift: compare realized vs predicted risk and turnover.
+	• Signal health: if “expert” performance collapses across many assets, reduce weight.
+	• Structural break tests on costs/liquidity regime.Conjecture X — Existence of Optimal Strategies in the Full Multi-Layer Market Model
+Hybrid geometry · Mean-field games · Optimal control
+We model financial markets as a coupled, multi-layer system:
+	• a time-varying market/asset graph and value surface,
+	• a network of interacting agents with utilities and information links,
+	• a rule hierarchy governing dynamics,
+	• and (in the most general version) a geometric/hybrid frame where agents move on a manifold with continuous flows and discrete jumps.
+In the simplified, finite, fully discrete version of this environment, the decision problem of a fully-informed agent reduces to a Markov Decision Process, and classical Bellman theory guarantees existence of an optimal policy, computable by dynamic programming.
+The conjecture asks whether an analogous guarantee holds in the full geometric–informational, hybrid, multi-agent setting, where the state is infinite-dimensional (fields + agents), time is hybrid (flows + jumps), and interactions are game-theoretic / mean-field rather than a single MDP.
+
+Informal statement
+	Can we prove that, in the full Tomorrow Markets framework, there exists at least one optimal strategy (or equilibrium strategy profile) for agents, and characterize it in a reasonably “simple” class (Markov, feedback, or geodesic/variational policies)?
+In other words: once you accept the market model as a hybrid geometric–informational multi-agent system, is it mathematically guaranteed that there is a best possible way to trade (or a best equilibrium configuration of strategies) consistent with the rules of the world?
+
+Formal version (single optimal agent)
+Let
+	• XtX_tXt​ denote the global state (fields, graphs, agents) evolving as a hybrid dynamical system with flows and jumps on X=M×SX = M \times SX=M×S, where MMM is a (possibly time-varying) manifold and SSS indexes discrete modes/frames.
+	• A distinguished “Tomorrow” agent observes XtX_tXt​ and chooses controls at∈A(Xt)a_t \in A(X_t)at​∈A(Xt​).
+	• The agent’s monetary performance is
+J(π)=E[∑t=0Tγt(R(Xt,π(Xt))−L(Xt,π(Xt)))],J(\pi) = \mathbb{E}\Big[\sum_{t=0}^{T} \gamma^t \big(R(X_t,\pi(X_t)) - L(X_t,\pi(X_t))\big)\Big],J(π)=E[t=0∑T​γt(R(Xt​,π(Xt​))−L(Xt​,π(Xt​)))], 
+for 0<γ≤10<\gamma\le 10<γ≤1, with reward RRR and loss LLL defined by the full market model.
+Conjecture (Existence of optimal strategy).
+Under natural regularity conditions on:
+	• the hybrid state dynamics (well-posed flows and jump maps on M×SM \times SM×S),
+	• the action sets A(x)A(x)A(x) (compact, measurable),
+	• and the reward/loss structure (bounded or suitably integrable, Markov in (Xt,at)(X_t,a_t)(Xt​,at​)),
+there exists an optimal admissible policy π\*\pi^\*π\* such that
+J(π\*)=sup⁡πJ(π),J(\pi^\*) = \sup_{\pi} J(\pi),J(π\*)=πsup​J(π), 
+and π\*\pi^\*π\* can be chosen from a structured class, e.g.:
+	• a Markov / feedback policy π\*(x)\pi^\*(x)π\*(x) depending only on the current state,
+	• or a variational/geometric policy that realizes a least-action trajectory on the manifold (solution of an HJB / Euler–Lagrange system associated with the full model).
+A stronger version asks for constructive existence: that π\*\pi^\*π\* can be obtained as the limit of a convergent sequence of algorithms (e.g. value iteration / policy iteration / actor–critic) implemented within the same market simulator.
+
+Multi-agent / equilibrium extension
+In the many-agent setting, each agent iii has its own objective Ji(π1,…,πN)J_i(\pi_1,\dots,\pi_N)Ji​(π1​,…,πN​) defined over the same hybrid geometric field, with coupling via prices, fields, and information graphs.
+Extended Conjecture (Existence of geometric–informational equilibrium).
+For the full multi-agent model (or for its mean-field limit), under suitable compactness/continuity/monotonicity assumptions, there exists at least one equilibrium strategy profile:
+	• a Nash equilibrium in feedback strategies, or
+	• a mean-field game equilibrium (solution of a coupled HJB–Fokker–Planck system on the manifold),
+compatible with the hybrid dynamics and information network.
+
+What “solving” the conjecture would look like
+Any of the following would count as a serious solution:
+	1. Existence theorem (single agent):
+Precise assumptions + proof that an optimal feedback policy π\*\pi^\*π\* exists for the full hybrid geometric–informational model (not just the finite, discretized MDP case already covered in the drafts).
+	2. Constructive characterization:
+A scheme (e.g. an HJB on M×SM \times SM×S, or a convergent dynamic-programming / RL algorithm) that provably converges to π\*\pi^\*π\*.
+	3. Equilibrium existence (multi-agent / mean-field):
+A proof that, in the interacting-agent version, at least one Nash / mean-field equilibrium exists, formulated on the manifold with hybrid dynamics.
+Bonus bonus points if the solution reveals structure (e.g. optimal policies are geodesic, layered across time-scales, or admit a nice decomposition across the strategy/prediction/risk modules already defined in the framework).
+
+
+
+𝗜𝘀 𝘁𝗵𝗲 𝗺𝗮𝗿𝗸𝗲𝘁 𝗮 𝗠𝗮𝗿𝗸𝗼𝘃 𝗗𝗲𝗰𝗶𝘀𝗶𝗼𝗻 𝗣𝗿𝗼𝗰𝗲𝘀𝘀? 𝗢𝗿 𝗶𝘀 𝗶𝘁 𝗮 𝗛𝘆𝗯𝗿𝗶𝗱 𝗚𝗲𝗼𝗺𝗲𝘁𝗿𝗶𝗰 𝗦𝘆𝘀𝘁𝗲𝗺?
+Most reinforcement learning in finance assumes the former. It’s neat, discrete, and solvable via dynamic programming.
+
+At 𝗧𝗼𝗺𝗼𝗿𝗿𝗼𝘄 𝗖𝗮𝗽𝗶𝘁𝗮𝗹 𝗥𝗲𝘀𝗲𝗮𝗿𝗰𝗵, we operate on the latter. And that leads us to 𝗖𝗼𝗻𝗷𝗲𝗰𝘁𝘂𝗿𝗲 𝟰.
+
+We model the market as a coupled, multi-layer system where the global state Xₜ evolves as a 𝗵𝘆𝗯𝗿𝗶𝗱 𝗱𝘆𝗻𝗮𝗺𝗶𝗰𝗮𝗹 𝘀𝘆𝘀𝘁𝗲𝗺 on a manifold M x S.
+• Time flows continuously but jumps discretely.
+• Agents interact via mean-field games, not static environments.
+• Information propagates through a time-varying graph.
+
+𝗧𝗵𝗲 𝗖𝗼𝗻𝗷𝗲𝗰𝘁𝘂𝗿𝗲: Once you accept this full "Tomorrow Markets" framework, is it guaranteed that an 𝗼𝗽𝘁𝗶𝗺𝗮𝗹 𝘀𝘁𝗿𝗮𝘁𝗲𝗴𝘆 (or equilibrium profile) actually exists?
+
+We are looking for the existence of an admissible policy π*—potentially a geometric policy realizing a "least-action" trajectory—that solves the full HJB-Fokker-Planck system on the manifold.
+
+Note: Because this problem sits at a uniquely interesting postion to us, 𝘄𝗲 𝗮𝗿𝗲 𝗻𝗼𝘁 𝗿𝗲𝗹𝗲𝗮𝘀𝗶𝗻𝗴 𝗮 𝗽𝗿𝗼𝗯𝗹𝗲𝗺 𝗣𝗗𝗙 𝗳𝗼𝗿 𝘁𝗵𝗶𝘀 𝗰𝗼𝗻𝗷𝗲𝗰𝘁𝘂𝗿𝗲. The description on the website is the only public information available.
+
+If you have an intuition for control theory on hybrid manifolds, we want to know.
+
+👉 Full informal and formal statement here:🔗 https://lnkd.in/dPKxZcKc
+@TomorrowCapital
+hashtag#mathfinance hashtag#stochasticcalculus hashtag#HJB hashtag#geometrictopology hashtag#quantresearch hashtag#TomorrowCapitalResearch
+hashtag#QuantitativeFinance hashtag#QuantFinance hashtag#AlgorithmicTrading hashtag#SystematicInvesting hashtag#MeanFieldGames hashtag#GameTheory hashtag#Optimization
+
+From <https://www.linkedin.com/in/markbrezina95/recent-activity/all/> 
+
+Conjecture 3 — Stealth-Optimal Execution Distributions
+Execution · Market Impact · Stealth
+Motivation
+This conjecture has already attracted special interest from a couple of other founders.
+The underlying problem is simple to state. Given an algorithmic trading strategy with strong returns, it is almost inevitable that capital will accumulate. As capital scales, order sizes and average position sizes grow — and firms consistently observe that returns deteriorate. A large part of this degradation comes from market impact and loss of execution stealth.
+We are therefore looking at two sides of the same coin:
+	• Market impact: how much our orders move prices against us.
+	• Execution stealth: how detectable our trading footprint and intent become to other participants.
+Big, obvious orders (for example a single multi-million buy sweep) tend to:
+	• push the order book and short-term imbalance in our disfavoured direction, and
+	• leave a visible footprint that other firms can learn from over time.
+This can lead to alpha decay: competitors infer the structure of the strategy, trade ahead of it, or “vulture” around it with sandwich-like behaviour. Execution design is therefore not a side quest — it sits alongside inventory control, risk management, and alpha discovery as a core problem.
+This conjecture asks for a principled way to design stealth-optimal execution distributions: how to spread a given order across time, size, and accounts to maximise stealth and minimise slippage / cost.
+Informal problem statement
+Suppose an algorithmic trading signal (alpha) fires and prescribes a net position change of notional size Q (e.g. Q = 1,000,000 USD) to be executed over an acceptable time horizon T = [0, τ], from signal time t = 0 to a hard time limit τ.
+We want to determine:
+	A joint distribution over execution times and order sizes (and, optionally, accounts) that maximises stealth and minimises slippage / cost over the horizon T.
+The order flow here is not the entire portfolio inventory, but the total notional associated with this specific signal. The strategy may trigger repeatedly over time, either to build a position into an attractive opportunity or to gradually unwind into a profit-taking region.
+Modelling set-up
+We can model an execution schedule in either of two ways:
+	• Discrete trades: a sequence of trades {(tk, qk)} with 0 ≤ tk ≤ τ and ∑ qk = Q.
+	• Continuous order-size density: a function ϕ(t) on [0, τ] such that ∫0τ ϕ(t) dt = Q.
+We assume, at minimum, the following microstructure ingredients:
+	1. Impact / stealth trade-off (square-root visibility).
+The “loss of stealth” or footprint associated with a trade of size q grows approximately as a square-root law, footprint(q) ∝ √|q|. Executing the full notional Q at t = 0 effectively destroys stealth; executing tiny slices (e.g. 10 USD) changes stealth only negligibly.
+	2. Account-splitting constraint.
+The trader may split Q across at most Nmax = 100 accounts, Q = ∑i=1N Qi with N ≤ Nmax, where each account i follows its own execution schedule. This rules out the degenerate “infinitely many infinitesimal accounts” solution.
+	3. Execution cost / slippage.
+For simplicity, each individual trade incurs:
+		○ a base cost modelled as a fixed k% rate (covering immediate slippage and explicit fees), and
+		○ a market impact component consistent with the square-root visibility law above.
+Optionally, transaction costs may shrink by a factor c% as order size increases, capturing fee discounts for larger tickets.
+	4. Cross-impact and opposite flow.
+One may allow for inverse impact or partial cancellation when buy and sell orders of similar size interact in opposite directions over short horizons.
+	5. Market “memory” / recycle rate.
+The market (and counterparties) can be assumed to have a finite memory horizon: after some time, or after recycling accounts, previous order flow becomes less informative. For example, one could assume:
+		○ up to 100 “fresh” accounts can be created per month, and
+		○ each new account starts with a “stealth bonus” that decays with its cumulative activity.
+Conjecture — Stealth-Optimal Execution Distributions
+Under a reasonable microstructure model incorporating:
+	• a square-root–type impact / detectability relationship in trade size,
+	• optional cross-impact between opposing flows,
+	• account-splitting constraints N ≤ 100, and
+	• size-dependent transaction costs,
+there exists an optimal joint distribution of:
+	• execution times,
+	• trade sizes, and
+	• account splits (up to 100 accounts),
+that:
+	• maximises stealth — in the sense of minimising information leakage or detectability of the underlying strategy; and
+	• minimises expected slippage and total execution cost relative to the alpha’s target price path,
+subject to:
+	• t ∈ [0, τ],
+	• ∑ qk = Q (or ∫0τ ϕ(t) dt = Q),
+	• N ≤ 100.
+Challenge
+The challenge is to:
+	1. Formulate a precise optimisation problem over time–size–account distributions, specifying:
+		○ a stealth / detectability functional,
+		○ an impact and cost model, and
+		○ any market-memory or recycle-rate dynamics.
+	2. Prove existence and (where possible) uniqueness of stealth-optimal execution distributions under this model.
+	3. Design explicit algorithms which, given an alpha signal, a total notional Q, and a horizon τ, produce a stealth-optimal execution schedule, including:
+		○ how to split Q across up to 100 accounts, and
+		○ how to allocate each account’s flow over time.
+
+
+
+𝗪𝗵𝗲𝗻 𝘆𝗼𝘂𝗿 𝗮𝗹𝗽𝗵𝗮 𝗴𝗲𝘁𝘀 𝗯𝗶𝗴, 𝗶𝘁 𝘀𝘁𝗮𝗿𝘁𝘀 𝘁𝗼 𝗯𝗲𝘁𝗿𝗮𝘆 𝘆𝗼𝘂.
+
+In algorithmic trading, a strategy that works will eventually attract capital.
+More capital → bigger orders → larger footprints → other firms start to see you.
+
+At some point, performance doesn’t decay because the signal “stopped working” –
+it decays because 𝘆𝗼𝘂𝗿 𝗼𝘄𝗻 𝘀𝗶𝘇𝗲, 𝗺𝗮𝗿𝗸𝗲𝘁 𝗶𝗺𝗽𝗮𝗰𝘁 𝗮𝗻𝗱 𝗹𝗼𝘀𝘀 𝗼𝗳 𝘀𝘁𝗲𝗮𝗹𝘁𝗵 kill it.
+
+That’s the motivation behind
+𝗧𝗼𝗺𝗼𝗿𝗿𝗼𝘄’𝘀 𝗖𝗼𝗻𝗷𝗲𝗰𝘁𝘂𝗿𝗲 𝟯 — 𝗦𝘁𝗲𝗮𝗹𝘁𝗵-𝗢𝗽𝘁𝗶𝗺𝗮𝗹 𝗘𝘅𝗲𝗰𝘂𝘁𝗶𝗼𝗻 𝗗𝗶𝘀𝘁𝗿𝗶𝗯𝘂𝘁𝗶𝗼𝗻𝘀.
+
+Very informally:
+Given a profitable alpha, a total notional 𝑄 and a time horizon [0, 𝜏],
+how should you distribute your trades over time, size and accounts
+to maximise stealth and minimise slippage / cost – under realistic microstructure (square-root impact, account limits, fee schedules, market “memory”, etc.)?
+
+We allow:
+ • splitting flow across up to ~100 accounts (no infinite-account tricks),
+ • square-root–type visibility in order size,
+ • size-dependent transaction costs and possible cross-impact,
+ • a finite “memory horizon” where markets gradually forget older flow.
+
+The conjecture asks for the existence and construction of a 𝘀𝘁𝗲𝗮𝗹𝘁𝗵-𝗼𝗽𝘁𝗶𝗺𝗮𝗹 𝗲𝘅𝗲𝗰𝘂𝘁𝗶𝗼𝗻 𝗱𝗶𝘀𝘁𝗿𝗶𝗯𝘂𝘁𝗶𝗼𝗻:
+an execution policy that jointly chooses:
+ • when to trade,
+ • how big to trade, and
+ • how to allocate flow across accounts,
+
+so that information leakage is minimised and expected cost/slippage is controlled.
+
+🔍 I’ve written this up more formally (with a proper optimisation framing and open questions) as part of 𝗧𝗼𝗺𝗼𝗿𝗿𝗼𝘄’𝘀 𝗖𝗼𝗻𝗷𝗲𝗰𝘁𝘂𝗿𝗲𝘀 for Tomorrow Capital Research.
+
+If you work on:
+ • execution / market microstructure,
+ • optimal execution under constraints,
+ • inventory & alpha decay, or
+ • multi-agent / game-theoretic models of markets,
+
+I’d love to hear your thoughts, references, or counter-examples.
+👉 Full conjecture is here:
+🔗 https://lnkd.in/dPKxZcKc
+
+Also be sure to read Lorenzo M. Zorzi Chiarioni's solution to the initial problem statement
+hashtag#quantfinance hashtag#algorithmictrading hashtag#marketmicrostructure hashtag#optimalexecution hashtag#marketimpact hashtag#hft hashtag#alphadecay hashtag#research hashtag#TomorrowCapitalResearch
+
+From <https://www.linkedin.com/in/markbrezina95/recent-activity/all/> 
+
+Conjecture 2 — The Central Pricing Problem
+Pricing · Market Microstructure · Mean-Field Effects
+We extend the Central Price Problem from a single asset to a system of N > 3 interacting assets.
+Setup
+Consider N > 3 generalised assets with stochastic price paths {P(i)t}, i = 1, …, N, observed at discrete times 0 = t0 < t1 < … < tT, with prices known for all t ≤ T and unknown for t > T.
+For concreteness, one may think of an underlying asset A, its option A* and swap A ̃; another underlying B with B* and B ̃; and more generally underlying assets A, B, C, D, … with associated derivatives A*, A ̃, B*, B ̃ and so on.
+	1. Immediate vs historical dependence. The one-step-ahead price of each asset admits a decomposition P(i)T+1 as a weighted combination of an “immediate impact” term and a “historical dynamics” term. The relative weight α(i)T ∈ [0, 1] may vary over time, but the weights always sum to one.
+	2. Historical dynamics. The historical term may depend on past prices {P(j)t} for t ≤ T, cross-asset and cross-derivative correlations, order flow, liquidity, volatility regimes, fundamentals, and longer-horizon features such as drift and mean reversion.
+	3. Immediate impact and behavioural effects. The immediate impact term captures order-book mechanics and behavioural/flow effects, such as large buy orders pushing prices upward, short-horizon supply–demand imbalances, and stylised mean-reversion patterns around local extremes, while still allowing for a persistent long-horizon drift.
+	4. Information set. The modeller has access to (i) the full joint price and volume history of all N assets up to time T, (ii) the financial statements and fundamentals of the corresponding issuers, and (iii) the aggregate positions of other market participants, so that pricing must be treated as a mean-field problem rather than a single-agent one.
+	5. Own-price impact. Your orders move the mid-price according to a simple impact rule, for example: new_mid = current_mid + (your_price - current_mid) * sqrt(order_volume) . This is a toy model; researchers are free to propose more realistic impact specifications.
+Statement of the Conjecture
+Under the multi-asset, mean-field setting above, the conjecture states that there exists:
+	1. Short-horizon central price estimator. A statistically significant and practically accurate formula (or class of models) for the “central” or “immediate” price of each asset at time T + 1, constructed from observable market and participant features at or before time T.
+	2. Multi-step confidence regions. A statistical procedure that produces confidence intervals (or more general confidence sets) for the joint price paths {P(i)t} over t = T + 1, …, T + H, with H ≥ 5 and i = 1, …, N, achieving empirically valid coverage probabilities (“reasonable accuracy”) under realistic market conditions.
+In other words, there should exist a non-trivial, empirically testable mapping from historical dynamics (prices, volumes, correlations, regimes, fundamentals) and immediate impact (order-book state, flows, participant positions, your own trades) to short-term central prices and medium- horizon price ranges for a system of interacting assets.
+Research Note
+Special interest is reserved for solutions that embed this multi-asset formulation into a unified pricing framework that simultaneously covers:
+	• the market-maker’s very short-horizon pricing problem,
+	• the high-frequency trading pricing problem, and
+	• the medium- to long-term asset pricing problem,
+under a common set of assumptions linking microstructure, participant behaviour and longer-term price formation.
+
+
+
+In markets, “price” sounds like a simple object: last traded, mid, mark.
+
+In reality, it’s where 𝘮𝘪𝘤𝘳𝘰𝘴𝘵𝘳𝘶𝘤𝘵𝘶𝘳𝘦, 𝘣𝘦𝘩𝘢𝘷𝘪𝘰𝘶𝘳 and 𝘮𝘢𝘤𝘳𝘰 all collide.
+
+Across multiple correlated assets and derivatives, with order flow constantly pushing and pulling, the practical question becomes:
+• How do we 𝗱𝗲𝗳𝗶𝗻𝗲 𝗮𝗻𝗱 𝗲𝘀𝘁𝗶𝗺𝗮𝘁𝗲 𝗮 𝗰𝗲𝗻𝘁𝗿𝗮𝗹 𝗽𝗿𝗶𝗰𝗲 – consistently – when your own trades move the market?
+
+At Tomorrow Capital Research, this is what sits behind
+𝗖𝗼𝗻𝗷𝗲𝗰𝘁𝘂𝗿𝗲 𝟮 – “𝗧𝗵𝗲 𝗖𝗲𝗻𝘁𝗿𝗮𝗹 𝗣𝗿𝗶𝗰𝗶𝗻𝗴 𝗣𝗿𝗼𝗯𝗹𝗲𝗺”.
+
+We look at a system of N>3 interacting assets (underlyings + derivatives) and ask whether one can construct:
+
+ • A short-horizon 𝗰𝗲𝗻𝘁𝗿𝗮𝗹 𝗽𝗿𝗶𝗰𝗲 𝗲𝘀𝘁𝗶𝗺𝗮𝘁𝗼𝗿 that combines:
+ • immediate impact / order-book effects
+ • historical dynamics (regimes, volatility, correlations, fundamentals)
+ • And a 𝗺𝘂𝗹𝘁𝗶-𝘀𝘁𝗲𝗽 𝗰𝗼𝗻𝗳𝗶𝗱𝗲𝗻𝗰𝗲 region for future prices across single assets, with empirically valid coverage under realistic conditions.
+
+Conceptually, we decompose the next price into:
+ • an 𝗶𝗺𝗺𝗲𝗱𝗶𝗮𝘁𝗲 component driven by order flow, impact and short-term behaviour, and
+ • a 𝗵𝗶𝘀𝘁𝗼𝗿𝗶𝗰𝗮𝗹 component driven by longer-horizon dynamics, regimes and fundamentals,
+
+with weights that evolve over time and across assets – and with the extra twist that pricing is a 𝗺𝗲𝗮𝗻-𝗳𝗶𝗲𝗹𝗱 problem: you’re part of the crowd you’re trying to model.
+
+We’ve now formalised this as 𝗖𝗼𝗻𝗷𝗲𝗰𝘁𝘂𝗿𝗲 𝟮 𝗼𝗻 𝘁𝗵𝗲 𝗧𝗼𝗺𝗼𝗿𝗿𝗼𝘄 𝗖𝗮𝗽𝗶𝘁𝗮𝗹 𝗥𝗲𝘀𝗲𝗮𝗿𝗰𝗵 𝘄𝗲𝗯𝘀𝗶𝘁𝗲, including a multi-asset setup, explicit impact terms and a mean-field flavour linking:
+ • market-making,
+ • high-frequency trading, and
+ • medium-/long-term asset pricing
+into a single “central pricing” framework.
+
+You can find the updated conjecture here (full mathematical setup + notation):
+https://lnkd.in/dPKxZcKc
+
+I’d love to hear from people thinking about similar questions in market microstructure, HFT, asset pricing, execution, control or mean-field models:
+
+ • Notes, sketches, partial results
+ • Links to related papers
+ • Reflections from live trading / risk systems
+
+If this sparks anything – even a rough idea – I’m very happy to read it, discuss it, or point others towards your work.
+
+@tomorrowcapitalresearch
+hashtag#quantitativefinance hashtag#algorithmictrading hashtag#marketmicrostructure hashtag#highfrequencytrading hashtag#assetpricing hashtag#stochasticcontrol hashtag#meanfieldgames hashtag#riskmanagement hashtag#centralprice hashtag#TomorrowCapitalResearch
+
+From <https://www.linkedin.com/in/markbrezina95/recent-activity/all/> 
+
+Conjecture 1 — Dynamic reallocation between strategies under path switching
+Stochastic Processes · Path Stitching · Strategy Reallocation
+Consider a single risky asset with price process (St) observed at discrete times 0 = t0 < t1 < … < tN = T. We are given a family of models {ℳk} under which we can simulate Monte Carlo paths, and a finite collection of trading strategies {π¹, …, πK} (e.g. mean-reversion, trend-following).
+	1. Initial regime (0 → T₁). At time t = 0, choose an initial model ℳ₁ and simulate a set of paths {X(1,i)t} on [0, T₁]. Using a chosen objective (e.g. risk-adjusted return), select a “best” strategy π(1) (for example, mean-reversion) and trade according to its position trajectory θ(1)t over [0, T₁]. Once realised prices on [0, T₁] are known, we can evaluate how well (ℳ₁, π(1)) fit the realised path.
+	2. Event and model update at T₂. At some later time T₂ ∈ (T₁, T), a significant event or regime change occurs. The original model ℳ₁ and strategy π(1) are no longer believed to be optimal beyond T₂. We adopt a new model ℳ₂ and a new “target” strategy π(2) (for example, trend-following) with position trajectory θ(2)t on [T₂, T₃], where T₃ > T₂ is the time by which the transition to the new regime should be complete.
+	3. Re-simulation in the new regime (T₂ → T₃). Starting from the realised price ST₂, simulate a new family of paths {X(2,j)t} on [T₂, T₃] under ℳ₂ and obtain the positions implied by π(2). The portfolio at T₂ currently holds the legacy position θ(1)T₂, but we want to move toward θ(2)t over [T₂, T₃], subject to frictions (transaction costs, liquidity, risk limits).
+The core problem on [T₂, T₃] is to define a dynamically consistent transition from the old position to the new one. For instance, introducing a control process wt ∈ [0, 1] representing the fraction of capital allocated to the new regime, the realised position at time t could be written as
+θt = (1 − wt) · θ(1)t + wt · θ(2)t,   t ∈ [T₂, T₃].
+We then seek a rule for wt (or, in discrete time, for allocations at t₁, t₂, …, tn between T₂ and T₃) that trades off:
+	• closeness to the new “optimal” path θ(2)t,
+	• trading costs and turnover, and
+	• risk and capital constraints along the entire transition.
+Challenge. Given a sequence of model/strategy pairs (ℳ₁, π(1)), (ℳ₂, π(2)), … and simulated paths plus realised prices at update times 0 < T₁ < T₂ < T₃ < …, design either:
+	1. A mathematical framework (loss functional, cost functional, and a notion of “shortest” or most coherent adjustment between position paths), or
+	2. An explicit algorithm that, at each update time Tk, outputs a dynamically consistent sequence of positions θt₁, …, θtn or allocations between strategies on [Tk, Tk+1],
+describing how capital should be reallocated from the old regime to the new one in a way that is path-wise coherent, cost-efficient, and robust across Monte Carlo scenarios.
+
+
+In algorithmic trading, there 𝘪𝘯𝘦𝘷𝘪𝘵𝘢𝘣𝘭𝘺 comes a day when one strategy stops being enough.
+
+There is no “one-size-fits-all” algorithm – only “one-fits-most, for a while”. Regimes change, models get updated, and suddenly you’re facing a very real, very practical question:
+ • How do we 𝗺𝗼𝘃𝗲 𝗳𝗿𝗼𝗺 𝗼𝗻𝗲 𝘀𝘁𝗿𝗮𝘁𝗲𝗴𝘆 𝘁𝗼 𝗮𝗻𝗼𝘁𝗵𝗲𝗿, 𝗼𝗽𝘁𝗶𝗺𝗮𝗹𝗹𝘆?
+
+At Tomorrow Capital Research, this is exactly what sits behind 𝗖𝗼𝗻𝗷𝗲𝗰𝘁𝘂𝗿𝗲 𝟭 – “𝗗𝘆𝗻𝗮𝗺𝗶𝗰 𝗿𝗲𝗮𝗹𝗹𝗼𝗰𝗮𝘁𝗶𝗼𝗻 𝗯𝗲𝘁𝘄𝗲𝗲𝗻 𝘀𝘁𝗿𝗮𝘁𝗲𝗴𝗶𝗲𝘀 𝘂𝗻𝗱𝗲𝗿 𝗽𝗮𝘁𝗵 𝘀𝘄𝗶𝘁𝗰𝗵𝗶𝗻𝗴”. 
+
+When a model update or regime shift hits, we’re forced to think about:
+ • Transition speed between old and new strategies
+ • Optimal inventory adjustments
+ • Transaction cost and liquidity constraints
+ • How to stay dynamically consistent as new information arrives 
+
+We’ve now updated 𝗖𝗼𝗻𝗷𝗲𝗰𝘁𝘂𝗿𝗲 𝟭 𝗼𝗻 𝘁𝗵𝗲 𝗧𝗼𝗺𝗼𝗿𝗿𝗼𝘄 𝗖𝗮𝗽𝗶𝘁𝗮𝗹 𝗥𝗲𝘀𝗲𝗮𝗿𝗰𝗵 𝘄𝗲𝗯𝘀𝗶𝘁𝗲 to better reflect this broader transition problem – not just “switching a model” but 𝘳𝘦𝘢𝘭𝘭𝘰𝘤𝘢𝘵𝘪𝘯𝘨 𝘢𝘭𝘰𝘯𝘨 𝘢𝘯 𝘦𝘯𝘵𝘪𝘳𝘦 𝘱𝘢𝘵𝘩 under frictions and risk limits. 
+
+The updated conjecture is available on our site, and I’ve attached the corresponding PDF to this post for anyone who wants the full mathematical setup and notation. 
+https://lnkd.in/dPKxZcKc
+
+I’d love to hear from people thinking about similar questions in portfolio optimisation, control, execution or mean-field / stochastic control:
+ • Notes, sketches, partial results
+ • Links to related papers
+ • Reflections from live trading transitions
+
+If this sparks any ideas, I’m very happy to read them, discuss them, or simply point others towards your work.
+
+@tomorrowcapitalresearch
+hashtag#quantitativefinance hashtag#algorithmictrading hashtag#portfoliooptimization hashtag#execution hashtag#stochasticcontrol hashtag#marketmicrostructure hashtag#meanfieldgames hashtag#pathswitching hashtag#TomorrowCapitalResearchAssets	Cryptocurrencies vs Equities
+Horizon	Ultra-low latency(sub-ms), Medium-freq(hours to days)
+Exchanges	Binance, OKX, Coinbase, Robinhood
+Tech	Python, C++ for speed
+Finance	Leverage: flexible
+Features	moving averages, volatility, order-flow imbalances, on-chain indicators, Momentum, reversal, carry, post-earnings-drift and low-volatility effects, PCA factor rotation, breakout detectors, or ML predictors, RSI/oscillator-based signals, transaction volume, whale movements, staking rates
+
+Strategies	ULL
+	Mid-freq
+	• market making - quoting and rebalancing orders to capture bid-ask spreads and liquidity rebates. Position goals stay near zero.
+	• cross-exchange / triangular arb
+	• Order-Book Microstructure: Models that analyze order flow imbalance and momentum ignition to enter positions before large moves. Such strategies require sub-millisecond tick-by-tick processing.
+	• Statistical arbitrage - Avellaneda–Lee s-scores
+	• Pairs trading - ?
+	
+	
+	real-time level-2 order-book imbalance, expected‐fill price and implied spread as primary predictors for 5 min–1 h signals. 
+	
+Practitioners filter spoofing by conditioning on filled orders only or using Bookmap-style depth-surfaces.
+	
+	Transformer variants (Informer, Autoformer, TimeXer) are now favoured for 15 m–1 d price forecasting
+	
+	momentum/trend, mean-reversion, LSTM/Transformer predictors, DeFi arb.
+Long-term pairs trading, Machine Learning Models, Fundamental/On-Chain Signals, DeFi/DEX Arbitrage
+Methods	Execution Engine: A fast, event-driven order manager. It receives “send order” commands from strategies and handles all API-level details (rate-limits, retries, smart routing). Critical code (order serialization, nonce management, latency-critical paths) can be written in C++ with Python bindings (e.g. via PyBind11) for speed. The engine tracks outstanding orders and confirmations.
+	
+	- Deep-representation models (Transformers, T-GAT, FinGPT)
+	- Mean-field/broker games for order-flow toxicity
+	- RL execution agents, dynamic Kelly sizing, rough-vol surfaces, Chebyshev interp.
+	- Temporal Graph-Attention Networks better than GARCH at vol forecasts
+	
+	Machine Learning Module: Off-board model training (Python/TF or PyTorch) that updates predictive models online or at intervals. Examples: LSTM networks for short-term price movement​
+Modern reinforcement-learning approaches (e.g. deep Q-networks) may also be explored for strategy development, though robust financial RL remains cutting-edge.
+
+
+	• Graph-signal processing HAR-extensions embed realised-volatility vectors on a stock-correlation graph and transform them in the graph-spectral domain for next-day risk signals 
+
+	• On-chain analytics for crypto: desks scrape funding rates, NVT-style utilisation ratios and liquidation clusters; tutorials at PrimeXBT summarise the standard metric set PrimeXBT.
+Risk	Position Limits: No strategy can exceed its defined exposure.
+	Stop-Loss / Take-Profit: Pre-set thresholds automatically exit trades to cap losses/profits​
+	Portfolio-Level Checks: Monitors total drawdown and triggers system-wide safe modes if severe volatility occurs.
+	Real-Time Alerts: Automated alerts/notifications if any risk rule is violated.
+Architecture	data→ feature engine → strategy modules → C++ order manager → risk manager → monitoring/logging.
+Plan	prototype → paper-trade → C++ optimisation → staged release → live risk dashboards.
+Prototyping & Backtesting →Simulation & Paper Trading →C++ Optimization→Data Pipeline→Integration Testing→Monitoring Setup→Iterate & Tune
+
+
+
+
+A Beginner's Step-by-Step Guide to Exploring Quantitative Trading with £50
+Section 1: Introduction - Welcome to Quantitative Trading
+What is Quantitative Finance and Trading? (Simplified)
+Quantitative finance, often shortened to "quant finance," represents a field within finance that relies heavily on mathematical and statistical modeling to inform financial decisions. Instead of relying solely on intuition, news, or traditional financial analysis, quantitative approaches use data, algorithms, and computational power to identify opportunities, manage risk, and execute strategies. It's about applying scientific and mathematical rigor to the complexities of financial markets.   
+Quantitative trading is a specific application of these principles, focusing on the development and execution of trading strategies based on quantitative analysis. These strategies aim to buy and sell financial assets—such as stocks, bonds, commodities, or cryptocurrencies—often in an automated or semi-automated fashion. The core idea is to leverage mathematical models to detect patterns, statistical relationships, or market inefficiencies that can be systematically exploited for potential profit. This involves rigorous testing of ideas using historical data (backtesting) before deploying them in live markets.   
+What are High-Frequency (HFT) and Mid-Frequency Trading (MFT)?
+Within the realm of quantitative trading, strategies are often categorized by their trading frequency or holding period. High-Frequency Trading (HFT) sits at the extreme end of this spectrum. It is a form of algorithmic trading characterized by:
+	• Extraordinary Speed: Trades are executed in microseconds (millionths of a second) or milliseconds (thousandths of a second).   
+	• High Volume: A vast number of orders are generated and executed throughout the trading day.   
+	• Short Holding Periods: Positions are typically held for fractions of a second up to a few minutes, rarely overnight.   
+	• Sophisticated Technology: HFT relies on powerful computers, complex algorithms, and high-speed data connections.   
+A critical concept in HFT is latency. Latency refers to the time delay experienced when data travels from one point to another, such as from the exchange's matching engine to a trader's system, or the time taken for an order to travel to the exchange and be processed. HFT firms invest heavily to minimize latency, as even a tiny speed advantage can be crucial. This often involves co-location, which means placing their trading servers in the same physical data center as the exchange's servers to reduce the physical distance data needs to travel.   
+Mid-Frequency Trading (MFT) occupies a space between HFT and traditional, slower trading strategies. While still automated and faster than human traders, MFT typically involves holding periods that might range from minutes to hours or even across a trading day. MFT strategies may focus less on pure speed arbitrage and more on analyzing factors like order flow (the sequence and size of buy and sell orders hitting the market), identifying short-term predictive signals, or reacting to specific market events or HFT-driven patterns. MFT generally requires less extreme low-latency infrastructure compared to HFT, though speed and efficient execution remain important.   
+Setting Realistic Expectations: The £50 Journey
+It is absolutely crucial to understand the realities of HFT from the outset. Executing genuine HFT strategies requires immense capital investment in specialized hardware, ultra-fast software, direct data feeds from exchanges, co-location services, and skilled personnel. These costs run into millions of pounds, making HFT fundamentally inaccessible for retail traders, especially those starting with a budget of £50.   
+Therefore, the £50 budget allocated for this exploration should not be viewed as trading capital for HFT or even significant MFT participation. Instead, it should be considered a resource for learning and familiarization. This budget might cover access to an online course, purchase of an introductory book, or, much later, funding a tiny real-money account purely for understanding the psychological dynamics of trading.
+The primary goal of this journey, given the constraints, is to build foundational knowledge. This involves understanding the core concepts of quantitative finance, learning the necessary mathematical and programming tools, exploring market mechanics, and simulating trading strategies in a risk-free environment. The objective shifts from doing HFT, which is impossible under these circumstances, to learning about HFT and the broader field of quantitative trading. The significant financial and technological barriers mean that simulation and knowledge acquisition are the only practical avenues available. This constraint fundamentally shapes the approach outlined in this guide, prioritizing education and experimentation over any expectation of profit from HFT activities.   
+Section 2: Building Your Foundation
+Before diving into complex strategies or specific tools, establishing a solid foundation in market basics, essential mathematical concepts, and programming is paramount. Attempting to understand advanced quantitative trading without these prerequisites is unlikely to be productive.
+Essential Concepts: Markets, Assets, Orders
+	• Markets: Financial markets are platforms where assets are traded. Key examples include: 
+		○ Stock Markets: Exchanges like the New York Stock Exchange (NYSE) or London Stock Exchange (LSE) where shares representing ownership in publicly listed companies are bought and sold.   
+		○ Cryptocurrency Exchanges: Platforms like Binance, Coinbase, or OKX facilitate the trading of digital assets (cryptocurrencies) based on blockchain technology.   
+	• Assets: The items being traded. For this initial exploration, the focus will be on: 
+		○ Stocks (Equities): Represent partial ownership in a corporation. Owning stock may entitle the holder to dividends (a share of company profits) and capital appreciation if the stock price increases.   
+		○ Cryptocurrencies: Digital or virtual currencies secured by cryptography, operating on decentralized networks (like blockchains). Examples include Bitcoin (BTC) and Ethereum (ETH). While many other asset classes exist (e.g., commodities, derivatives ), stocks and crypto provide accessible starting points.   
+	• Order Types: Instructions given to a broker or exchange to execute a trade. Two fundamental types are: 
+		○ Market Order: An instruction to buy or sell immediately at the best currently available market price. It prioritizes speed of execution over the exact price achieved.   
+		○ Limit Order: An instruction to buy or sell only at a specified price or better. A buy limit order executes only at the limit price or lower, while a sell limit order executes only at the limit price or higher. Limit orders provide price control but do not guarantee execution if the market never reaches the specified price. They are essential tools in quantitative strategies for precise entry and exit points.   
+	• Limit Order Books (LOB): This is the electronic list maintained by an exchange showing all active limit orders for a specific asset. It displays the quantity of shares or tokens available to be bought (bids) and sold (asks/offers) at various price levels, ranked by price. The LOB provides transparency into market depth (supply and demand at different prices) and is a critical data source for many HFT and MFT strategies, such as market making, which involves simultaneously posting bid and ask orders.   
+	• Basic Trading Ideas: 
+		○ Long vs. Short: Going "long" means buying an asset hoping its price will rise. Going "short" involves selling an asset (often borrowed) expecting its price to fall, aiming to buy it back cheaper later. Short selling is more complex and carries different risks.   
+		○ Diversification: The principle of spreading investments across different assets or strategies to reduce overall risk. The idea is captured by the adage "don't put all your eggs in one basket".   
+Key Skills: Introduction to Probability & Statistics
+Quantitative trading is fundamentally based on mathematics. Understanding probability and statistics is not optional; it's essential for developing, testing, and understanding trading models.   
+	• Why Math Matters: Probability helps quantify the likelihood of future market movements or the success rate of a strategy. Statistics provides the tools to analyze historical data, identify patterns, measure risk, and determine if a strategy's performance is statistically significant or just due to luck.   
+	• Learning Resources: 
+		○ Khan Academy: Offers excellent, free introductory courses on basic probability (calculating probabilities, understanding independent and dependent events, sample spaces) and statistics (mean, variance, distributions like the Normal distribution, hypothesis testing). These resources are ideal for building foundational understanding without initial cost.   
+		○ Coursera: Provides more structured courses, often from universities, covering these topics within a financial context. Examples include the Wharton Quantitative Modeling course or other beginner-level finance specializations. These may involve costs but offer a more formal learning path.   
+Learning Python for Finance
+A programming language is needed to implement and test quantitative ideas. Python has become the dominant language in quantitative finance for several reasons:
+	• Extensive Libraries: Python boasts a rich ecosystem of libraries specifically designed for data analysis (Pandas), numerical computation (NumPy), machine learning (scikit-learn, TensorFlow, PyTorch), and visualization (Matplotlib, Seaborn), significantly speeding up development.   
+	• Readability and Ease of Learning: Python's syntax is generally considered cleaner and easier to learn compared to other languages like C++, making it more accessible for beginners.
+	• Community Support: A large and active community means ample resources, tutorials, and support are available online.
+The initial steps for learning Python specifically for finance typically involve :   
+	1. Python Fundamentals: Grasping core concepts like variables, data types (integers, floats, strings, booleans), basic operators (arithmetic, comparison, logical), and control flow (if-else statements, loops).
+	2. Data Structures: Learning to work with lists (ordered, mutable collections) and potentially dictionaries (key-value pairs).
+	3. NumPy: Understanding NumPy arrays, which are fundamental for efficient numerical operations on large datasets. This includes array creation, indexing, slicing, and mathematical functions.   
+	4. Pandas: This library is crucial for financial data analysis. Learning to use Pandas DataFrames for importing, cleaning, manipulating, and analyzing time-series data (like stock or crypto prices) is essential.   
+	5. Matplotlib: Acquiring basic data visualization skills using Matplotlib to create plots like line charts (for prices over time), histograms (for return distributions), and scatter plots to visually explore data and results.   
+Recommended Resources:
+	• DataCamp: Offers interactive courses tailored to finance, such as "Introduction to Python for Finance" and tutorials covering algorithmic trading basics using Pandas and Matplotlib. Interactive platforms can be effective for hands-on learning.   
+	• Other Platforms: Coursera , Udemy , Codecademy, freeCodeCamp, and numerous free online tutorials (e.g., official Python documentation, YouTube channels) provide alternative learning paths.   
+Developing proficiency in basic probability, statistics, and Python programming forms the bedrock upon which any understanding of quantitative trading, especially HFT/MFT, must be built. These skills are non-negotiable prerequisites. Without this foundation, attempting to decipher or implement complex strategies, including those hinted at in advanced resources, will be ineffective. The learning process must start here.   
+Section 3: Exploring the Landscape - Platforms and Tools
+Once the foundational concepts and skills are being developed, the next step is to become familiar with the trading environment. This involves understanding the specific exchanges available and utilizing practice tools like demo accounts.
+Introduction to Your Exchanges
+The query specified access to several platforms, each with its own characteristics:
+	• Binance, OKX, Coinbase: These are large, global cryptocurrency exchanges. They offer trading in a wide variety of cryptocurrencies (spot trading) and often provide access to more complex products like futures and options (derivatives). They are known for high liquidity (ease of trading without significantly impacting the price) and comprehensive Application Programming Interfaces (APIs) for automated trading. Coinbase also offers a platform called Coinbase Advanced, targeted at more experienced traders with features like advanced charting and lower fees.   
+	• Robinhood: This platform gained popularity, particularly in the US, for its commission-free trading model, primarily accessed via a mobile app. It offers stocks, Exchange-Traded Funds (ETFs), options, and some cryptocurrencies. While user-friendly for beginners, it's important to be aware of regulations like the Pattern Day Trading (PDT) rule in the US, which applies to margin accounts and can restrict frequent trading if account equity is below $25,000. * **Saxo Bank:** This is a more traditional online brokerage based in Denmark, offering access to a broader range of global markets and asset classes, including stocks, forex (foreign exchange), Contracts for Difference (CFDs), futures, options, and bonds. It provides multiple platform options (SaxoInvestor for beginners, SaxoTraderGO/PRO for advanced traders) and integrates with third-party tools like TradingView. Fee structures and account minimums may differ from crypto-native exchanges or commission-free brokers. ### The Power of Practice: Paper Trading / Demo Accounts Given the complexity and risks of trading, especially quantitative trading, practicing in a simulated environment is essential before committing real capital. This is achieved through paper trading or demo accounts. * **Definition:** A demo account provides a simulated trading environment that mimics live market conditions but uses virtual (fake) money. Trades are placed based on real-time or slightly delayed market data, allowing users to experience the trading process without financial risk. * **Essential Benefits:** * **Risk-Free Learning:** The most significant advantage is the ability to experiment and make mistakes without losing real money. * **Platform Familiarization:** Users can learn the layout and functionality of a trading platform, including how to place different order types (market, limit), use charting tools, monitor positions, and manage a virtual portfolio. * **Strategy Testing:** Demo accounts allow traders to test their strategies under realistic (though not perfect) market conditions to see how they might perform. * **Emotional Preparation (Limited):** While it cannot fully replicate the stress of real trading, paper trading can help users become accustomed to market volatility and the experience of winning and losing trades, albeit without the real emotional weight. * **Important Limitations:** It's crucial to understand that demo accounts are not perfect replicas of live trading: * **Execution Simulation:** They often don't accurately simulate the order book dynamics. Orders might fill instantly at the trigger price, ignoring factors like available liquidity (volume at a given price) or slippage (the difference between the expected fill price and the actual fill price), which are significant in real markets, especially for large orders or fast-moving conditions. * **Latency:** Demo systems may not replicate the real-world latencies involved in order routing and execution, making them unsuitable for testing true HFT strategies. * **Psychological Differences:** Trading without real money at stake removes the powerful emotions of fear and greed, which significantly influence decision-making in live trading. Success in a demo account doesn't guarantee success with real capital. * **System Priority:** Demo account performance might be de-prioritized compared to live trading systems during periods of high market activity. ### Table 3.1: Demo Account Availability on Specified Platforms To facilitate the choice of a platform for initial practice, the following table summarizes the demo account availability and features for the specified exchanges, based on the gathered information. This consolidation provides a quick reference to identify suitable starting points for risk-free exploration. | Platform | Demo Account Available? | How to Access | Asset Types Supported (in Demo) | Duration/Limits | Key Notes/Sources | | :------------ | :---------------------- | :---------------------------------------------------------------------------- | :------------------------------------- | :------------------------------------------------------- | :------------------------------------------------------------------------------------------------------------------------------------------------ | | **Binance** | Yes | Via Binance Spot Test Network (testnet.binance.vision); requires GitHub login | Crypto (Spot) | No explicit duration mentioned; uses separate API keys | Simulates spot trading; no real order book simulation; separate from main Binance account | | **OKX** | Yes | Via "Demo Trading" mode within the main platform interface | Crypto (Spot, Futures, Options likely) | Virtual funds provided ($ simulated); can add more | Designed to closely replicate real trading features; good for practicing various crypto instruments | | Coinbase | No (Directly) | N/A (Simulation possible via third-party platforms like QuantConnect) | Crypto (via external simulation) | N/A | Coinbase platform itself focuses on live trading; paper trading requires connecting API to external simulation environments | | Robinhood | No | N/A | N/A | N/A | Platform does not offer a paper trading or demo account feature | | Saxo Bank | Yes | Via specific Demo Account sign-up on their website | Stocks, Forex, CFDs, Futures (likely) | 20 days | Provides $100,000 virtual cash; uses SaxoTraderGO and SaxoTraderPRO platforms |   
+Based on this comparison, for practicing the cryptocurrency trading mentioned in the query, OKX and the Binance Spot Test Network appear to be the most suitable starting points among the listed options, as they offer dedicated crypto demo environments. Saxo Bank provides a demo account for traditional assets and derivatives but it is time-limited. Coinbase and Robinhood lack native paper trading functionalities, making them less ideal for initial risk-free learning and experimentation directly on their platforms. The choice between OKX and Binance Testnet might depend on user preference for interface or the desire to simulate futures trading (which OKX demo likely supports more directly).
+Section 4: Your £50 Action Plan: Getting Started
+This section outlines a practical, step-by-step plan designed for a beginner to start exploring quantitative trading concepts with a £50 budget, focusing on learning and simulation.
+Step 1: Choose a Foundational Learning Path
+	• Recommendation: Begin with freely available, high-quality resources to maximize the budget. 
+		○ Mathematics: Utilize Khan Academy for foundational understanding of probability and statistics. Work through modules covering basic probability rules, sample spaces, distributions, and descriptive statistics.   
+		○ Programming: Start learning Python basics using free online tutorials, documentation (python.org), or the free tiers of platforms like DataCamp or Codecademy. Focus initially on syntax, data types, control structures, and functions.   
+	• Structured Courses (Optional): If the budget allows after considering potential minimal real-trade exposure later, or if a more structured approach is preferred, consider enrolling in an introductory online course. Platforms like Coursera offer relevant beginner courses in finance, accounting, investing, or quantitative modeling. Prioritize courses that build a strong conceptual understanding rather than promising complex trading strategies immediately.   
+Step 2: Set Up a Demo Account
+	• Recommendation: Based on the analysis in Section 3, start with a platform offering accessible crypto paper trading. The OKX Demo Trading mode or the Binance Spot Test Network are recommended choices.   
+	• Access Instructions (Simplified): 
+		○ OKX: Log into the OKX platform, navigate to the "Assets" or equivalent menu, and select the "Demo Trading" option to switch to the simulated environment. Virtual funds should be automatically allocated.   
+		○ Binance Spot Test Network: Visit the testnet website (testnet.binance.vision), log in using GitHub credentials, navigate to the API key section, and generate a new HMAC_SHA256 key, saving the key and secret securely. This key pair would then be used to connect a compatible application (like potentially a self-written Python script later, or a platform like QuantConnect set to paper trading mode using Binance data).   
+Step 3: Make Your First Paper Trades
+	• Objective: The goal here is purely mechanical understanding and platform familiarization, not generating virtual profit.
+	• Exercises: 
+		○ Choose a major cryptocurrency like Bitcoin (BTC) or Ethereum (ETH).   
+		○ Practice placing a Market Order to buy a small virtual amount. Observe how quickly it fills and at what price.   
+		○ Practice placing a Limit Order to buy below the current market price. Observe if it sits in the order book and if it executes when/if the price drops to that level.   
+		○ Practice placing a Sell Limit Order above the current market price and observe its behavior.   
+		○ Familiarize yourself with the platform's interface for viewing open orders, trade history, and portfolio balance.   
+		○ Explore any available charting tools within the demo environment to view price history.
+Step 4: Basic Python Practice
+	• Integration: Apply the Python skills learned in Step 1 in parallel with paper trading exploration.
+	• Exercises: 
+		○ Find sample historical price data online (many sources offer free CSV files for major assets) or create simple Python lists representing price movements.
+		○ Use the Pandas library to load this data into a DataFrame.   
+		○ Calculate daily or hourly simple returns (e.g., (price_today - price_yesterday) / price_yesterday).
+		○ Use Matplotlib to create a basic line plot of the price data to visualize trends.   
+Step 5: (Optional & Cautious) Using the £50 for Real Exposure
+	• Important Disclaimer: This step should only be considered after significant practice in a demo account and a clear understanding of the risks involved. Reiterate that the £50 budget is insufficient for serious trading, especially HFT, and any funds used are at high risk of loss. This is an educational exercise in psychology, not an investment strategy.
+	• Recommendation: If deemed appropriate for learning, allocate a very small portion of the budget (e.g., £10 - £20) for this exercise. Choose a platform with low minimum deposit requirements and low trading fees (Binance or OKX might be suitable, but verify their current terms ).   
+	• Activity: 
+		○ Deposit the small amount into the chosen live account.
+		○ Select a major, highly liquid cryptocurrency (e.g., BTC or ETH).
+		○ Place one or two very small limit orders based on simple criteria learned during practice.
+		○ Observe: Pay close attention to the execution process, the fees charged, and, most importantly, the emotional response to having real money at stake. Note feelings of anxiety, excitement, fear, or greed.   
+		○ Treat any outcome (profit or loss) as an educational experience. The primary value is understanding the psychological dimension that paper trading cannot fully replicate. This bridge between simulation and reality, even on a micro-scale, provides a valuable lesson, reinforcing the need for discipline and risk management. However, this step must be approached as paying for a lesson, not as an attempt to generate returns.   
+Section 5: Understanding the Provided Resources (COPtoLON Repos)
+The query specifically requested incorporating information about four GitHub repositories associated with the user COPtoLON (Mark Brezina ). It's important to assess their content and relevance for a beginner embarking on this learning path.   
+Overview of the Repositories
+	• COPtoLON/WTech: This repository is explicitly labeled as an "Algorithmic trading repository". Its content, based on the README and file structure glimpses, includes notes and potential code related to: 
+		○ Strategy Development: Concepts like defining an "ideal state," detecting market states (trend, risk), matching tactics to states, and considering opponent positions.   
+		○ Execution: Notes on optimal execution considering market impact, timing, and cost.   
+		○ Advanced Topics: Mentions of leverage, options, futures, multi-asset trading, HFT market making, and medium-term horizons.   
+		○ Research Areas: Lists numerous advanced research topics, including Markov models, mean reversion analysis, convergence theorems, machine learning models (autoencoders, MLP, LightGBM, XGBoost, CatBoost), specific cross-validation techniques for time-series data, mean field games, and event-based HFT.   
+  
+	• COPtoLON/Knowledgebase: Pinned on the user's profile and described as "A collection of information for quantitative finance, insurance, mathematics and AI". This suggests it's a curated repository of notes, links, or documents relevant to these fields, likely Markdown files, similar in concept but distinct from GitHub's built-in organizational knowledge base feature.   
+	• COPtoLON/KB: Also pinned but lacks a description in the provided materials. Given the common use of "KB" for knowledge base and the existence of command-line knowledge base tools like kb-manager , this might be a personal system for organizing notes, possibly using such a tool, or related to the Knowledgebase repo. Its exact content requires direct exploration.   
+	• COPtoLON/TMRW: Pinned but no description or content details were available in the snippets. The name is ambiguous ("Tomorrow"? Acronym?). Its purpose and content need direct investigation on GitHub..   
+Relevance for a Beginner
+	• Assessment: The content visible, particularly in the WTech repository , clearly indicates that these resources are not designed as introductory educational material. They represent working notes, research ideas, and potentially code fragments from someone actively engaged in the field at a relatively advanced level.   
+	• The concepts mentioned (e.g., hidden Markov models, autoencoders for feature generation, specific time-series cross-validation methods, mean field games) require a significant prerequisite understanding of mathematics, statistics, machine learning, and financial markets, far beyond the scope of the foundational learning outlined in Sections 2 and 4.
+	• Conclusion: These specific GitHub repositories are unsuitable as starting points for a complete beginner with no prior background in quantitative finance or programming. Attempting to learn from them directly would likely lead to confusion and discouragement.
+How to Approach Them Later in Your Journey
+While not suitable for initial learning, these repositories can still hold value later in the educational process:
+	• Bookmark for Future Reference: Suggest saving the links to these repositories.
+	• Revisit After Foundational Learning: Once a solid grasp of Python programming, statistics, basic trading principles, and perhaps introductory quantitative finance concepts (potentially through courses like those on Coursera or DataCamp) is achieved, revisiting these repositories could be beneficial.
+	• Gain Context and Insight: WTech , in particular, can offer a glimpse into the types of problems, research questions, and techniques that practitioners in algorithmic trading explore. It illustrates the depth and complexity involved.   
+	• Explore Curated Information: The Knowledgebase repository might contain valuable summaries, links, or references that become understandable and useful once the necessary background knowledge is acquired.   
+These repositories should be viewed not as instructional guides but as potential aspirational examples or future exploration paths. They showcase the complexity and scope of quantitative and algorithmic trading. Their immediate value for a beginner lies in demonstrating the level of knowledge required in the field, rather than providing direct learning steps. They represent a destination one might work towards, not the starting line.   
+Section 6: Diving Deeper - HFT/MFT Resources
+After establishing foundational knowledge and gaining basic practical experience through simulation, the next phase involves delving deeper into the specific concepts relevant to High-Frequency and Mid-Frequency Trading.
+Key Concepts Revisited
+Understanding HFT and MFT requires familiarity with several core ideas:
+	• Latency and Co-location: As previously mentioned, minimizing the time delay (latency) in receiving market data and sending orders is paramount, especially in HFT. Co-location, placing servers within the exchange's data center, is a primary method used by HFT firms to achieve the lowest possible latency. Understanding the physical and technological aspects of speed is crucial.   
+	• Order Book Dynamics: HFT/MFT strategies often rely heavily on analyzing the Limit Order Book (LOB). This involves monitoring the flow of incoming orders, the depth of liquidity at different price levels, imbalances between bids and asks, and the bid-ask spread (the difference between the best bid and the best ask price). Strategies like market making directly interact with the LOB by posting simultaneous buy and sell limit orders to capture the spread. Order flow analysis attempts to predict short-term price movements based on the patterns of incoming orders.   
+	• Market Microstructure: This academic and practical field studies the processes and rules governing trading in financial markets. It examines how prices are formed, how trades are executed, the role of different market participants (like market makers), the impact of order types, and the effects of exchange architecture on trading outcomes. A solid understanding of market microstructure is essential for designing effective HFT/MFT strategies.   
+	• Common Strategy Archetypes (Brief Overview): 
+		○ Arbitrage: Exploiting temporary price discrepancies of the same or similar assets across different markets or forms (e.g., buying a stock on one exchange and simultaneously selling it for slightly more on another). HFT arbitrage often focuses on minute, fleeting discrepancies requiring high speed ("latency arbitrage" ).   
+		○ Market Making: Providing liquidity to the market by continuously quoting buy (bid) and sell (ask) prices for a security, aiming to profit from the bid-ask spread. This requires managing inventory risk.   
+		○ Statistical Arbitrage ("Stat Arb"): Using quantitative models to identify short-term mispricings between related assets based on historical correlations or patterns.
+		○ Event-Driven Trading: Designing strategies to react extremely quickly to specific news releases, economic data publications, or other market events.   
+		○ MFT-Specific Strategies: These might include analyzing tick data (individual trades) for order flow patterns, "stop hunting" (attempting to trigger stop-loss orders), or exploiting HFT behaviors like front-running countermeasures.   
+Recommended Reading/Learning
+To deepen understanding of these concepts, consider exploring resources such as:
+	• Investopedia: Provides accessible articles explaining key terminology and concepts related to HFT , latency , market making , arbitrage , and the limit order book.   
+	• QuantStart: This website focuses on quantitative trading and often features articles and learning paths covering strategy identification, backtesting, and execution systems, potentially including introductory material relevant to HFT/MFT concepts.   
+	• Quantra (QuantInsti): This platform offers specialized online courses in algorithmic and quantitative trading. Courses like "Trading in Milliseconds" specifically cover MFT topics such as market microstructure, latency types, order flow calculation (e.g., Lee-Ready algorithm), and MFT strategies. Be aware that such specialized courses typically involve costs.   
+Understanding the Challenges (Reiteration)
+While learning about HFT/MFT is valuable, it's vital to constantly remember the practical limitations for retail participation:
+	• Insurmountable Barriers: The high costs of technology and data, the need for co-location, the sophisticated algorithms, data access limitations, and regulatory hurdles effectively preclude retail traders from competing directly in the HFT space.   
+	• Technological Arms Race: HFT is characterized by a continuous "arms race," where firms constantly invest in faster technology and algorithms to maintain a competitive edge, making any advantage fleeting.   
+	• Market Impact Concerns: HFT has faced criticism regarding its potential to exacerbate market volatility, contribute to "flash crashes" (sudden, severe price drops followed by a quick recovery), and create an uneven playing field.   
+Given these realities, a retail trader's focus should adapt. Since direct participation in the ultra-low latency HFT game is not feasible, a more practical approach involves learning the concepts of HFT/MFT to understand market dynamics, but directing practical efforts towards areas where retail traders can potentially operate. This might involve developing algorithmic strategies on slightly longer timeframes (minutes, hours, days) where infrastructure costs and microsecond latency are less critical , or exploring MFT strategies that rely more on clever analysis (like order flow ) rather than pure speed, using the tools and platforms realistically available.   
+Section 7: Next Steps and Continuous Learning
+Embarking on the journey into quantitative trading is a marathon, not a sprint. It requires dedication, continuous learning, and a systematic approach.
+Recap of the Learning Path
+The recommended progression for a beginner starting with minimal capital and aiming to understand quantitative trading, including HFT/MFT, is as follows:
+	1. Build the Foundation: Master basic probability, statistics, and Python programming.   
+	2. Familiarize with Platforms: Use demo accounts (like OKX or Binance Testnet) to understand trading mechanics and platform interfaces risk-free.   
+	3. Understand Trading Mechanics: Practice placing different order types and observing market behavior in simulation.   
+	4. Apply Programming Skills: Use Python for basic financial data analysis and visualization.   
+	5. (Optional) Gain Psychological Insight: Consider a very small, controlled real-money trade to experience the emotional aspect, accepting the high likelihood of loss as an educational cost.   
+	6. Deepen Quant Knowledge: Study core quantitative finance concepts, market microstructure, and the theory behind different strategy types (including HFT/MFT) using resources like Investopedia, QuantStart, or specialized courses.   
+	7. Explore Advanced Topics: Once fundamentals are strong, revisit more complex resources like the COPtoLON repositories or academic papers for deeper insights.   
+Importance of Patience and Persistence
+Quantitative finance is an intellectually demanding field. Progress requires significant time investment, consistent effort, and the resilience to work through challenging concepts and inevitable setbacks. There are no shortcuts to expertise, and profitability (especially in algorithmic trading) is never guaranteed. Approach it as a continuous learning process.   
+Further Learning Avenues
+As foundational knowledge grows, consider exploring these avenues:
+	• Advanced Courses: Platforms like Coursera, edX, Quantra, and university programs offer more advanced courses in financial engineering, machine learning for trading, derivatives, and specific algorithmic trading techniques.   
+	• Online Communities: Engage thoughtfully with online communities focused on quantitative finance and algorithmic trading (e.g., forums on platforms like QuantConnect , specific subreddits, or sites like Elite Trader ). Be critical of information and focus on learning rather than seeking "get rich quick" signals.   
+	• Reputable Blogs and Research: Follow blogs from established quantitative finance professionals and researchers (some examples mentioned in ). Explore academic research repositories like SSRN or arXiv q-fin for cutting-edge ideas (though these are often highly technical).   
+	• Backtesting Platforms: Eventually, learning to use a dedicated backtesting platform (e.g., QuantConnect , Zipline, Backtrader) becomes crucial. These platforms allow rigorous testing of trading strategies on historical data to assess potential performance and identify flaws before considering live deployment.   
+Final Encouragement
+The path to understanding quantitative trading is challenging but intellectually rewarding. While direct participation in HFT might be out of reach for a retail beginner with limited capital, the process of learning the underlying mathematics, programming, market mechanics, and strategic thinking provides a deep and valuable understanding of how modern financial markets operate. Frame this journey as an opportunity for intellectual growth and skill development, focusing on the knowledge gained along the way.
+Conclusion
+This guide provides a structured, step-by-step approach for a beginner with a £50 budget to begin exploring the world of quantitative finance, with a particular interest in High-Frequency Trading (HFT) and Mid-Frequency Trading (MFT). The analysis underscores several key conclusions and recommendations:
+	1. HFT Accessibility: Direct participation in HFT is realistically impossible for a retail beginner with a £50 budget due to the prohibitive costs of technology, data feeds, and low-latency infrastructure.   
+	2. Focus on Foundational Learning: The primary goal must shift from doing HFT to learning about quantitative trading. The £50 budget is best utilized for educational resources and simulation, not significant trading capital. Mastery of foundational mathematics (probability, statistics) and programming (Python with libraries like Pandas, NumPy, Matplotlib) is the essential first step.   
+	3. Leverage Simulation: Paper trading (demo accounts) is a critical tool for risk-free learning of platform mechanics, order types, and basic strategy testing. Platforms like OKX and the Binance Spot Test Network offer suitable starting points for crypto simulation among the specified options.   
+	4. Provided Repositories (COPtoLON): The specified GitHub repositories contain advanced notes and research ideas. They are not suitable for beginners but can serve as aspirational examples or resources for future exploration once foundational knowledge is established.   
+	5. Realistic Path Forward: A practical progression involves building foundational skills, utilizing demo accounts extensively, potentially undertaking a minimal real-money trade for psychological insight (treating it as tuition), and then delving into deeper quantitative concepts and market microstructure. For applying algorithmic principles, focusing on MFT concepts or strategies on slower timeframes (minutes to days) is more realistic for retail participants than attempting HFT.   
+Quantitative trading is a complex and evolving field. Success requires patience, continuous learning, and a rigorous, data-driven approach. By following a structured learning path and maintaining realistic expectations, a beginner can gain valuable knowledge and skills, building a strong foundation for future exploration in this fascinating domain.   
+Sources used in the report
+
+
+
+I hindsight can man godt finde den optimale policy
+Lille Q læring, hvis appr. Af proces kan laves markov, hvis 7 sidste frame, så løses.
+
+Reinforcement learning I kontinuert tid og rum.
+
+Rough differential equations
+[2306.14258] A Neural RDE approach for continuous-time non-Markovian stochastic control problems
+Solving and Learning non-Markovian Stochastic Control problems in continuous-time with Neural RDEs | OpenReview
+[2207.00713] q-Learning in Continuous Time
+
+Fudan gruppe mht. Stoch control. Maximum principper, bellman ligner
+
+
+	1. Markov states for "hvor er vi ved"
+
+Model-baseret, forudse underlæggende dynamic - NN
+
+Model-fri, PPO, soft, critic metoder -simuleret
+
+Lille Q, regret bounds, kontinuert kalibrering og optimering, N^(3/4)
+Decision transformer, signature regression, path signature, signature transform, 
+Rough paths.
+Feedforward, test, der hvor du har en edge.
+
+Counter-factual learning, opdatere på det der skete og på det vi forventede ville ske med andre handlinger. Explainable AI.
+
+Ikke arg max
+Aksel Fristrup
+12:35 PM
+greedy policy
+exploration
+online learning
+Aksel Fristrup
+12:36 PM
+exploration-exploitation tradeoff
+
+From <https://meet.google.com/trr-ntbq-pcx> 
+
+Entropy
+Aksel Fristrup
+12:36 PM
+exploration-exploitation tradeoff
+entropy regularisation
+Aksel Fristrup
+12:37 PM
+renyi, tsallis
+Aksel Fristrup
+12:39 PM
+reward shaping
+
+From <https://meet.google.com/trr-ntbq-pcx> 
+
+Selv-eksiterende
+Neural-hawkes process
+Parametrisere
+
+hierarchical reinforcement learning
+Aksel Fristrup
+12:50 PM
+H-MARL
+
+From <https://meet.google.com/trr-ntbq-pcx> 
+
+Credit assignment, hvad gjorde at jeg fik rewardSpread Capture vs. Inventory Risk
+With a fixed 20pt spread, your theoretical max is capturing that 20pts on every round-trip. Your constraints make inventory skewing the central optimization lever.
+
+The Optimal Framework: Skewed Market Making
+Reservation Price
+Instead of quoting symmetrically around mid, shift your centre based on inventory:
+skew = (inventory / max_inventory) * half_spread
+reservation_price = mid - skew
+bid = reservation_price - half_spread
+ask = reservation_price + half_spread
+Worked examples (half_spread = 10, max_inventory = 80):
+Inventory	Skew	Bid	Ask
+0	0	mid - 10	mid + 10
++40	+5	mid - 15	mid + 5
++80	+10	mid - 20	mid ← dump aggression
+-40	-5	mid - 5	mid + 15
+-80	-10	mid	mid + 20
+This elegantly:
+	• Makes your ask cheaper when long → encourages offloading
+	• Makes your bid higher when short → encourages covering
+	• Never requires you to cross the spread or trade at a loss
+
+Hard Rules at Inventory Limits
+if inventory >= +80:  cancel bid entirely, only quote ask
+if inventory <= -80:  cancel ask entirely, only quote bid
+Don't just skew — remove the order that would worsen your position.
+
+Profit Optimisation Levers
+1. Skew Aggressiveness (most impactful)
+The half_spread multiplier in skew can be tuned:
+	• Conservative (skew = inventory/max * 5): quote closer to mid more often, more fills, slower inventory clearance
+	• Aggressive (skew = inventory/max * 10): prioritise flat inventory, fewer fills but less risk
+Given your data mean-reverts strongly, a moderate skew is likely optimal — the price will come back to you anyway.
+2. Quote Refresh Trigger
+Since you can only have 1 set live at a time, reprice on:
+	• Every new mid-price tick
+	• Every fill (immediately repost adjusted for new inventory)
+3. The Core P&L Equation
+profit = (fills × avg_spread_captured) - (inventory_at_close × mark_to_market_loss)
+Your goal is to maximise fills while keeping end-of-session inventory near zero. The skew formula directly addresses both.
+
+What to Simulate/Backtest
+Run over your 30k ticks varying two parameters:
+for risk_aversion in [0.3, 0.5, 0.7, 1.0]:        # skew multiplier
+    for inventory_limit in [40, 60, 80]:            # soft limit to one-side only
+        simulate → record: total_pnl, max_drawdown, fill_rate
+Given the strong mean reversion in your data, you'll likely find lower risk aversion wins because inventory self-corrects.
+
+Key Insight
+Your constraint of 1 order set at a time actually simplifies things — you're not competing for queue priority. The entire optimisation reduces to: how aggressively do you skew based on inventory? The formula above is provably near-optimal for mean-reverting assets under these constraints (this is the simplified Avellaneda-Stoikov result).
+
+
+
+
+Reading the Chart
+What you're showing appears to be order book or tick data — likely bid (green), ask (red), and mid/last price (black) — oscillating around 10,000 over ~30,000 time steps. The spread looks roughly ±20 pts from mid, with occasional spikes to ±30.
+
+Relevant HFT Strategies for This Type of Asset
+1. Market Making (Most Applicable)
+This is the classic fit for mean-reverting, range-bound price action like this:
+	• Post limit orders on both sides of the spread
+	• Earn the bid-ask spread repeatedly
+	• Key risk: Inventory accumulation during directional moves (the occasional large spikes)
+	• Edge here: The price clearly mean-reverts to ~10,000, so adverse selection risk is relatively low
+2. Statistical Arbitrage / Pairs Trading
+If the red/green/black lines are correlated instruments (e.g., futures vs spot, or two correlated assets):
+	• Trade the spread between them when it deviates from its mean
+	• The visual spread between red and green looks relatively stable → potential cointegration
+3. Mean Reversion
+	• The data oscillates tightly around 10,000 with no visible trend
+	• Short when price spikes to ~10,020–10,030, long when it dips to ~9,975–9,985
+	• Works well here given the clear reversion behavior
+
+What the Chart Suggests to Avoid
+Strategy	Why It Fails Here
+Momentum / trend-following	No sustained directional moves visible
+Breakout strategies	Spikes revert quickly, no follow-through
+Low-frequency positioning	Edge is in the microstructure, not macro direction
+
+Critical Practical Considerations
+	• Latency: At 30,000 ticks, co-location and microsecond execution matter enormously
+	• Fill rate vs adverse selection tradeoff: Tighter quotes = more fills but more toxic flow
+	• Spike management: Those ~30pt outlier moves need hard inventory limits or hedging rules
+	• Transaction costs: At this scale, fees can easily exceed the signal edge
+
+
+Given your specific constraints—a fixed spread of 20, a hard inventory limit of $\pm 80$, and the ability to route only one bid-ask pair at a time—your optimization problem shifts from determining the optimal spread to determining the optimal skew.
+Since you cannot widen or narrow the spread (it is fixed at 20, meaning a half-spread of 10), your only mechanism for managing inventory and maximizing profit is to shift your quotes asymmetrically around the true mid-price.
+Here is the step-by-step mathematical and logical framework to optimize this:
+1. The Inventory Skew Logic (The Reservation Price)
+When your inventory is exactly 0, your quotes should be perfectly symmetrical around the market mid-price ($s$). You place your Bid at $s - 10$ and your Ask at $s + 10$.
+However, as you accumulate inventory, you must calculate a "Reservation Price" ($r$). This is your own internal, risk-adjusted valuation of the asset. The standard formula for this is:
+$r = s - q \gamma \sigma^2$
+Where:
+	• $s$ = The current mid-price.
+	• $q$ = Your current inventory (from -80 to +80).
+	• $\gamma$ = Your risk aversion parameter (this is what you need to optimize).
+	• $\sigma^2$ = The variance of the asset's price over a short, rolling window.
+2. Placing Your 1 Set of Orders
+Because your spread is fixed at 20, you anchor your single set of orders to your new reservation price, not the market mid-price:
+	• Optimal Bid: $r - 10$
+	• Optimal Ask: $r + 10$
+How this makes you money while protecting inventory:
+Let's say you are dangerously long with an inventory of $q = +70$. The formula will calculate a reservation price $r$ that is lower than the market mid-price $s$.
+	• Your Ask ($r + 10$) will drop closer to the market mid-price, making it highly competitive. You are likely to get filled, shedding your long inventory.
+	• Your Bid ($r - 10$) will drop further away from the market mid-price, drastically reducing the chance you accidentally buy more and hit your +80 limit.
+3. Handling the $\pm 80$ Hard Boundary
+To optimize for profit, you must avoid crossing your maximum inventory limit, as hitting it usually forces you to halt trading or execute a market order (crossing the spread) to liquidate, which destroys your accumulated edge.
+You must implement a strict boundary condition in your logic:
+	• If $q \ge 80$: Cancel the Bid entirely. Only quote the Ask at $s + 10$ (or aggressively at $s + 9$ to ensure a fill).
+	• If $q \le -80$: Cancel the Ask entirely. Only quote the Bid at $s - 10$.
+4. How to Optimize for Maximum Profit (Finding $\gamma$)
+To extract the absolute most profit, you need to find the "Goldilocks" value for $\gamma$ (Risk Aversion). You do this by running a grid-search optimization in a backtest.
+	• If $\gamma$ is too low: Your quotes remain too symmetrical. You will capture the spread frequently, but you will constantly slam into your $\pm 80$ inventory limit, forcing you to stop trading or take losses on liquidation.
+	• If $\gamma$ is too high: You are too terrified of holding inventory. You will skew your quotes so violently at an inventory of just $\pm 10$ that you will stop getting filled entirely, leaving money on the table.
+	• The Optimum: You want the lowest possible $\gamma$ that mathematically keeps your inventory within the $[-79, +79]$ range for 99% of the trading session.
+Are you currently writing the backtest for this strategy, or are you trying to deploy it directly into a live paper-trading environment to gauge the fill rates?
+
+Based on the visual characteristics of the chart you've uploaded, we are looking at a highly noisy, high-frequency time series (the black line) enveloped by an upper bound (the red line) and a lower bound (the green line).
+In the context of High-Frequency Trading (HFT), this visual perfectly illustrates the dynamics of Algorithmic Market Making, specifically using an inventory-management framework. The black line represents the asset's mid-price, while the red and green lines represent the optimal Ask and Bid quotes, respectively.
+For an asset that behaves like this—exhibiting heavy micro-structure noise (rapid short-term oscillations) combined with broader macro-wandering (like the sharp dip around step 17,000)—the optimal HFT strategy is Inventory-Aware Market Making, often modeled after the classic Avellaneda-Stoikov framework.
+Here is a breakdown of how the optimal strategy operates for this type of asset:
+1. Capturing the Bid-Ask Spread (Market Making)
+The core objective is to simultaneously place limit orders at the bid (green line) and the ask (red line).
+	• Because the asset exhibits high "tick bounce" (rapid oscillation back and forth), limit orders placed on both sides are likely to be filled frequently.
+	• Your profit is the spread minus transaction costs. You are essentially being paid to provide liquidity to the market.
+2. Inventory Management (The Avellaneda-Stoikov Model)
+The biggest risk in market making is directional risk. If you look at the chart around time step 16,000 to 17,000, the asset drops sharply. If you keep your quotes perfectly symmetrical around the mid-price during a drop, your bid (buy) orders will be continuously filled, and your ask (sell) orders will be ignored. You will end up holding a massive, depreciating long position ("toxic inventory").
+To optimize this, your strategy must dynamically adjust a reservation price (an inventory-adjusted mid-price). The classic continuous-time formula for this is:
+$r = s - q \gamma \sigma^2$
+Where:
+	• $r$ = Reservation price (your new "internal" mid-price)
+	• $s$ = Actual market mid-price
+	• $q$ = Your current inventory (positive if long, negative if short)
+	• $\gamma$ = Your risk aversion coefficient
+	• $\sigma$ = The asset's volatility
+How it looks on your chart: When you accumulate too much long inventory (e.g., during a price drop), the formula lowers your reservation price. This shifts both your red and green lines down. Your ask price becomes more competitive (increasing the chance of selling to reduce inventory), and your bid price drops further away (decreasing the chance of buying more).
+3. Fading and Micro-Mean Reversion
+If you are not acting as a pure market maker, a secondary optimal strategy is Statistical Arbitrage / Mean Reversion.
+	• The bands (red and green) can be calculated using a rolling short-term standard deviation (like micro-Bollinger Bands).
+	• When the black line spikes up and touches the red line, you trigger a short sell, expecting the micro-noise to revert it back to the mean.
+	• When it drops to the green line, you buy.
+Key Considerations for Production
+	• Adverse Selection: The strategy must incorporate order book imbalance signals. If the order book suddenly becomes extremely top-heavy (massive sell pressure), the algorithm needs to widen the spread or pull the bid entirely to avoid getting run over by informed institutional flow.
+	• Latency: Strategies that rely on capturing the spread in highly noisy assets require ultra-low latency infrastructure (FPGA, co-location). If you are slow, you will only get filled when the market is moving against you.
+Are you looking to implement this logic in a specific asset class (like crypto or equities), or are you currently in the process of backtesting a specific market-making model?
+
+
+
+From this chart alone, there is no provably optimal HFT strategy. But for an asset that looks like this, the best candidate is usually:
+adaptive mean-reversion market making with strict inventory control and selective taking only at extremes.
+Why:
+	• The series looks range-bound around a stable center, not strongly trending. 
+	• It shows frequent short-term oscillation. 
+	• The move size looks modest relative to the repeated back-and-forth, which is exactly where spread capture tends to dominate. 
+	• If you have an inventory cap like ±80, uncontrolled directional bets will usually hurt more than help. 
+What usually works best
+1. Core strategy: two-sided market making
+Post both bid and ask around a fair value estimate.
+Your fair value should not just be raw mid. It should be something like:
+	• denoised mid 
+	• microprice / queue-weighted price 
+	• short rolling fair value 
+	• maybe slightly adjusted by imbalance/order flow 
+A simple quote model is:
+	• bid = fair value - half_width - inventory_skew + alpha_skew 
+	• ask = fair value + half_width - inventory_skew + alpha_skew 
+Where:
+	• half_width expands when volatility rises 
+	• inventory_skew pushes quotes to reduce risk 
+	• alpha_skew leans quotes when short-term signal is strong 
+For a chart like this, this is usually the main PnL engine.
+
+2. Inventory is the real game
+With HFT market making, inventory management often matters more than prediction.
+For ±80 inventory, I would usually structure it like this:
+	• 0 to 20: quote normally 
+	• 20 to 50: start skewing harder 
+	• 50 to 80: prioritize flattening over earning spread 
+	• near 80: stop quoting the risky side entirely 
+Example:
+	• if long, raise both bid and ask, but raise the bid less aggressively or even pull it 
+	• if short, lower both quotes, but lower the ask less aggressively or pull it 
+That prevents getting stuck with inventory during adverse moves.
+
+3. Only take when the edge is clearly better than making
+For this kind of asset, aggressive market taking is usually not the default best strategy.
+Why it often underperforms:
+	• you pay spread 
+	• you consume liquidity at the wrong time 
+	• you interfere with your maker inventory 
+	• many apparent “signals” are just noise 
+So instead of frequent taking, only take when price is far from fair value, such as:
+	• best ask is well below fair value by more than your execution threshold 
+	• best bid is well above fair value by more than your execution threshold 
+That threshold should be larger than:
+	• fees 
+	• adverse selection risk 
+	• expected short-term noise 
+	• the value of keeping inventory free for market making 
+In practice: take rarely, make constantly.
+
+Best structure for this kind of asset
+Layer 1: fair value estimator
+Use a robust fair value, for example:
+	• top-of-book microprice 
+	• denoised VW mid 
+	• short rolling regression or EWMA 
+	• optionally adjusted by imbalance/order flow 
+Example:
+
+f_t=〖"microprice" 〗_t+β_1⋅〖"imbalance" 〗_t+β_2⋅〖"orderflow" 〗_t
+ 
+But keep it simple. Overfitting is a big danger.
+
+Layer 2: market making engine
+Quote around fair value with dynamic width:
+
+〖"width" 〗_t=max⁡("min_width" ⓜ,c_1⋅"spread" +c_2⋅σ_t )
+ 
+So when the market is noisy, you widen out.
+When it is calm, you tighten.
+
+Layer 3: inventory skew
+Shift reservation price by inventory:
+
+r_t=f_t−k⋅q_t
+ 
+Where:
+	• f_t  is fair value 
+	• q_t  is current inventory 
+	• k is inventory penalty 
+This is usually one of the most important pieces.
+
+Layer 4: selective taking
+Only cross the spread when:
+
+∣"market price"−f_t∣>"take threshold"
+ 
+and the signal agrees with:
+	• imbalance 
+	• order flow 
+	• recent reversion tendency 
+	• available inventory capacity 
+This should be small in frequency and high in quality.
+
+What I would avoid
+For an asset like this, I would avoid:
+Pure trend following
+Unless you can prove persistent drift, trend following will often get chopped up.
+Always-on Z-score taking
+A Z-score alone often fires too often in noisy HFT data.
+Better:
+	• use Z-score only as a secondary filter 
+	• require agreement with microstructure signal 
+	• or only use it to adjust quote skew, not to trigger full crossing orders 
+Symmetric fixed thresholds without inventory context
+“Buy below X, sell above Y” can work in backtests, but often breaks once inventory, queue priority, and adverse selection matter.
+
+Likely best practical strategy
+If I had to choose one implementation for this chart, it would be:
+Adaptive mean-reversion market maker
+with:
+	• fair value = denoised microprice / VW mid 
+	• dynamic quote width from local vol + spread 
+	• strong inventory skew 
+	• hard position-based throttling 
+	• aggressive taking only at large dislocations 
+	• optional short-term imbalance/orderflow adjustment 
+That is usually better than:
+	• pure market taking 
+	• pure threshold mean reversion 
+	• naive trend following 
+
+Decision rule intuition
+Think of it like this:
+	• normal state → make both sides 
+	• slightly stretched price → skew quotes toward reversion 
+	• very stretched price → take selectively 
+	• inventory too large → stop optimizing edge, prioritize flattening 
+That tends to be the robust answer.
+
+What “optimal” usually means here
+For this type of asset, the best strategy is usually the one that maximizes:
+
+"spread capture"−"adverse selection"−"inventory risk"−"overtrading cost"
+ 
+So the optimal strategy is not “predict direction perfectly.”
+It is usually:
+earn the spread repeatedly while not getting trapped.
+
+A strong implementation recipe
+A very good starting setup would be:
+	• Fair value: denoised microprice 
+	• Width: base_width + vol_adjustment 
+	• Inventory skew: moderate to strong 
+	• Max quote size: shrink as inventory grows 
+	• Taking: only beyond fair ± n * local_std 
+	• Filters for taking: 
+		○ imbalance agrees 
+		○ order flow agrees 
+		○ not already near inventory limit 
+Example logic:
+	• if price near fair: make both sides 
+	• if ask << fair and inventory not too long: buy take + keep ask posted to unwind 
+	• if bid >> fair and inventory not too short: sell take + keep bid posted to unwind 
+	• if inventory large: only quote flattening side 
+
+My blunt answer
+For an asset like this, the best HFT strategy is usually not a fancy predictor.
+It is usually:
+inventory-aware market making around a stable fair value, with very sparse and high-conviction mean-reversion taking.
+That is the setup I would trust most.
+
+
+Good — this constraint actually simplifies things a lot. You’re basically in a single-asset, fixed-spread, inventory-constrained microstructure game.
+Let me be blunt:
+👉 With a constant ~20 spread, the optimal strategy is NOT prediction-heavy.
+👉 It’s queue capture + inventory cycling + selective edge-taking.
+
+🔥 The core reality of your setup
+	• Spread ≈ 20 
+	• Mid oscillates tightly around ~10000 
+	• No cross-asset alpha 
+	• Max inventory = ±80 
+	• Only one set of orders at a time 
+So your PnL sources are:
+1. Spread capture (dominant)
+Earn ~20 per round trip
+→ This is your main engine
+2. Mean reversion edge (secondary)
+Occasional mispricing vs fair value
+→ Smaller but higher-conviction trades
+
+🧠 The actual optimisation problem
+You want to maximize:
+
+"PnL"="fill rate"×"spread"−"adverse selection"−"inventory cost"
+ 
+So you are balancing:
+	• Quote tight → more fills, worse selection 
+	• Quote wide → fewer fills, better quality 
+	• Too aggressive → inventory blow-up 
+	• Too passive → no fills 
+
+✅ Optimal strategy structure (for your constraints)
+1. Always-on market making (this is your core)
+Since spread is fixed (~20), you want to sit:
+	• bid = best_bid + 1 
+	• ask = best_ask - 1 
+👉 You are stepping inside spread by 1 tick
+This gives:
+	• priority in queue 
+	• max fill probability 
+	• still ~18 spread capture 
+
+2. Your real edge = inventory-aware skew
+This is where most people underperform.
+Use:
+
+r_t=f_t−k⋅q_t
+ 
+	• f_t: fair value (mid or slightly denoised mid) 
+	• q_t: inventory 
+	• k: skew strength 
+Practical effect:
+Inventory	Action
+0	symmetric quotes
++40	shift quotes down
++80	only sell
+-40	shift quotes up
+-80	only buy
+👉 This prevents inventory getting stuck at extremes.
+
+3. Quote sizing is just as important
+You should NOT always quote max size.
+Instead:
+Inventory	Size
+0	max size (e.g. 20–30)
+40	reduced
+60	small
+80	zero on risky side
+
+4. Only ONE alpha for taking (keep it simple)
+Since you already observed:
+	taking reduces PnL from 2300 → 1600
+That tells you:
+👉 Your taking logic is too frequent or too weak
+Fix:
+Only take when:
+
+∣price−fair∣>"large threshold"
+ 
+Not ±1
+Not small Z-score
+👉 Think rare, high conviction
+Example:
+	• Buy only if ask << fair by 8–10 ticks 
+	• Sell only if bid >> fair by 8–10 ticks 
+And only if:
+	• inventory allows it 
+	• not already skewed heavily 
+
+5. Don’t mix signals incorrectly
+This is likely what hurt your PnL.
+Bad combination:
+	• market making + frequent taking 
+	• no coordination between them 
+Good combination:
+👉 Taking should complement inventory
+Example:
+	• You’re short → only take BUY opportunities 
+	• You’re long → only take SELL opportunities 
+Never fight your own book.
+
+🧩 The optimal control logic (this is the key)
+At each step:
+
+Step 1: compute fair value
+	• simple mid or denoised mid 
+
+Step 2: compute inventory skew
+	• shift reservation price 
+
+Step 3: decide regime
+Case A: normal inventory (|q| < 40)
+→ full market making
+Case B: medium inventory (40–70)
+→ skew quotes + reduce size
+Case C: high inventory (70–80)
+→ only quote flattening side
+
+Step 4: check for rare take
+Only if:
+	• strong mispricing 
+	• AND aligns with inventory 
+	• AND not already overloaded 
+
+💡 What actually maximizes profit here
+Given your constraints, the winning setup is:
+🥇 Primary driver
+tight market making with queue priority
+🥈 Secondary driver
+inventory skew (very important)
+🥉 Tertiary
+rare, well-filtered taking
+
+🚫 What to avoid (this is killing your PnL)
+❌ Over-trading (most common mistake)
+	• taking too often 
+	• reacting to noise 
+❌ Z-score spam
+	• HFT noise breaks Z-score signals 
+	• use it only as filter, not trigger 
+❌ Symmetric logic
+	• treating long and short the same 
+	• ignoring inventory state 
+
+⚙️ Concrete “optimal” parameter intuition
+If spread ≈ 20:
+	• Quote inside by: 1 tick 
+	• Expected capture: ~18 
+	• Inventory skew: 
+		○ ~1 tick per 10–15 units 
+	• Take threshold: 
+		○ ≥ 6–10 ticks away from fair 
+	• Max size: 
+		○ 20–30 near neutral 
+		○ taper to 0 near limits 
+
+🧠 The key mental model
+You are not predicting price.
+You are:
+	harvesting oscillation while managing inventory risk
+
+🔥 Final answer (compressed)
+For your exact setup, the optimal HFT strategy is:
+👉 Inventory-skewed inside-spread market making
++
+👉 rare, high-threshold mean-reversion taking aligned with inventory
+
+
+You’re circling something real—but the way you’ve phrased it is almost right and needs sharpening to avoid a misleading conclusion.
+The intuition you have (what’s right)
+There is a general pattern across systems (quantum → statistical → macroscopic):
+	• Small-scale systems → fast, frequent fluctuations, constant “micro-corrections” 
+	• Large-scale systems → slower dynamics, larger, rarer adjustments 
+	• Aggregation → noise averages out, leaving smoother but more persistent deviations 
+This shows up everywhere:
+	• Quantum systems → constant fluctuations, decoherence corrections 
+	• Molecular systems → thermal noise averaging into temperature 
+	• Markets → tick noise vs structural moves 
+	• Climate → weather vs long-term shifts 
+So your idea of:
+	“Corrections become rarer but larger as scale increases”
+…is directionally correct.
+
+Where it breaks (important correction)
+The key mistake is thinking that “corrections” are actively happening at all scales in the same way.
+They’re not.
+What actually changes is:
+	Whether the system is dominated by noise or by structure.
+
+A better framing
+1. At the quantum / micro level
+	• Everything is fluctuation-dominated 
+	• There is no clear “imbalance” vs “correction” 
+	• It’s just continuous stochastic motion 
+	• “Correction” is not meaningful—it’s all noise 
+
+2. At mesoscopic levels (statistical physics)
+	• You start getting restoring forces 
+		○ e.g. diffusion, mean reversion, entropy maximisation 
+	• Imbalances exist, but: 
+		○ They are corrected continuously 
+		○ Via many small interactions 
+This is closest to your “constant corrections” idea.
+
+3. At macroscopic / aggregated levels
+Now something qualitatively different happens:
+	• Small fluctuations cancel out 
+	• Only large, coherent imbalances survive aggregation 
+	• Systems develop: 
+		○ inertia 
+		○ thresholds 
+		○ nonlinear responses 
+So:
+	Corrections are not rarer because the system waits
+	They are rarer because only large deviations are visible at that scale
+
+The key principle (this is the core insight)
+Across scales, what changes is:
+	Signal-to-noise filtering via aggregation
+Mathematically / conceptually:
+	• Micro level → high variance, low persistence 
+	• Macro level → low variance (relative), high persistence 
+So:
+	• Small imbalances → disappear in aggregation 
+	• Large imbalances → propagate → require large corrections 
+
+Your idea, refined
+A more accurate version of your statement would be:
+	At small scales, systems are dominated by continuous stochastic fluctuations that appear as constant micro-adjustments.
+	As we move to larger scales, aggregation filters out small fluctuations, so only larger, more persistent imbalances remain—these manifest as rarer but larger corrections.
+
+Why this matters (especially for you / trading)
+This maps directly to what you’ve been working on:
+	• Order book level 
+		○ constant noise → microstructure → spread capture 
+	• Short-term signals 
+		○ small mean reversion → frequent, small trades 
+	• Longer horizons 
+		○ trend / drift → fewer, larger moves 
+And the trap you’ve been hitting:
+	Trying to apply micro-level “corrections” logic at macro scale (or vice versa)
+That’s why combining:
+	• market making 
+		○ directional holding 
+…keeps conflicting.
+They operate on different correction regimes.
+
+Even deeper (if you want to push this)
+What you’re describing is closely related to:
+	• Renormalisation / coarse-graining 
+	• Central Limit Theorem 
+	• Mean field approximations 
+	• Scale separation in stochastic systems 
+And in markets:
+	• microstructure noise vs alpha 
+	• liquidity vs information 
+	• HFT vs positional trading
+
+	Voucher surface relative-value with delta hedge
+This is the best candidate.
+Why it is attractive
+The voucher strip is orderly, monotone, and strongly tied to Velvetfruit spot, but the time-value surface is where the action is. The ATM/near-ATM options carry the largest extrinsic value and the strongest useful beta to spot.
+Recommended universe
+• Primary: VEV_5000, VEV_5100, VEV_5200, VEV_5300
+• Hedge: VELVETFRUIT_EXTRACT
+Signal construction
+At each snapshot:
+1. Compute intrinsic value and time value.
+2. Fit a rolling smooth curve to time value as a function of strike, using the last 50 to 200 snapshots.
+3. Identify residuals:
+• buy undervalued voucher if residual < -1.5σ to -2.5σ
+• sell overvalued voucher if residual > +1.5σ to +2.5σ
+4. Hedge spot exposure with Velvetfruit using a rolling beta or local delta proxy.
+Working hedge ratios from this file
+• VEV_5000: about 0.65
+• VEV_5100: about 0.58
+• VEV_5200: about 0.44
+• VEV_5300: about 0.27
+Entry and exit
+• Enter on residual z-score breach with both the voucher and the hedge two-sided.
+• Exit when residual mean reverts inside |z| < 0.5.
+• Time stop: 5 to 30 snapshots.
+• Hard stop: if the corresponding hedge ratio changes materially or a best side disappears.
+Risk controls
+• Max net spot delta close to zero after hedge
+• Per-strike gross exposure cap
+• Kill switch if top-of-book disappears
+• Reject VEV_6000 and VEV_6500
+• Reject signals when spread exceeds median plus 2σ
+Sensitivity to missing-side events
+High. If any leg loses a best side, the apparent mispricing can be fake because executable parity disappears. This strategy should trade only when both the voucher and hedge have live two-sided books.
+Velvetfruit spot and voucher market making
+This is the best “steady throughput” strategy if you must produce continuous flow.
+Why it is attractive
+• Velvetfruit spot spread is stable at around 5 ticks
+• Near-ATM vouchers have real informational linkage to spot
+• Surface is well-behaved, so inventory can be hedged
+Recommended instruments
+• VELVETFRUIT_EXTRACT
+• VEV_5000
+• VEV_5100
+• VEV_5200
+• selectively VEV_5300
+Quoting rules
+• Base half-width:
+• Spot: 0.5x to 1.2x median spread
+• Vouchers: 0.8x to 1.5x median spread
+• Inventory skew:
+• widen adverse side as inventory grows
+• lean quotes in direction of hedge need
+• Reprice frequency:
+• every snapshot if underlying or surface moves
+• immediate cancel if missing side appears in any hedge leg
+Entry and exit logic
+This is continuous quoting, but operational rules matter:
+• Quote only when both sides are present
+• Quote size proportional to visible depth and inverse to churn
+• Pull quotes during high-churn bursts or when the underlier moves sharply without voucher confirmation
+• Hedge voucher fills into spot immediately if inventory exceeds threshold
+Risk controls
+• Spot inventory cap
+• Option vegas/gammas approximated by moneyness bucket limits
+• Stop quoting OTM tails during missing-side conditions
+• Volatility throttle when one-snapshot spot move exceeds 2 to 3 median moves
+Sensitivity to missing-side events
+Moderate to high. Missing-side events in OTM vouchers make passive bid quoting non-viable and can poison model-based fair values. Keep the curve-trader active in 5000–5300, not 6000+.
+Deep-ITM conversion or synthetic hedge
+This is less of a pure alpha strategy and more of a structural hedge / basis control strategy.
+VEV_4000 and VEV_4500 behave almost like synthetic spot:
+• average time value around 0.01
+• extremely tight relationship to Velvetfruit
+• deep ITM basis is nearly flat
+Use case
+• hedge spot inventory with deep ITM vouchers when spot book is temporarily less attractive
+• exploit temporary basis deviations if the exchange permits voucher conversion or exercise with low friction
+Signal
+Track:
+[ B_t = C_t + K - S_t ]
+For deep ITM calls, this basis should stay very near a small constant.
+Entry
+• Buy call / sell spot if B_t is too low
+• Sell call / buy spot if B_t is too high
+• Only when both books are two-sided and conversion rules are known
+Exit
+• Exit when basis returns toward rolling median
+• Hard exit on spread blowout or side disappearance
+Important caution
+The current file does not include exercise style, maturity, settlement timing, or fees. So this is a design recommendation, not a backtested production strategy.
+Latency-sensitive stale-quote taking
+This is only a secondary idea because the observed lead/lag structure is weak.
+Across the voucher ladder, the best measured lag is basically lag 0, not lag +1. That means the vouchers usually move in sync with Velvetfruit at the snapshot granularity.
+So the strategy should be very selective:
+• trigger only on large Velvetfruit moves
+• look for option quotes that did not reprice by an adequate fraction of expected beta
+• take liquidity only if your latency is materially better than the market and raw event timestamps confirm the delay
+Parameter ranges
+• spot move trigger: 2 to 4 ticks or top decile of spot moves
+• stale option threshold: option move < 30% to 40% of expected beta-adjusted move
+• hold period: 1 to 3 snapshots
+• cancel if the option reprices before your order would realistically arrive
+Sensitivity to missing-side events
+Very high. Missing sides can make “stale” quotes look attractive when they are simply non-executable.
+Liquidity taking around blip proxies
+A proper orderflow-blip strategy cannot be validated from this file because the event stream is missing. But a book-blip fade can still be designed.
+Use only in:
+• VELVETFRUIT_EXTRACT
+• VEV_5000
+• VEV_5100
+• VEV_5200
+Signal idea
+• detect a one-snapshot outlier move with no supporting depth continuation
+• require partial reversal in the next snapshot or two
+• fade the move with small size
+Rules
+• Enter against a move that is at least 4x to 5x the median one-snapshot move
+• Require spread to stay normal or narrow
+• Hold 1 to 5 snapshots
+• Stop if price extends another 1 to 2 ticks against you
+Sensitivity
+Moderate. This is useful only if the signal is built from the reconstructed state, not from duplicated trade-print columns.
+Hydrogel standalone market making
+This is the best idea for Hydrogel given the absence of Hydrogel vouchers.
+Hydrogel has:
+• stable center near 10,000
+• mean spread around 15.7
+• no strong cross-asset alpha from Velvetfruit
+That makes it suitable for simple passive inventory-managed market making, not for pair trading.
+Rules
+• quote around midpoint using 0.5x to 1.0x of median spread
+• symmetric size at low inventory, strong skew once inventory exceeds threshold
+• reduce quoting during visible churn bursts
+• mark-to-market off midpoint, not off last_price
+Risk controls
+• strict inventory cap
+• time stop for stale inventory
+• disable if visible depth collapses or update churn exceeds threshold
+
+From <https://chatgpt.com/c/69ebeb1a-216c-83eb-8608-4757ab90eb2d> 
+
+ 
+Combine quoting and taking logic
+All three approaches, in one way or another, are about deciding:
+
+* when to take liquidity because the current price looks favourable
+* when to make liquidity by posting bids and asks around an estimated fair price
+
+So the common trading pattern is not just prediction, but prediction plus execution logic.
 
 
 Products
@@ -1154,7 +3141,89 @@ Check for skewness for momentum
 <img width="1504" height="806" alt="image" src="https://github.com/user-attachments/assets/714c1fee-f932-4891-9b0e-03f617e83079" />
 <img width="1028" height="944" alt="image" src="https://github.com/user-attachments/assets/5e8d959f-2d74-4546-9560-079abc1884ab" />
 
+There are three bodies of work in what you shared: competition strategy notes, the Tomorrow Capital Research conjectures, and earlier design and learning notes.
 
+1. Competition strategy (IMC Prosperity-style round)
+
+The ranking table scores seven strategies by return, Sharpe, complexity and requirements:
+
+Strategy	Return / quality	Complexity
+Voucher-surface relative value on VEV_5000–5300 vs Velvetfruit	High / high	High
+Velvetfruit spot + voucher market making	Medium-high	Medium
+Deep-ITM basis on VEV_4000/4500	Medium	High
+Hydrogel standalone market making	Medium	Low-medium
+Stale-quote taking, blip fades, Hydrogel–Velvetfruit stat arb	Low to medium-low	—
+
+Document 1 gives the detail behind each row:
+
+Voucher relative value. Fit a rolling curve of time value against strike, trade residuals beyond about ±1.5–2.5σ, delta-hedge with spot (betas of roughly 0.65, 0.58, 0.44 and 0.27), and exit inside |z| < 0.5.
+Market making. Quote spot and near-ATM vouchers with inventory skew.
+Deep-ITM basis. Track C + K − S, which should be nearly flat.
+Stale-quote taking. Weak, because the vouchers move at lag 0 with spot.
+Blip fades. Fade outlier moves of 4–5× the median move.
+Hydrogel market making. Stable around 10,000 with a mean spread of ~15.7 and no cross-asset alpha.
+Recurring warning. Missing book sides create fake mispricings, so trade only when every leg has a two-sided book.
+
+Documents 2–4 answer “what’s optimal for a range-bound asset with a ±80 limit” (2 and 3 are duplicates). They all reach the same answer:
+
+Inventory-skewed market making around a robust fair value, using the reservation price r = FV − k·q (Avellaneda–Stoikov).
+Tiered inventory regimes, shrinking size as inventory grows, and pulling the risky side near the limit.
+Taking only rarely, at large dislocations, and in the direction that reduces inventory. Your observation that taking cut PnL from 2300 to 1600 is diagnosed as thresholds set too tight.
+Document 4 adds tuning advice: grid-search the risk-aversion parameter so inventory stays within the limit about 99% of the time.
+
+Your own notes on teams’ code (from the Prosperity tutorial round) group them into three archetypes:
+
+A fixed fair value of 10,000 with simple take and make.
+An EMA fair value with inventory-skewed quotes.
+A regression forecast on cached Banana prices.
+
+Your takeaways from these:
+
+Every team keeps state.
+Every team strictly enforces position limits.
+They all build from simple parts.
+Each team’s edge is “prediction plus execution logic,” meaning the combination of quoting and taking.
+2. Tomorrow Capital Research conjectures (with LinkedIn posts)
+C1, strategy reallocation under path switching: when the regime or model changes at T₂, how to move from the old position path θ⁽¹⁾ to the new θ⁽²⁾ through a blend weight wₜ. The transition has to balance closeness to the target against cost and risk, and stay robust across Monte Carlo scenarios.
+C2, the central pricing problem: for N > 3 interacting assets and derivatives, the next price is a time-varying mix of an immediate-impact term and a historical-dynamics term. The setting is mean-field and includes your own price impact. The conjecture claims there exist a short-horizon central-price estimator and valid confidence regions for horizons H ≥ 5. A bonus is a framework unifying market-making, HFT and long-term pricing.
+C3, stealth-optimal execution: split a notional Q over [0, τ] across time, size and up to 100 accounts. The model has square-root visibility, size-dependent costs, cross-impact and a finite market memory. The aim is to minimise detectability and slippage, with existence, uniqueness and an algorithm wanted. The post credits Lorenzo M. Zorzi Chiarioni with a solution to the initial version.
+C4 / “X”, existence of optimal strategies in the full model: markets as a hybrid (flow plus jump) multi-agent system on a manifold M×S. The question is whether an optimal feedback or geodesic policy exists, or a Nash or mean-field equilibrium solving an HJB–Fokker–Planck system. You deliberately released no PDF for this one.
+C5, “The Final Problem”: a firm decomposed into portfolio, strategy and execution layers, each with local objectives. The conjecture is that a single variational, multiscale principle makes the whole configuration globally and locally optimal at once. You frame it as the closing problem of a self-learning financial architecture.
+3. Design, learning and research notes
+Trend-following system (document 11):
+Multi-horizon EWMAC or time-series momentum signals, risk-scaled and squashed with tanh.
+Horizon weights learned online, by Bayesian averaging or regime conditioning.
+Volatility targeting plus a drawdown governor.
+Cost-aware mean-variance optimisation with constraints.
+An execution model and kill switches.
+Stat-arb design (in your message):
+A clean, liquid universe and a factor risk model.
+Residual mean-reversion alpha with “cheap for a reason” filters.
+Clustering, baskets and Kalman-filter pairs.
+A neutral, constrained optimiser.
+Execution and correlation-spike risk controls.
+Early architecture notes (document 5):
+A crypto/equities, ultra-low-latency vs mid-frequency strategy map.
+A pipeline running data → features → strategies → C++ order manager → risk → monitoring.
+A staged path from prototype to live trading.
+The beginner’s £50 guide (document 5): a generic guide to learning quant trading on a small budget. It also reviews your COPtoLON repos and calls them advanced research notes.
+RL meeting notes with Aksel Fristrup (Danish, document 5):
+Continuous-time q-learning and neural rough differential equations for non-Markovian control.
+Path signatures and decision transformers.
+Model-based vs model-free (PPO, actor-critic) approaches.
+Exploration, with entropy regularisation (Rényi, Tsallis) and reward shaping.
+Neural Hawkes processes, hierarchical multi-agent RL, credit assignment and counterfactual learning.
+Multiscale idea (documents 2–3): corrections look constant and small at micro scale and rare and large at macro scale. The refinement is that aggregation filters noise, so only persistent imbalances survive. This explains why market making and directional holding conflict: they live in different correction regimes.
+The common thread
+
+The competition notes are a small, concrete instance of the conjectures:
+
+Fair value is a toy version of C2.
+Inventory skew and execution are small-scale versions of C3.
+Switching between making, taking and hedging regimes is C1.
+Running several products and strategies under shared position limits is C5 in miniature.
+
+The RL notes are the toolkit you’d use to attack C4.
 
 <img width="740" height="4488" alt="image" src="https://github.com/user-attachments/assets/b3c06ac4-7f4e-4bc2-a2c2-4775ce7a917c" />
 
