@@ -1,7 +1,7 @@
 I need help with the next steps in my career.
 I have the following conditions, 
 
-1. I need to move up in real wage.
+1. I need to move up in real wage. And even if it requires A LOT OF HARD WORK, it must be guaranteed to give better income.
 2. I can't afford to spend more than 300£ per month extra to do so.
 3. It doesn't have to be finding a new job or career, it can be adding on side hustles, that can be done on weekends or in the periods of time my job is quiet.
 
@@ -24,7 +24,6 @@ I have prompted on previous occasions about a best career path
 
 1. What might be the best career path for me, this should simply be your opinion or estimation.
 2. How do we get there from where we are at."
-
 
 
 These 3 are websites I want to run for the Tomorrow Capital Research ecosystem.
