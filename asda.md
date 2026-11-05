@@ -38,12 +38,13 @@ Quantitative developer and analyst with experience across pension-fund risk anal
 
 ### Konecta — Customer Service Representative, Danish Market (Center Parcs account)
 **London · May 2026 – Present**
-*Management-information and reporting development alongside the service representative role*
+*Management-information and reporting development alongside the service representative role* \
 **Representative role**
 - Handle inbound sales and service for the Danish market, plus Foreign Markets(English speakers) overflow and outbound welcome calls, on the AS400 / IBM-i booking system and the PVCP booking platform(Polo system).
 - Highest average booking retention in the Danish queue, 100% of my bookings stay, sales conversion above the European benchmark, and service handling time around one minute faster than the campaign standard.
 - Rated 90–100% on listening, empathy, clarity and problem resolution in quality audits; 86.1% on the most recent service evaluation against a 75% target.
 - Became a regular point of contact for Danish and Dutch colleagues on AS400 navigation, cancellation and modification rules, and call handling. Codified the most common rules into a shared booking calculator that derives cancellation fees, modification fees and refund entitlement from booking date, arrival date, add-ons and insurance status.
+
 **Management information and reporting automation (self-initiated)**
 - **Call-reason taxonomy.** With no agent-level call-reason reporting available, hand-logged every call (category, timestamp, note), derived a structured taxonomy of around a dozen reasons from the free text, and profiled inbound demand and outbound contact windows by hour — correcting for censoring caused by my own breaks, shift boundaries and long calls before using the results.
 - **KPI reporting pipeline.** Replaced an AI-assisted (NotebookLM) reporting process that produced unreliable figures with a deterministic script-based pipeline. It reads six daily BI exports (daily, week-to-date and month-to-date across sales and service queues), rebuilds a seven-tab agent-level KPI pack for the Benelux and Danish markets, benchmarks against peer sites and scores conversion against target with RAG flags. In daily use by the account's management team.
