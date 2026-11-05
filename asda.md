@@ -36,18 +36,14 @@ Quantitative developer and analyst with experience across pension-fund risk anal
 
 ## Experience
 
-### Konecta — Customer Service Advisor, Danish Market (Center Parcs account)
+### Konecta — Customer Service Representative, Danish Market (Center Parcs account)
 **London · May 2026 – Present**
-*Management-information and reporting development alongside the advisor role*
-
-<!-- CHECK: official job title. Drafts use "Customer Service Advisor", "Customer Service & Sales Advisor" and "Customer Service Representative". Use whatever the contract / a background check would return. -->
-
-**Advisor role**
-- Handle inbound sales and service for the Danish market, plus Dutch and Belgian overflow and outbound welcome calls, on the AS400 / IBM i booking system and the PVCP booking platform.
-- Highest average booking value in the Danish queue (€1,542–€2,628 against a €1,080 queue average), sales conversion above the European benchmark, and service handling time around one minute faster than the campaign standard.
-- Rated 90–100% on listening, clarity and problem resolution in quality audits; 86.1% on the most recent service evaluation against a 75% target.
+*Management-information and reporting development alongside the service representative role*
+**Representative role**
+- Handle inbound sales and service for the Danish market, plus Foreign Markets(English speakers) overflow and outbound welcome calls, on the AS400 / IBM-i booking system and the PVCP booking platform(Polo system).
+- Highest average booking retention in the Danish queue, 100% of my bookings stay, sales conversion above the European benchmark, and service handling time around one minute faster than the campaign standard.
+- Rated 90–100% on listening, empathy, clarity and problem resolution in quality audits; 86.1% on the most recent service evaluation against a 75% target.
 - Became a regular point of contact for Danish and Dutch colleagues on AS400 navigation, cancellation and modification rules, and call handling. Codified the most common rules into a shared booking calculator that derives cancellation fees, modification fees and refund entitlement from booking date, arrival date, add-ons and insurance status.
-
 **Management information and reporting automation (self-initiated)**
 - **Call-reason taxonomy.** With no agent-level call-reason reporting available, hand-logged every call (category, timestamp, note), derived a structured taxonomy of around a dozen reasons from the free text, and profiled inbound demand and outbound contact windows by hour — correcting for censoring caused by my own breaks, shift boundaries and long calls before using the results.
 - **KPI reporting pipeline.** Replaced an AI-assisted (NotebookLM) reporting process that produced unreliable figures with a deterministic script-based pipeline. It reads six daily BI exports (daily, week-to-date and month-to-date across sales and service queues), rebuilds a seven-tab agent-level KPI pack for the Benelux and Danish markets, benchmarks against peer sites and scores conversion against target with RAG flags. In daily use by the account's management team.
@@ -59,15 +55,13 @@ Quantitative developer and analyst with experience across pension-fund risk anal
 - **Automated client slides.** Designed an idempotent daily slide export that tags its own output and redraws it in place, so repeated or failed runs never duplicate slides and slides are still found after the reader reorders the deck.
 - **Testing.** Validated each tool before go-live against simulated test environments, including a strict mock of the Google Apps Script API (74 assertions across 8 scenarios), and an independent Python recalculation of every published figure from the raw data.
 
-*Tools: Google Apps Script (JavaScript), Google Sheets / Slides / Forms, Python, AS400 / IBM i (5250), data reconciliation and QA, KPI design, Bayesian modelling*
+*Tools: Google Apps Script (JavaScript), Google Sheets / Slides / Forms, Python, AS400 / IBM-i (5250), data reconciliation and QA, KPI design, Bayesian modelling*
 
 ---
 
 ### Tomorrow Capital Research — Quantitative Developer & Researcher
 **Remote · January 2024 – Present**
 *Independent research venture developing systematic trading strategies and infrastructure.*
-
-<!-- An earlier draft listed this as "WTECH, Copenhagen" with claims about incorporation, securing funding and recruiting a team. Removed: only add back what you can document. -->
 
 **Research**
 - **Market-state detection:** custom state classifiers, Hidden Markov Models, decision-tree frameworks, autocorrelation analysis and stationarity tests.
@@ -82,17 +76,20 @@ Quantitative developer and analyst with experience across pension-fund risk anal
 
 *Tools: Python, SQL, C++, Monte Carlo methods, HMMs, ARIMA/GARCH, OOP, modular architecture*
 
+*Note: this needs SIGNIFICANTLY MORE DATA*
+
+
 ---
 
 ### Freelance Software Developer & Quantitative Consultant
 **Self-employed · Remote · May 2024 – Present**
-
 - **Sports betting research (Oct – Nov 2025):** Designed probabilistic models for European football markets (1X2, goals and more) using historical performance, league effects and matchup dynamics. Modelled micro-events (shots, shots on target, corners, cards, fouls) with Poisson, negative binomial, Gamma, Normal and empirical distributions and conditional probabilities. Built data intake for weather, line-ups, historical and player data, with a correlated model setup and bet-ordering across multiple bookmakers.
 - **Strategy performance validation (Sep – Oct 2025):** Validated trading-book data for price integrity, transaction costs and execution consistency; recalculated CAGR, absolute and cumulative returns, volatility and Sharpe ratio from raw trades; documented methodological issues in backtesting assumptions and execution logic.
-- **Low-latency crypto trading (Dec 2024 – Feb 2025):** Built a low-latency system for clients trading newly listed tokens on the Raydium market.
+- **Low-latency crypto trading (Dec 2024 – Feb 2025):** Built a low-latency system for clients trading newly listed tokens on the Raydium market. *Note: This was done back in Denmark with the pump.fun website, I have later found that the website isn't available in the UK, for good reasons, but I have since discovered that this particular Alpha can be utilised in other ways and have done much more research on it.*
 - **Algorithmic scripting (May – Jul 2024):** Pine Script strategy on TradingView triggering trades on custom signals (session-time setups, exchange opening times, multi-day mean reversion).
+- **Web and game development (July 2026 - September 2026):** For a colleague I setup a free website and webdevelopment of an app, a game involving clues and puzzle solutions for romance crime solving, the website and link is https://www.clubclue.com/ The inspiration was taken from Murdle, but the theme was pivoted towards romance, intrigue and relationship drama.
 - **Web development (May – Jul 2024):** Static HTML/CSS/JavaScript portfolio website for a hobby photographer.
-- **Excel integrations (ongoing):** Workbook enhancements in Python, C#, VBA and VBScript — dashboards, financial calculations and inter-application automation.
+- **Excel integrations(Sporadic):** Workbook enhancements in Python, C#, VBA and VBScript — dashboards, financial calculations and inter-application automation.
 
 *Tools: Python, Excel, VBA, C#, Pine Script, HTML/CSS/JavaScript*
 
@@ -100,10 +97,7 @@ Quantitative developer and analyst with experience across pension-fund risk anal
 
 ### LD Pensions — Junior Quantitative Developer
 **Copenhagen, Denmark · August 2023 – May 2024**
-*Part-time student position, 15–35 hours per week, year-round. Danish pension fund managing assets on behalf of members.*
-
-<!-- CHECK: exact title on contract / reference. -->
-
+*Part-time student position, 15–35 hours per week, year-round. Danish pension fund managing assets on behalf of members and the public*
 - **Data pipelines:** Automated, scheduled Python ETL ingesting and cleaning data from Nykredit, Nordea, Bloomberg, MSCI, Sustainalytics, Morgan Stanley and Danske Bank into the central database, so analytics were up to date at the start of each workday.
 - **Internal Python library ("LDF"):** On-premises package for quantitative analysis, risk modelling and data management, refactored from functional to object-oriented design, with an Excel add-in exposing it to non-technical users.
 - **Risk analytics:** Modules for VaR, CVaR, credit, interest-rate, currency and derivatives risk, with emphasis on margin-call frameworks for currency futures and rate-sensitive portfolios.
@@ -114,14 +108,13 @@ Quantitative developer and analyst with experience across pension-fund risk anal
 
 *Tools: Python, SQL, VBA, Power BI, Bloomberg/MSCI APIs, VaR/CVaR, scenario simulation*
 
+Note: I want this work experience to have significantly more information about what work I did while being employed here, as this job was likely one of the positions where I have done the most work mentally, programmaticly, structurally, other than Tomorrow Capital Research.
+
 ---
 
 ### Lån & Spar Bank — Data Quality Analyst
 **Copenhagen, Denmark · January 2023 – August 2023**
 *Part-time student position, 15–35 hours per week, year-round. Danish retail bank.*
-
-<!-- CHECK: exact title on contract / reference. -->
-
 - Assessed and documented data-quality indicators for the bank's upcoming IRB system (2025 launch), analysing PD/PC, LGD/LGC, EAD and default-definition procedures across accuracy, completeness, consistency, validity, uniqueness and integrity.
 - Worked with the head of IRB, IRB analysts and model validators to confirm the right variables were covered; produced data-quality reports and presented them to stakeholders.
 - Mapped and diagrammed the SAS table architecture linking credit evaluation, IRB and transactional systems.
@@ -136,11 +129,9 @@ Quantitative developer and analyst with experience across pension-fund risk anal
 ### DJØF — VBA & Python Course Instructor
 **Copenhagen, Denmark · January 2023 – August 2023**
 *Danish Association of Lawyers and Economists.*
-
 - Designed and taught Excel, VBA and Python courses, online and in person, from beginner to advanced level.
 - Built advanced VBA material covering nested macros, custom functions and cross-application automation (VBA/VBScript).
 - Based exercises on real tasks — automating routine processes, analysing datasets — and refined material from participant feedback.
-
 *Training: 3-day course in pedagogical presentation*
 
 ---
@@ -148,7 +139,6 @@ Quantitative developer and analyst with experience across pension-fund risk anal
 ### Statistics Denmark — Data Analyst & Developer
 **Copenhagen, Denmark · August 2021 – August 2023**
 *Part-time student position, 15–50 hours per week, year-round. Denmark's national statistics authority.*
-
 - **Timesheet and budgeting:** Administered the timesheet and budgeting platform; ran monthly SAS/SQL extractions for budget and salary forecasts, hour estimates and reallocation of borrowed hours; integrated Navision (bookkeeping), Dynamics (CRM) and legacy budget systems into SAS/SQL pipelines.
 - **Donations system:** Helped run the donations system (C#, SQL, Excel) and built an API integration with the legacy platform for monitoring income, expenses and project usage.
 - **Project finance:** Built an Excel/VBA/SAS/SQL toolset consolidating project data (hours, overhead, CRM and external costs), classifying projects by profitability, owner and expense flow, with automated email reminders to project leads.
@@ -158,12 +148,13 @@ Quantitative developer and analyst with experience across pension-fund risk anal
 *Tools: SAS, SQL, C#, VBA/VBScript, Power BI, Navision, Dynamics*
 *Training: SAS Institute programmer course series; internal courses in Statistics with R I & II and Demographic Statistics*
 
+Note: I want this work experience to have significantly more information about what work I did while being employed here, as that similarly, I did A LOT OF WORK here like with Tomorrow capital research and LD Pensions
+
 ---
 
 ### MentorDenmark — Senior Mentor, Physics, Mathematics & Science
 **Copenhagen, Denmark · August 2017 – August 2021**
 *Denmark's largest tutoring company.*
-
 - Top-5 senior mentor: over 1,000 hours tutoring mathematics, physics and science to students aged 7–23, with an average satisfaction rating of 4.7/5.
 - Prepared more than 50 students for mathematics exams through curriculum review, mock exams and simulated examiner scenarios.
 
@@ -174,7 +165,6 @@ Quantitative developer and analyst with experience across pension-fund risk anal
 ### Thomas Lystlund Studio — Data Analysis Intern
 **Copenhagen, Denmark · March 2019 – May 2019**
 *Single-project internship (unpaid).*
-
 - Analysed cash flows and projected returns of forex trading bots the client was considering, identified likely scams and recommended safer alternatives.
 
 ---
@@ -197,7 +187,7 @@ Quantitative developer and analyst with experience across pension-fund risk anal
 ## Education
 
 ### BSc Mathematical Statistics — University of Copenhagen
-**2021 – 2025 (on hold)**
+**2021 – 2025 (Dropped out)**
 - Bachelor project: *Option Pricing with Stochastic Volatility in the Heston Model* — R/C++ package for Heston pricing and volatility-surface work, developed with a company that now uses it commercially.
 - First-year project: *Event Study in the Stock Market* (Apple's announced acquisition of AuthenTec).
 - Relevant courses: Mathematical Statistics, Stochastic Processes I & II, Advanced Probability Theory, Life Insurance, General Insurance, Differential Geometry.
