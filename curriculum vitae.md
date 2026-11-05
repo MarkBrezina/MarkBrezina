@@ -5,12 +5,35 @@ Hidden notes like this one don't render on GitHub but are visible in the raw fil
 Open items are collected at the bottom.
 Last updated: 2026-11-05
 -->
-
-# Mark Brezina
-
+# Name: Mark Daniel Balle Brezina 
 London, UK · (+44) 7761 917 490 · [mark@brezina.dk](mailto:mark@brezina.dk) · [LinkedIn](https://www.linkedin.com/in/markbrezina95) · [GitHub](https://github.com/MarkBrezina)
 
 UK right to work (partner visa, no sponsorship required)
+
+
+# Name: Mark Daniel Balle Brezina 
+Age: 31 \
+Birthday: 4th, August, 1995 \
+Height: 171cm \
+Weight: 86kg \
+Gender: Male \
+IQ-Score: 159 (tested) \
+Address: London, SE13 7UD, 6 Nuding Close
+### Contact information 
+UK-phone: (+44) 7761917490 \
+DK-phone: (+45) 93904834 \
+Private-email: mark@brezina.dk \
+Work-email: cphtolon@gmail.com \
+Linkedin: https://www.linkedin.com/in/coptolon/ \
+GitHub: https://github.com/COPtoLON \
+Wilmott-forum-username: CopenhagentoLondon, MarkBrezina \
+Quantnet-forum-username: MarkBrezina 
+### Availability 
+• Immediately available for work. \
+• Open to work: full-time, part-time, internship, contract, permanent. \
+• Danish native, with citizenship. Available for work in Denmark. \
+• European native, with citizenship. Available for work in all of the European Union, Iceland, Greenland, Norway, Switzerland and more. \
+• UK partner visa holder, Right to work in the UK, no future sponsorship required. 
 
 <!-- Full address used on applications: 6 Nuding Close, London SE13 7UD. Kept out of the rendered page in case the repo is public. -->
 
@@ -268,6 +291,8 @@ Quantitative developer and researcher with experience in pension-fund risk analy
 - First-year project: *Event Study in the Stock Market* (Apple's announced acquisition of AuthenTec).
 - Relevant courses: Mathematical Statistics, Stochastic Processes I & II, Advanced Probability Theory, Life Insurance, General Insurance, Differential Geometry.
 
+Thesis: “Option Pricing with Stochastic Volatility in the Heston Model” - developed as a library in R and used by the company EnvisionRisk \
+
 ### BSc Mathematical Physics — University of Copenhagen
 **2019 – 2021 (withdrew)**
 - First-year project: *Estimating Dark Matter Density from Spiral Galaxy Rotation Curves*.
@@ -275,6 +300,9 @@ Quantitative developer and researcher with experience in pension-fund risk analy
 
 ### Upper secondary (STX) — KNORD Lyngby
 Physics A, Mathematics A, English A, Danish A, Chemistry B.
+### Ordinary student exam - KNord Lyngby STX, Denmark Kongens Lyngby 
+Subjects: Danish A, English A, History A, Mathematics A, Physics A, Chemistry B, German B, Biology C, Design C, Innovation C, Philosophy C, Religion C, Social Science C, Natural science introduction C, General language C \
+GPA: approximately 8.5/12. 
 
 ---
 
@@ -408,6 +436,24 @@ Chess rating left out on purpose — 330 reads as a beginner rating; say "active
 | 2026-10-13 | London Quant Group | Manav Chaudhary — The Anatomy of the Treasury Market |
 
 <!-- CHECK: 2026-06-09 title had "(...)" in your notes — fill in the full title. 2026-07-14 organiser missing. 2026-09-13 is a Sunday — confirm the date. Your note says you stopped logging for a while, so there may be gaps between June and October 2026. -->
+
+- Unknown, multiple - Henrik Hørsløv Larsen - beer meetup 
+- 7/2/2025 - Peter Pommergård Holm - beer meetup 
+- 13/2/2025 - Oxford Mathematical and Computational Finance - Eghbal Rahimikia - Revisiting Large Language Models in Finance 
+- 27/2/2025 - Quant Insider – Andrey Chirikhin – Introduction to Credit Derivatives 
+- 8/3/2025 - Bangalore Quant Club - Peter Cotton - Machine Learning for Hierachical Portfolio Optimization Using Schur Complements 
+- 11/3/2025 - Imperial College - Daniel Lacker - Non asymptomatic perspectives on mean field approximations and stochastic control 
+- 12/3/2025 - CQF Institute - Portfolio Management in Quant Finance Conference 
+- 8/4/2025 - London Quant Group & Bloomberg - Smart Money, Digital Currencies and the Emerging New World Order 
+-  7/5/2025 - CQF Institute - Professor Laura Ballotta - The Term Structure of Implied Correlations Between S&P and VIX Markets 
+- 11/5/2025 - London Investors and Traders Group - Discussion & Networking 
+- 12/5/2025 - Great Britain Crypto, Forex/Gold, Stock/Index Trading Community Meetup! 
+- 13/5/2025 - London Quant Group - Artur Sepp - The Science and Practice of Trend
+- ??? Bloomberg event
+- 4/6/2025 - CQF Institute - Volatility conference
+- 5/6/2025 - Learning the values of illiquid bonds
+- 11/6/2025 - Financial Reasoning Agents: In-Context Reinforcement Learning and Test-Time Compute' with Nicole Königstein
+
 
 ### Certificates
 
