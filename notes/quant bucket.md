@@ -395,3 +395,171 @@ sdweweawewaewae
 <img width="697" height="278" alt="image" src="https://github.com/user-attachments/assets/f117e0ea-9a6a-43d3-b9f6-bdf52593b3c4" />
 <img width="566" height="266" alt="image" src="https://github.com/user-attachments/assets/a1fb92e6-5ded-45ef-ab98-958db32f9654" />
 
+
+
+
+
+
+
+
+Rank		Name	Algo description	Improvement notes
+#2 Overall	IMC2	Linear Utility		
+#2 Overall	IMC1	Stanford Cardinal		
+#9 Overall	IMC2	Jasper (Von Merle)	Market-making	Soft/hard liquidation procedures at less than usual prices to get out of prolonged positions.
+
+Linear regression on starfruit, but not profitable?
+			        - Buy/sell price from maximum volume
+			        - Trading starfruit around 10k
+			
+#13 Overall	IMC2	Kang, Kim, Lee		
+#30 Overall	?	Gabriel Romon		
+#57 Overall	IMC1	Michael Okon		
+#91 Overall		Nicolas Sinott		
+#X >350 Overall	IMC1	Academiq-AI		
+#381 Overall		David Teather		
+				
+				
+				
+
+The challenge is run in rounds. The main focus is market-making
+With the opportunity to do Manual Trading as well.
+
+Round 1
+
+Algo
+The algo side of round 1 appeared to be a continuation of the tutorial round on new data. I tried to improve my market making strategy, but couldn't improve on my tutorial code, so ended up submitting that without any changes.
+
+In this round, we worked on pearls and bananas separately. For pearls, we realized that they had a stable price of around 10,000, but there were times when the best bid was 10,002 and the best ask was 9,998. Additionally, there were trades even at -5, -4, +4 and +5 of the mean price (10k), which meant that all we had to do for pearls was market-take and market-make around 10k.
+For bananas, we ran a linear regression on the last few timesteps of banana prices to predict the next price. Using this to market-take worked reasonably, and market-making along with market-taking worked quite well. We tried to implement LR-on-the-fly, but this didn't work as well (and with the Lambda error bugs that were prevalent through the competition, it was for the best to skip this approach). We noticed that the banana trends were linear-ish across days (ie, day 2 was more similar to day 1 in LR coefficients than day -1 and so on), which could give an additional boost in PnL.
+
+Manual
+How to trade with secretive fish. A challenging and interesting… | by Edgar Maddocks | Medium
+
+The manual trading was straightforward in this round. Based on the results of Round 1, we were in 9th place.
+
+
+
+Round 2
+
+Algo
+The trick was to continuously short sell to the limit at a price at which you could immediately convert profitably back to 0 in the next iteration, hoping for other bots in the simulated market to fill your orders. This got me to 60k profit at first, and to 109k minutes later after I realized you can convert your position to 0 and then immediately go short again in the same iteration. ~Jasper
+
+Manual
+For the manual side of round 2 I calculated the profit of each possible answer, and ended up submitting seashells -> pizza slices -> wasabi roots -> seashells -> pizza slices -> seashells, which gave the maximum profit of 113,938.8.
+
+For the manual round, we submitted a guess of 9,777 based on a simulation. This was good enough to net us some profit, with the median price of the bottom 50% being 9,685. Shockingly, we got a score of below -120k in the algorithmic trading in this round, which dropped us from 9th place to... 926th place!!!
+
+
+
+
+
+Round 3
+
+Algo
+After the round opened, it was clear that the algo side of round 3 was basically a copy-paste of last year's round 4. As such, I started off with building a strategy based on the difference between the value of gift baskets and the combined value of the contents of a gift basket. When this difference crosses certain thresholds, the strategy would go 100% long or 100% short on gift baskets. I later extended it to mirror the position on the individual products of the gift basket, which did reasonably well (although overfit).
+After hearing other participants reaching 600k in backtests and failing to figure that out myself, I decided to start trading the gift baskets and its components at different thresholds, and performed several grid searches to find good thresholds for the 30k iterations of example data. This resulted in a profit on everything but roses, on which I lost over 36k. Following these results I disabled my trading on components for future rounds, as I deemed it too risky against too little potential profits.
+
+Manual
+For the manual challenge of round 3 I combined my gut feeling, some some calculations I ran on guesses of the number of participants choosing each tile, and the spreadsheet containing user-reported expeditions created by noah1921 on Discord. Based on these sources, I figured it was unlikely to earn >75k from an expedition, while >25k seemed very doable, making two expeditions the best amount. I decided on expeditions 83 and 87, mostly based on noah1921's spreadsheet, and ended up with a profit of 78,577. The maximum profit of this manual round was 106,291, which was a bit unfortunate.
+
+Round 4
+
+Algo
+Round 4 had unfortunate scheduling issues. Because both round 1 and round 3 were extended by 24 hours following major production incidents that made submissions impossible, round 4 fell entirely within a pre-planned weekend holiday of mine to Luxembourg to hike part of the Mullerthal trail with my father. I didn't plan on bringing my laptop, meaning all my round 4 work had to be done on a phone.
+The evening before leaving I built a custom Streamlit app to convert email/password to ID token, to use my submitter (converted the CLI to work inside Streamlit), to download leaderboard data (for my own leaderboard website), and to list submissions. On the way to Luxembourg I decided to try some Python editors in the Play Store, and found Pydroid 3 to be the most capable one, because it allows installing and running arbitrary PyPI packages like my backtester. I also found an app called Desktop FullScreen Web Browser, which let me bypass Prosperity's anti-mobile devices "feature" (that happens to be resilient against the "Show desktop version" features in Chrome and Firefox).
+For the algo side of round 4 my inability to effectively analyze the provided data was pretty annoying. While it was clear that coupons were meant as an option-like instrument with coconuts being the underlying assets, I had some trouble turning that knowledge into a profitable strategy. Based on hints from other participants I eventually tried to apply the Black-Scholes model to calculate the expected price of the coupons, and then traded around that. This worked, and following discussions with other participants I was able to tune my Black-Scholes parameters to getting 420k in backtests. The profit I got on coupons in backtests was pretty close to the profit I got at the end of the round, which was nice to see.
+I also created a simple directional trading strategy for coconuts themselves, expecting them to mostly go upwards or downwards during a trading day. This assumption failed catastrophically at the end of the round, leaving me with a 77k loss on coconuts against a 184k profit on coupons. Following these results I stopped using this strategy in round 5.
+
+Manual
+For the manual challenge I figured most people would probably go for round 2's optimal bids of 952/978. Because I thought some people would increase their high bid to be at or above the average, I decided to go for 952/980 instead. The average bid ended up being 980, which left me with a nice profit of 102,592, which appeared to be the maximum profit when comparing to results others posted on Discord.
+
+
+Round 5
+
+Algo
+Round 5's algo challenge introduces de-anonymized trades data. I initially stared at generated charts for a while and found four credible signals, and then ran a grid-search consisting of 3,600 backtests to find signals I might've missed by eye, finding nothing new. These are the signals I found:
+	• If Vladimir sells CHOCOLATE to Remy, then go long on CHOCOLATE.
+	• If Remy sells CHOCOLATE to Vladimir, then go short on CHOCOLATE.
+	• If Rihanna/Rhianna sells ROSES to Vinnie, then go long on ROSES.
+	• If Vinnie sells ROSES to Rihanna/Rhianna, then go short on ROSES.
+My final strategy for each product is as follows, and all of these ended up being profitable in round 5:
+	• AMETHYSTS: market-making around 10,000.
+	• STARFRUIT: market-making around the popular mid price.
+	• ORCHIDS: arbitrage between the north and south archipelagos.
+	• CHOCOLATE: directional trading based on trades between Vladimir and Remy.
+	• STRAWBERRIES: directional trading based on parameters overfit on round 3 data.
+	• ROSES: directional trading based on trades between Rihanna/Rhianna and Vinnie.
+	• GIFT_BASKET: directional trading based on parameters overfit on round 3 data.
+	• COCONUT: nothing, I couldn't find a consistently profitable strategy for it.
+	• COCONUT_COUPON: trading around the expected value of the product calculated using the Black-Scholes model.
+
+Manual
+
+For the manual side of this round I read the Iceberg news and decided that for electric blankets (sell), sleds (sell), ice sculptures (buy), PS6 (buy), and moustache serum (sell) I felt confident about which direction I thought they would move, and that for icicle earrings (buy) I was a little less confident but was still willing to trade. For refrigerators, lava lamps, and hot chocolate I didn't feel certain enough about their direction, so I decided not to trade them. I allocated 10% of my capital to icicle earrings, and then divided the remaining 90% equally between the other products. This resulted in a manual profit of 115k, with the best manual result for this round being 149k, and the optimal being 157k.
+
+
+Additional thoughts
+it appears the trick to getting multi-million algo profits in rounds 4 and 5 was to exploit the coconut data in the Prosperity 2 being a (near-)exact match with the coconut data in Prosperity 1. Congratulations to Puerto Vallerta for figuring that out first during round 4 (presumably), and to the other three teams in the final top 4 that seemingly figured it out too during round 5.
+Prosperity 2 was yet again an interesting competition, with some challenges being very similar to last year's with others being brand-new. It was a bit disappointing to see two rounds being extended due to the website going down for extended periods of time, especially after Prosperity 1's issues with AWS Lambda errors. Hopefully Prosperity 3 is plagued with fewer issues. Nonetheless, I thank Prosperity's organizers for keeping the competition going, and all other participants for creating a lively online community together for the duration of the competition.
+TradingState.order_depths['KELP'] =
+
+Market
+Essentially Trading state:
+
+Timestamp, 
+Listings, 
+
+TraderData, 
+Position, 
+
+Own_trades, 
+Order_depths, 
+Market_trades, 
+Observations.
+
+Agents
+We don't know what triggers what behaviour with these.
+They post buy-sell orders, shown in order depth.
+Posting ludicrous buy-sell orders, don't effect these.
+
+Trader
+Position limits 
+Takes TradingState.
+Runs through products in the market.
+Considers order_depths
+returns orders to market.
+
+<img width="1195" height="890" alt="image" src="https://github.com/user-attachments/assets/2d589a55-24ea-44b3-a5db-b1fbe12ea5d8" />
+
+
+	1. Mid-price
+		a. Drift
+		b. Volatility
+		c. Risk premium, jump probabilities
+
+dS_t=μ_t dt+σ_t  dW_t+∫▒J_t  dN_t
+
+	1. Spread
+		a. High volatility - widen spread
+		b. Low volatility - narrow spread
+	2. Bid price
+		a. Predict future optimal bid
+		b. Positive drift - raise bid
+		c. Negative drift - lower bid
+	3. Bid amount
+		a. High volatility - Smaller amount
+		b. Low volatility - larger amount
+	4. Ask price
+		a. Predict future optimal ask
+		b. Positive drift - lower ask
+		c. Negative drift - raise ask
+	5. Ask amount
+		a. High volatility - Smaller amount
+		b. Low volatility - larger amount
+	6. Inventory
+		a. High volatility - avoid large inventory
+		b. Low volatility - more open to risk
+		c. Adjust for jumps
+		d. Crossing the spread to flatten positions?
+		e. Risk limits, maximum inventory bounds, order throttling
+	
