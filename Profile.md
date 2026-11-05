@@ -107,7 +107,24 @@ I am an ass at interviews and I generalise so much, that most of all the ideas o
 - Expected capital requirements and realistic scaling opportunities.
 - Whether TMRW should remain a side project or become your primary career.""
 
+here are some of my github repos in no particularly good order
+https://github.com/MarkBrezina/CONTROL
+https://github.com/MarkBrezina/QPM
+https://github.com/MarkBrezina/WunderConnectome
+https://github.com/MarkBrezina/WTech
+https://github.com/MarkBrezina/BasicIT
+https://github.com/MarkBrezina/Personal
+https://github.com/MarkBrezina/TMRW
+https://github.com/MarkBrezina/Ctrl-Alt-DefeatTheMarket
+https://github.com/MarkBrezina/Foundational-Quantitative-Research
+https://github.com/MarkBrezina/Market-States-Regimes
+https://github.com/MarkBrezina/Knowledgebase
+https://github.com/MarkBrezina/KB
 
+As you may be able to deduct from these and the many different notes, sites and repos I have shared, my work is essentially lots of reiterations on 3 things.
+1. sharing knowledge I have stored, gained or obtained through research.
+2. Quantitative research work, research into alphas, hedgefund structuring, portfolio management the entire process of algorithmic trading and investing and trying to wrap it into one thing.
+3. Implementations, operations and more with respect to these two.
 
 
 ----------------------------------------------------------------------------------------------------------------------------------------------------
