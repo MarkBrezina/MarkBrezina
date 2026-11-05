@@ -4,15 +4,18 @@
 
 - [x] Setup basic run for WunderFund RNN prediction of prices
 - [o] Reach top 10%(500), 0.65366 WP for WunderFund RNN - we ended up being nr. 890 with 0.649 WP
-- [ ] Improve Extensive CV
+- [x] Improve Extensive CV
   - [x] Added writeup for Konecta
   - [ ] Improve notes on tomorrow capital research work
     - [ ] algo setup
     - [ ] alpha research
     - [ ] infrastructure setup
   - [x] Improve notes on extracurricular activities
-    - [ ] Consider whether spending for ECAs would be useful?
-    - [ ] If so Find additional ECAs
+    - [x] Consider whether spending for ECAs would be useful? Yes, 20£ on Coursera courses.
+    - [x] If so Find additional ECAs
+      - [ ] https://www.coursera.org/learn/reinforcement-learning-in-finance?utm_source=chatgpt.com
+      - [ ] https://www.coursera.org/learn/cs-fundamentals-2?utm_source=chatgpt.com
+      - [ ] https://www.coursera.org/learn/introduction-to-machine-learning-in-production?utm_source=chatgpt.com 
 - [ ] Setup work portfolio
   - [x] simulation library - Concursus
     - [x] physics simulations
@@ -23,7 +26,7 @@
     - [ ] Portfolio Management initial setup
     - [ ] Risk management initial setup
     - [ ] Trading integration
-  - [ ] Improve [Tomorrow Markets](https://github.com/TomorrowMarkets/tomorrowmarkets.github.io)
+  - [x] Improve [Tomorrow Markets](https://github.com/TomorrowMarkets/tomorrowmarkets.github.io)
     - [ ] Bot improvements
       - [ ] Tie Concursus into Tomorrow Markets
       - [ ] Do research into processes that approach market behaviors better
@@ -31,13 +34,16 @@
       - [ ] Do a history implementation with a Stochastic process.
     - [ ] Algorithmic trading setup improvements
     - [ ] Multiple game modes.
-  - [ ] Tomorrow Archive
+  - [x] Tomorrow Archive
+    - [x] Initial setup
+    - [x] Improved connectivity to Tomorrow markets and Tomorrow Capital research
+    - [ ] Post research onto the site
 - [ ] Set up algorithmic trading
   - [ ] Run mean reversion test
   - [ ] Run breakout test
   - [ ] Run main hypothesis
 - [ ] Search out new job opportunities
-- [ ] Set up quant archive
+- [x] Set up quant archive
 - [ ] streamline documents and social media
   - [ ] notion pages, google docs, etc.
   - [ ] linkedin, instagram, websites.
