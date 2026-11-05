@@ -14,13 +14,10 @@ UK right to work (partner visa, no sponsorship required)
 
 <!-- Full address used on applications: 6 Nuding Close, London SE13 7UD. Kept out of the rendered page in case the repo is public. -->
 
----
-
 ## Profile
 
 Quantitative developer and analyst with experience across pension-fund risk analytics, credit-risk data quality at a bank, public-sector business intelligence and contact-centre reporting automation. I build data pipelines, risk and pricing models, and validation tooling in Python, SQL and SAS, and run independent research in systematic trading and market microstructure. Studied Mathematical Statistics and Mathematical Physics at the University of Copenhagen.
 
----
 
 ## Skills
 
@@ -32,7 +29,6 @@ Quantitative developer and analyst with experience across pension-fund risk anal
 
 **Practice:** Data quality and reconciliation, model and performance validation, test design, KPI design, stakeholder and client reporting, teaching
 
----
 
 ## Experience
 
@@ -58,7 +54,6 @@ Quantitative developer and analyst with experience across pension-fund risk anal
 
 *Tools: Google Apps Script (JavaScript), Google Sheets / Slides / Forms, Python, AS400 / IBM-i (5250), data reconciliation and QA, KPI design, Bayesian modelling*
 
----
 
 ### Tomorrow Capital Research — Quantitative Developer & Researcher
 **Remote · January 2024 – Present**
@@ -79,9 +74,6 @@ Quantitative developer and analyst with experience across pension-fund risk anal
 
 *Note: this needs SIGNIFICANTLY MORE DATA*
 
-
----
-
 ### Freelance Software Developer & Quantitative Consultant
 **Self-employed · Remote · May 2024 – Present**
 - **Sports betting research (Oct – Nov 2025):** Designed probabilistic models for European football markets (1X2, goals and more) using historical performance, league effects and matchup dynamics. Modelled micro-events (shots, shots on target, corners, cards, fouls) with Poisson, negative binomial, Gamma, Normal and empirical distributions and conditional probabilities. Built data intake for weather, line-ups, historical and player data, with a correlated model setup and bet-ordering across multiple bookmakers.
@@ -93,8 +85,6 @@ Quantitative developer and analyst with experience across pension-fund risk anal
 - **Excel integrations(Sporadic):** Workbook enhancements in Python, C#, VBA and VBScript — dashboards, financial calculations and inter-application automation.
 
 *Tools: Python, Excel, VBA, C#, Pine Script, HTML/CSS/JavaScript*
-
----
 
 ### LD Pensions — Junior Quantitative Developer
 **Copenhagen, Denmark · August 2023 – May 2024**
@@ -111,8 +101,6 @@ Quantitative developer and analyst with experience across pension-fund risk anal
 
 Note: I want this work experience to have significantly more information about what work I did while being employed here, as this job was likely one of the positions where I have done the most work mentally, programmaticly, structurally, other than Tomorrow Capital Research.
 
----
-
 ### Lån & Spar Bank — Data Quality Analyst
 **Copenhagen, Denmark · January 2023 – August 2023**
 *Part-time student position, 15–35 hours per week, year-round. Danish retail bank.*
@@ -125,8 +113,6 @@ Note: I want this work experience to have significantly more information about w
 *Tools: SAS, SQL, IRB framework (PD, LGD, EAD), data governance, Scrum*
 *Training: SAS Institute courses in SAS and SQL*
 
----
-
 ### DJØF — VBA & Python Course Instructor
 **Copenhagen, Denmark · January 2023 – August 2023**
 *Danish Association of Lawyers and Economists.*
@@ -134,8 +120,6 @@ Note: I want this work experience to have significantly more information about w
 - Built advanced VBA material covering nested macros, custom functions and cross-application automation (VBA/VBScript).
 - Based exercises on real tasks — automating routine processes, analysing datasets — and refined material from participant feedback.
 *Training: 3-day course in pedagogical presentation*
-
----
 
 ### Statistics Denmark — Data Analyst & Developer
 **Copenhagen, Denmark · August 2021 – August 2023**
@@ -151,8 +135,6 @@ Note: I want this work experience to have significantly more information about w
 
 Note: I want this work experience to have significantly more information about what work I did while being employed here, as that similarly, I did A LOT OF WORK here like with Tomorrow capital research and LD Pensions
 
----
-
 ### MentorDenmark — Senior Mentor, Physics, Mathematics & Science
 **Copenhagen, Denmark · August 2017 – August 2021**
 *Denmark's largest tutoring company.*
@@ -161,14 +143,10 @@ Note: I want this work experience to have significantly more information about w
 
 *Training: 2-day course in pedagogical presentation*
 
----
-
 ### Thomas Lystlund Studio — Data Analysis Intern
 **Copenhagen, Denmark · March 2019 – May 2019**
 *Single-project internship (unpaid).*
 - Analysed cash flows and projected returns of forex trading bots the client was considering, identified likely scams and recommended safer alternatives.
-
----
 
 ## Other Employment
 
@@ -182,8 +160,6 @@ Note: I want this work experience to have significantly more information about w
 | Oct 2016 – Dec 2018 | Night-shift store manager, supervising two staff | MinKøbmand, Copenhagen |
 
 *Training: Psychological first aid for trauma and shock, chemical safety, track safety (DSB); Copenhagen Airport Security Awareness (WHSmith)*
-
----
 
 ## Education
 
@@ -200,8 +176,6 @@ Note: I want this work experience to have significantly more information about w
 
 ### Upper secondary (STX) — KNORD Lyngby
 Physics A, Mathematics A, English A, Danish A, Chemistry B.
-
----
 
 ## Projects
 
