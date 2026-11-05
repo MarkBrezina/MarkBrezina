@@ -3,7 +3,7 @@
 
 
 - [x] Setup basic run for WunderFund RNN prediction of prices
-- [ ] Reach top 10%(500), 0.65366 WP for WunderFund RNN
+- [o] Reach top 10%(500), 0.65366 WP for WunderFund RNN - we ended up being nr. 890 with 0.649 WP
 - [ ] Improve Extensive CV
   - [x] Added writeup for Konecta
   - [ ] Improve notes on tomorrow capital research work
