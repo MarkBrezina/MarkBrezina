@@ -1193,3 +1193,213 @@ CV handler om nu og bagud, Ansøgning om nu og fremtiden
 
 https://www.actuarialcareers.co.uk/search/jobs/type/all/location/home-working,london/sort/featured
 
+
+https://graduateships.com/4-cv-templates-used-by-harvard-stanford-mckinsey-goldman-sachs/
+
+https://www.goldmansachs.com/careers/blog/posts/resume-tips-from-goldman-sachs.html
+
+Indeed - UK/US
+https://www.indeed.com/
+Glassdoor - UK/US
+https://www.glassdoor.com/
+Monster - UK
+https://www.monster.co.uk/jobs/
+EfinancialCareers - ???
+https://www.efinancialcareers.dk/jobs?countryCode=DK&radius=40&radiusUnit=km&pageSize=15&currencyCode=DKK&language=en&includeUnspecifiedSalary=true
+Hays - UK
+https://www.hays.co.uk/
+SelbyJennings - UK
+https://www.selbyjennings.com/jobs
+MichaelPage - UK
+https://www.michaelpage.co.uk/
+Robert Half - UK
+https://www.roberthalf.com/gb/en
+Morgan Mckinley - UK
+https://www.morganmckinley.com/uk
+Randstad - UK
+https://www.randstad.co.uk/
+Goodman Masson - UK
+https://www.goodmanmasson.com/
+UK government job search 
+https://findajob.dwp.gov.uk/
+Robert Walters - UK
+https://www.robertwalters.co.uk/
+
+
+JOBINDEX - DK
+https://www.jobindex.dk/?adv=1
+
+DJØFs jobåbninger 
+https://www.jobunivers.dk/resultat.aspx
+
+TheHub
+https://thehub.io/jobs?countryCode=DK&sorting=mostPopular
+
+
+Banker
+
+Nordea
+https://www.nordea.com/en/careers/vacant-positions
+
+Danske bank
+https://ejqi.fa.em2.oraclecloud.com/hcmUI/CandidateExperience/en/sites/CX_1001/requisitions?mode=location
+
+Nykredit
+https://www.nykredit.com/karriere/stillinger/
+
+Jyske bank
+https://www.jyskebank.dk/karriere/job
+
+Arbejdernes landsbank
+https://www.al-bank.dk/om-banken/karriere/soeg-job/ledige-stillinger
+
+Lån og spar bank
+https://lsb.easycruit.com/
+
+Sydbank
+https://sydbank-career.talent-soft.com/accueil.aspx?LCID=1030
+
+Lunar
+https://jobs.lunar.app/jobs
+
+Staten
+
+Finansministeriet
+https://fm.dk/karriere/
+
+Nationalbanken
+https://www.nationalbanken.dk/da/karriere
+
+Forsikring og pension
+
+Falck
+https://falck.csod.com/ux/ats/careersite/2/home?c=falck
+
+Velliv
+https://velliv.easycruit.com/
+
+Sampension
+https://www.sampension.dk/om-sampension/job/ledige-stillinger#url=https%3A%2F%2Fcareer5.successfactors.eu%2Fcareer%3Fcompany%3DsampensionP
+
+Lbforsikring
+https://lbforsikring.career.emply.com/da/ledige-stillinger
+
+Gjensidige
+https://jobs.gjensidige.com/go/Analysejobs/8784101/
+
+Tryg
+https://tryg.dk/karriere
+
+Alm. Brand
+https://www.almbrand.dk/job/ledige-stillinger/
+
+PFA
+https://career2.successfactors.eu/career?company=pfapensionP&career%5fns=job%5flisting%5fsummary&navBarLevel=JOB%5fSEARCH&_s.crb=UNAmF2wtY1aD0KOImfL0qLVgIxU%3d
+
+PKA
+https://pka.dk/om-pka/job-i-pka/ledige-stillinger?cid=2248&ProjectId=143763&DepartmentId=18960&MediaId=4631
+
+ATP
+https://www.atp.dk/karriere/ledige-stillinger?location=338&category=All
+
+Topdanmark
+https://www.topdanmark.com/karriere/ledige-stillinger/
+
+Investeringsvirksomheder
+
+Bankinvest
+https://bankinvest.dk/om-bankinvest/vores-historie-og-vaerdier/job-i-bankinvest/
+
+Saxobank
+https://www.home.saxo/about-us/careers
+
+Konsulenter
+
+Boston consulting group
+
+AON
+
+Wtw
+https://careers.wtwco.com/
+
+Grant Thornton
+https://www.grantthornton.dk/karriere/ledige-stillinger/
+
+Deloitte
+https://www2.deloitte.com/dk/da/careers/job-search.html?icid=top_
+
+PWC
+https://www.pwc.dk/da/karriere/jobsoegning.html
+
+KPMG
+https://candidate.hr-manager.net/Vacancies/List.aspx?customer=kpmg
+
+EY
+https://eyglobal.yello.co/job_boards/c1riT--B2O-KySgYWsZO1Q?locale=en
+https://careers.ey.com/ey/search/?createNewAlert=false&q=&locationsearch=&optionsFacetsDD_country=&optionsFacetsDD_customfield1=&optionsFacetsDD_customfield3=
+
+Citi group
+https://jobs.citi.com/location/united-kingdom-jobs/287/2635167/2
+Barclays
+https://home.barclays/careers/
+HSBC
+https://www.hsbc.com/careers
+Natwest
+https://jobs.natwestgroup.com/search/jobs
+Jpmorgan
+https://careers.jpmorgan.com/us/en/home
+Bank of america
+US Bank
+USBancorp
+Morgan stanley
+Goldman sachs
+Blackrock
+Blackstone
+Man group
+https://www.man.com/careers
+AQR capital management
+Bridgewater associates
+Citadel
+DE Shaw group
+Hudson River Trading
+Jane street
+Man Group
+Millenium Management
+Renaissance Technologies
+Two Sigma
+Jump trading
+Balyasny Asset management
+Western asset management
+Optiver
+Squarepoint
+Point72
+Graham Capital Management
+Fidelity
+Invesco
+State street
+Exxon mobil
+CME group
+Chicago trading company
+DRW
+Dimensional fund advisors
+
+
+Show key credentials - show them in what ways you may fit
+Emphasize 3 reasons you'll fit the company
+Emphasize how far you are and what you did to get there, what you did to improve.
+Mention your unique or personal qualities
+Quantify and mention achievements/responsibilies
+Keep it concise
+Why do I want to work here?
+Interesting projects? Does it add value? Is it well paid? Future growth opportunities? Believe in the mission?
+
+Find a mentor, be a go-to person, listen and help, problemsolver, help regardless, work hard and dedicated, be nice, respectful and cheerful.
+Use bullets and punctuations, 6 pieces of info in 6 seconds. Design is also important
+CV handler om nu og bagud, Ansøgning om nu og fremtiden
+
+
+
+
+
+
+
