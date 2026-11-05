@@ -369,10 +369,133 @@ unpaid, due to "I want to earn money first before I pay you"
 - [Linkedin Learning Path - Advance Your Career as an Individual Contributor](https://www.linkedin.com/learning/certificates/00d00324e1197ecb6c154fb51e5179790876b1a0dbd42846c58096f20272a9d9?lipi=urn%3Ali%3Apage%3Ad_flagship3_profile_view_base_certifications_details%3BE9b3Vn7vTYaxQD6EhCthHA%3D%3D)
 
 
-# NOTABLE ACTIVITIES 
-● Partaking in various courses, lectures, webinars, conferences and more with relation to quantitative finance o 13/2/2025 - Oxford Mathematical and Computational Finance - Eghbal Rahimikia - Revisiting Large Language Models in Finance o 27/2/2025 - Quant Insider – Andrey Chirikhin – Introduction to Credit Derivatives o 8/3/2025 - Bangalore Quant Club - Peter Cotton - Machine Learning for Hierarchical Portfolio Optimization Using Schur Complements o 11/3/2025 - Imperial College - Daniel Lacker - Non asymptomatic perspectives on mean field approximations and stochastic control o 12/3/2025 - CQF Institute - Portfolio Management in Quant Finance Conference o 8/4/2025 – CQF Institute - Wim Schoutens - Omnipresent Model Risk o 7/5/2025 – CQF Institute - Laura Ballotta - The Term Structure of Implied Correlations Between S&P and VIX Markets o 4/6/2025 – CQF Institute - Volatility and Risk in Quant Finance Conference o 10/6/2025 – CQF Institute - Financial Reasoning Agents: In-Context Reinforcement Learning and Test-Time Compute o 9/7/2025 – CQF Institute - Optimization of Strategic and Tactical Asset Allocation for Multi-Asset Portfolios o 12/8/2025 – CQF Institute - Modelling Non-Maturing Deposits o 9/9/2025 – CQF Institute - How to Add Currencies to a Portfolio: Currency Benchmarks and Active Currency Management o 17/9/2025 – CQF Institute – AI and Machine Learning in Quant Finance Conference o 14/10/2025 – LQG – Instability: Debt, Inflation an AI’s Impact on Investing o 4/11/20205 till 5/11/2025 - CQF - Annual Quant Insights Conference  o 12/11/2025 - CQF Generating Realistic Economic Scenarios for Stress Testing Portfolios Using Generative AI' with Samit Ahlawat o 19/11/2025 - CQF - London Society Meeting: Market Microstructure talk o 3/12/2025 - CQF - The Quant’s AI Advantage: Leveraging AI for Natural Language Assistance in Trading Analytics - Peter Simpson and Alexander Serechenko o 9/12/2025 - CQF - Why So Much Science Doesn’t Hold Up and What Quantitative Minds Can Do About It' with Stephen Weston o … Need to add all the participations here o 16/12/2025 - LQG Annual Debate - Ed Fishwick & Henry Neville o 15/01/2026 - LQG -  Limits to (Machine) Learning - Semyon Malamud o 11/02/2026 - CQF Trade Wars to Market Wars: Quantifying Geopolitical Impact on Equity Returns' with Professor Lorne Switzer o 17/02/2026 - LQG - What we learned about risk - Edward Fishwick o 26/02/2026 - SP Global - London Quant intelligence forum 2026 o 11/3/2026 - CQF - Portfolio Management in Quant finance Conference o 18/03/2026 - CQF - American Option Pricing by the Finite Difference Method: Tips and Tricks from the Trenches - Leif Andersen o 18/03/2026 - DefconQ x Squarepoint - KDB developers meetup o 14/04/2026 - LQG - Better Together: Fundamental and systematic views in credit investing 
-- Simon Polbennikov o 29/04/2026 - CQF - ESG Investing and Portfolio Selection - Dr. John Guerard o 12/05/2026 - LQG - Adventures in high-dimensional space - Robert Macrae
-● Ranked in the top 10% (2800 out of more than 36,000 participants) in Børsen stock-picking challenge 2023 ● Ranked in the top 1% (107 out of more than 12,000 teams) in the IMF Prosperity 3 algorithmic trading challenge ● Ranked in the top 1% (468 out of an average of 47,000 participants) in Børsen stock-picking challenge 2024 ● Ranked in the top 6.3% (1800 out of an average of 28,500 participants) in Børsen stock-picking challenge 2026 ● Ranked in the top 15% ( 988 out of an average of 6,500(22,000?) participants) in the IMF Prosperity 4 algorithmic trading challenge ● MENSA member (2018-present), Membership No. 2018170 with assessed IQ≥158 ● Active Chess player and High achiever in real-time strategy game Starcraft II (top 5% of players). ● Member of Willmotts forum, CQF institute, ML-quant and Quantpedia ● Member of UNF (Danish Youth Foundation of Natural Science) (2013–2017) ● Member of ATU (Danish Academy of Talented Youths) (2014–2016).  ● UNF Physics Camp participant (2015) ● Design for Change Awardee (2010). An international competition on innovative solutions for everyday problems. Newspaper article 1, Newspaper article 2, Official Video ● Passed LinkedIn Skill Assessments in R, Python, VBA, Excel, and MATLAB. ● I earned an excess of 200+ € on Steam marketplace, buying and selling Counter Strike skin cases, initially adding 100€ to my account for this particular trading idea, earning an estimated 200+€ from my investment(100€ to 300€) over a period of 3 years.
+EXTRACURRICULAR COURSES
+2026
+C++ course
+statistical learning course
+AI course
+Interest rate course
+Derivatives course
+
+2025
+Forage Citi - Markets Quantitative Analysis
+Forage Standard Bank - Risk Management
+Forage Goldman Sachs - Risk
+Forage Standard Chartered - Credit Analyst
+Forage Lloyds Banking Group - Data Science
+Forage Goldman Sachs - Excel Skills for Business
+Forage Citi - Finance
+Forage J.P.Morgan Chase & Co - Software Engineering
+Forage quantium - Software Engineering
+Forage Goldman Sachs - Software Engineering
+Forage Standard Bank - Software Engineering
+Forage Commonwealth Bank - Software Development
+Forage Citi - Investment Banking
+2024
+Forage J.P.Morgan Chase & Co - Quantitative Research Job Simulation
+Forage Standard Bank - Actuarial Job Simulation
+Forage PGIM - Fixed Income Job Simulation
+Forage Cognizant - Artificial Intelligence Job Simulation
+Fundamentals of Quantitative Modelling
+Forage AIG - Underwriting Job Simulation
+Forage Bank of America - Investment Banking
+Forage J.P.Morgan Chase & Co - Investment Banking
+Forage Commonwealth Bank - Introduction to Data Science
+Forage Quantium - Data Analytics
+Forage BCG - Data Science
+Forage accenture - Data Analytics and Visualization
+Forage J.P.Morgan Chase & Co - Software Engineering
+Forage Standard Bank - Software Engineering
+CME Group, Introduction to futures
+CME Group, Introduction to Treasuries
+CME Group, Long Options: Underlying and Volatility impact
+CME Group, Understanding Futures Spreads
+Trinity College London - GESE 2 / CEFR Level A1
+LanguageCert - ESOL International B2 English Communicator
+2021
+GARP - Foundations of Financial Risk
+CFI - introduction to banking
+CFI - Fundamentals of Credit
+2020
+Linkedin Learning Path - Become a Data Scientist
+Linkedin Learning Path - Advance Your Skills in Python
+Linkedin Learning Path - Advance Your Python Skills For Data Science
+Linkedin Learning Path - Getting Started with R for Data Science
+Microsoft edX - Professional Certificate in Data analysis: Essential Skills
+University of Columbia edX - Professional Certificate in Corporate Finance
+IMF edX - Macroeconometric Forecasting
+IMF edX - Macroeconometric Diagnostics
+IMF edX, Financial Market Analysis
+NYIF edX, Risk management and Credit Principles
+NYIF edX, Ratio Analysis
+MentorDenmark - Course on pedagogical presentation in teaching
+WorldBank edX, The Future of Work: Preparing for Disruption
+WorldBank edX, Unlocking Investment and Finance in Emerging Markets and Developing Economies
+Linkedin Learning Path - Master Key Financial Analyst Skills
+Linkedin Learning Path - Getting Started in Finance and Accounting
+Linkedin Learning Path - Getting Started in Finance & Bookkeeping
+Linkedin Learning Path - Getting Started as a Business Analyst
+2019
+Linkedin Learning Path - Master Microsoft Word
+Linkedin Learning Path - Master In-Demand Professional Soft skills
+Linkedin Learning Path - Improve Your Organizational Skills
+Linkedin Learning Path - Improve Your Interoffice Politics Skills
+Linkedin Learning Path - Advance Your Career as an Individual Contributor
+NOTABLE ACTIVITIES
+Partaking in various courses, lectures, webinars, conferences and more with relation to quantitative finance
+13/2/2025 - Oxford Mathematical and Computational Finance - Eghbal Rahimikia - Revisiting Large Language Models in Finance
+27/2/2025 - Quant Insider – Andrey Chirikhin – Introduction to Credit Derivatives
+8/3/2025 - Bangalore Quant Club - Peter Cotton - Machine Learning for Hierarchical Portfolio Optimization Using Schur Complements
+11/3/2025 - Imperial College - Daniel Lacker - Non asymptomatic perspectives on mean field approximations and stochastic control
+12/3/2025 - CQF Institute - Portfolio Management in Quant Finance Conference
+8/4/2025 – CQF Institute - Wim Schoutens - Omnipresent Model Risk
+7/5/2025 – CQF Institute - Laura Ballotta - The Term Structure of Implied Correlations Between S&P and VIX Markets
+4/6/2025 – CQF Institute - Volatility and Risk in Quant Finance Conference
+10/6/2025 – CQF Institute - Financial Reasoning Agents: In-Context Reinforcement Learning and Test-Time Compute
+9/7/2025 – CQF Institute - Optimization of Strategic and Tactical Asset Allocation for Multi-Asset Portfolios
+12/8/2025 – CQF Institute - Modelling Non-Maturing Deposits
+9/9/2025 – CQF Institute - How to Add Currencies to a Portfolio: Currency Benchmarks and Active Currency Management
+17/9/2025 – CQF Institute – AI and Machine Learning in Quant Finance Conference
+14/10/2025 – LQG – Instability: Debt, Inflation an AI’s Impact on Investing
+4/11/20205 till 5/11/2025 - CQF - Annual Quant Insights Conference 
+6/11/2025 till 7/11/2026 - 9th London-Paris Bachelier Workshop
+12/11/2025 - CQF Generating Realistic Economic Scenarios for Stress Testing Portfolios Using Generative AI' with Samit Ahlawat
+19/11/2025 - CQF - London Society Meeting: Market Microstructure talk
+3/12/2025 - CQF - The Quant’s AI Advantage: Leveraging AI for Natural Language Assistance in Trading Analytics - Peter Simpson and Alexander Serechenko
+9/12/2025 - CQF - Why So Much Science Doesn’t Hold Up and What Quantitative Minds Can Do About It' with Stephen Weston
+16/12/2025 - LQG Annual Debate - Ed Fishwick & Henry Neville
+15/01/2026 - LQG -  Limits to (Machine) Learning - Semyon Malamud
+11/02/2026 - CQF Trade Wars to Market Wars: Quantifying Geopolitical Impact on Equity Returns' with Professor Lorne Switzer
+17/02/2026 - LQG - What we learned about risk - Edward Fishwick
+26/02/2026 - SP Global - London Quant intelligence forum 2026
+11/3/2026 - CQF - Portfolio Management in Quant finance Conference
+18/03/2026 - CQF - American Option Pricing by the Finite Difference Method: Tips and Tricks from the Trenches - Leif Andersen
+18/03/2026 - DefconQ x Squarepoint - KDB developers meetup
+14/04/2026 - LQG - Better Together: Fundamental and systematic views in credit investing - Simon Polbennikov
+29/04/2026 - CQF - ESG Investing and Portfolio Selection - Dr. John Guerard
+12/05/2026 - LQG - Adventures in high-dimensional space - Robert Macrae
+09/06/2026 - LQG - Making sense of this (...) World and the resurgent chinese empire - Brunello Rosa
+I have stopped noting down for a long while
+14/07/2026 - Alternative data, traditional expertise and Ownership - Maxime Bonelli
+13/09/2026 - Bloomberg data and tech summit
+13/10/2026 - LQG - The anatomy of the treasury market - Manav Chaudhary  
+\
+Ranked in the top 10% (2800 out of more than 36,000 participants) in Børsen stock-picking challenge 2023
+Ranked in the top 1% (107 out of more than 12,000 teams) in the IMF Prosperity 3 algorithmic trading challenge
+Ranked in the top 1% (468 out of an average of 47,000 participants) in Børsen stock-picking challenge 2024
+Ranked in the top 6.3% (1809 out of an average of 28,500 participants) in Børsen stock-picking challenge 2026
+Ranked in the top 11.4% (741 out of 6,500 active teams, 22,000 registered teams) in the IMC Prosperity 4 algorithmic trading challenge
+Ranked in the top 20% (890 out of 5,500 active teams) In the Wunderfund RNN challenge 2026
+MENSA member (2018-present), Membership No. 2018170 with assessed IQ≥158
+Active Chess player elo(330), Team fight tactics (gold player) and High achiever in real-time strategy game Starcraft II (Mid masters player).
+Member of Willmotts forum, CQF institute, ML-quant and Quantpedia
+Member of UNF (Danish Youth Foundation of Natural Science) (2013–2017)
+Member of ATU (Danish Academy of Talented Youths) (2014–2016). 
+UNF Physics Camp participant (2015)
+Design for Change Awardee (2010). An international competition on innovative solutions for everyday problems. Newspaper article 1, Newspaper article 2, Official Video
+Passed LinkedIn Skill Assessments in R, Python, VBA, Excel, and MATLAB.
+I earned an excess of 200+ € on Steam marketplace, buying and selling Counter Strike skin cases, initially adding 100€ to my account for this particular trading idea, earning an estimated 200+€ from my investment(100€ to 300€) over a period of 3 years.
+Avid fitness enthusiast, building muscle and doing my best to keep physically sharp, to keep in good physical health to improve physical and mental health.
 
 # PROJECTS 
 
