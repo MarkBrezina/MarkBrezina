@@ -1,586 +1,529 @@
-MARK BREZINA 6 Nuding CLose, London, SE13 7UD (+44)7761917490 | mark@brezina.dk Linkedin | GitHub 
+<!--
+MASTER CV — Mark Brezina
+This is the long-form reference record. Cut targeted CVs from it; don't send it as-is.
+Hidden notes like this one don't render on GitHub but are visible in the raw file.
+Open items are collected at the bottom.
+Last updated: 2026-11-05
+-->
 
+# Mark Brezina
 
+London, UK · (+44) 7761 917 490 · [mark@brezina.dk](mailto:mark@brezina.dk) · [LinkedIn](https://www.linkedin.com/in/markbrezina95) · [GitHub](https://github.com/MarkBrezina)
 
-# EXPERIENCE
+UK right to work (partner visa, no sponsorship required)
 
-Konecta — CV entry and portfolio write-up
-20 Oct 2026 · @Mark
-Two versions of the same experience: a CV entry to paste straight into the CV, and a longer first-person write-up for the portfolio site.
-CV entry
-Konecta — Customer Service & Sales Advisor, Danish Market (Center Parcs account) London | May 2026 – Present
-Alongside the advisor role, designed and built the account's management information and reporting automation.
-Advisor role
-• Handle inbound sales and service for the Danish market, plus Dutch and Belgian overflow and outbound welcome calls, working on the AS400 / IBM i booking system and the PVCP booking platform.
-• Highest average booking value in the Danish queue (€1,542–€2,628 against a €1,080 queue average), sales conversion above the European benchmark, and service handling time around a minute faster than the campaign standard.
-• Rated 90–100% on listening, clarity and problem resolution in quality audits; 86.1% on the most recent service evaluation against a 75% target.
-• Within months of joining, became a regular point of contact for Danish and Dutch team colleagues on AS400 navigation, cancellation and modification rules, and call handling. Codified the most frequently asked rules into a shared booking calculator that derives cancellation fees, modification fees and refund entitlement from booking date, arrival date, add-ons and insurance status, converting recurring ad-hoc questions into a self-service tool.
-Management information and reporting automation (self-initiated)
-• Manual call log and call-reason taxonomy (precursor to the tools below). With no agent-level call-reason reporting available from the telephony platform, hand-logged every call with category, timestamp and free-text note, then derived a structured call-reason taxonomy from the free text and profiled inbound demand and outbound contact windows by hour. Identified and corrected for systematic censoring in the raw series — own break and shift boundaries suppressing apparent demand — before using the findings.
-• KPI reporting pipeline. Replaced an AI-assisted reporting process that produced unreliable figures with a deterministic script-based pipeline. It reads six daily BI exports (daily, week-to-date and month-to-date, across sales and service queues), rebuilds a seven-tab agent-level KPI pack for the Benelux and Danish markets, benchmarks against peer sites, and scores conversion against target with RAG flags. In daily use by the account's management team.
-• Data quality controls. Every published figure is reconciled against the source system's own subtotals, with cross-period consistency checks (daily ≤ week-to-date ≤ month-to-date). Missing, stale or unreadable source files are flagged on the report itself rather than published as silent zeros, and an audit log records which source version produced each figure. Reports reset automatically at week and month boundaries.
-• Resilient ingestion. Source extracts are republished daily under new file identifiers, so files are resolved by folder and name, with automatic format conversion, timezone-safe date parsing, and an incremental archive that reconstructs the full week-to-date daily view from single-day extracts.
-• Welcome-call MI and client reporting. Automated the daily ingest of the client's Excel extract from email, including de-duplication and dialling-format normalisation, feeding team and per-agent KPI tables and a weekly auto-generated slide used in client presentations to Center Parcs.
-• Best-time-to-call model. Bayesian (Dirichlet–multinomial) model of outbound call outcomes by weekday and hour, with decay on older observations, ranking time slots by expected value — contact likelihood weighted against negative customer reaction — to schedule outbound campaigns.
-• First-call-resolution tracking. Designed a repeat-call reason-logging tool for the Danish market: single-click capture in the agent application with access control and undo, feeding a dashboard of reasons, trends and per-agent patterns used to identify root causes of repeat contact.
-• Earlier tools. Complaint-logging click-tool and dashboard; multilingual Danish/Dutch booking-tracking workbook used by the team.
-• Validated each tool before go-live against simulated test environments and independent recalculation in Python.
-Tools: Google Apps Script (JavaScript) · Google Sheets / Slides / Forms automation · Python · AS400 / IBM i (5250) · data reconciliation and QA · KPI design · Bayesian modelling · client and stakeholder reporting
+<!-- Full address used on applications: 6 Nuding Close, London SE13 7UD. Kept out of the rendered page in case the repo is public. -->
 
-Konecta – Customer Service Advisor, Danish Market (Center Parcs account) | London | [dates]
-Alongside the phone role, designed and built the account’s management information and reporting automation (Google Apps Script, Sheets, Slides).
+---
 
-KPI reporting pipeline: Replaced an AI-based reporting process (NotebookLM) that was producing unreliable figures with a script-based pipeline that produces exactly the same output from the same data. It reads six raw BI exports (daily, week-to-date and month-to-date; sales and service), builds agent-level KPI reports for the Benelux and Danish markets, benchmarks them against peer sites, and scores conversion against target with red/amber/green flags.
-Data quality controls: Every figure is checked against the source files’ own totals, and daily, weekly and monthly numbers are cross-checked against each other. Missing or outdated files are flagged directly on the reports, and the reports reset automatically when a new week or month starts.
-First-call-resolution tracking (Danish market): Designed a tool for logging why customers call back. Agents click a reason in their app; access is restricted to the team and misclicks can be undone. The clicks feed a dashboard of reasons, trends and per-agent patterns, used to find the root causes of repeat calls.
-Welcome-call MI and client reporting: Automated the daily import of the client’s Excel extract from Gmail, with duplicate removal and phone numbers formatted for dialling. It feeds team and per-agent KPI tables and a weekly auto-generated slide used in client presentations to Center Parcs.
-Best-time-to-call model: Built a Bayesian model (Dirichlet–multinomial) of call outcomes by weekday and hour. Older months gradually count less, and time slots are ranked by expected value (pickup versus negative customer reaction) to schedule outbound calls.
-Validated each tool before go-live with simulated test environments and an independent recalculation in Python.
+## Profile
 
-Skills: Google Apps Script (JavaScript) · Google Sheets / Slides / Forms automation · Python · data reconciliation and QA · KPI design · Bayesian modelling · stakeholder and client reporting
+Quantitative developer and researcher with experience in pension-fund risk analytics, credit-risk data quality at a bank, public-sector business intelligence and contact-centre reporting automation. I build data pipelines, risk and pricing models, simulation tooling and validation frameworks in Python, SQL and SAS. Alongside employment I run Tomorrow Capital Research, an independent venture covering systematic trading research, live execution infrastructure and a multiscale theory of market equilibrium. Studied Mathematical Statistics and Mathematical Physics at the University of Copenhagen.
 
+**Featured project:** [Concursus](https://github.com/MarkBrezina/Concursus), a Python simulation library covering stochastic processes, particle physics, population dynamics and market models, with a benchmark that scores the market models against real data. [Details below](#featured-concursus).
 
+---
 
+## Skills
 
-Portfolio write-up
-Building the management information layer for a multi-market contact centre
-I was hired as a phone advisor and ended up building the reporting layer the account runs on: a daily pipeline with its own reconciliation controls, a set of capture tools that instrument things the telephony platform does not measure, and a Bayesian model for scheduling outbound calls.
-The situation. The operation handles inbound sales and service for a holiday-resort operator across the Benelux and Nordic markets, working from a legacy IBM i booking system. Agent performance data arrived as six spreadsheet exports from a central BI team, covering daily, week-to-date and month-to-date figures across the sales and service queues. Turning those into the numbers the operation actually managed by was manual, and for a period it ran through an AI summarisation step that produced figures nobody could reconcile against the source. That is what I set out to replace, and it is why the replacement is deterministic by design: the same inputs produce the same outputs, and every published figure traces back to the row it came from.
-Starting where there was no data at all. Before any of the reporting work, I spent months hand-logging my own calls — reason, timestamp, free-text note. The telephony platform recorded volumes and handle times but nothing about why people were calling, which is the only thing that lets you reduce repeat contact rather than merely measure it. Coding the free text afterwards produced a taxonomy of around a dozen call reasons. That taxonomy is now the click-capture scheme in a first-call-resolution tool the Danish team uses: one button per reason, logged against agent and hour, feeding a dashboard of trends and root causes. The same log gave the first picture of demand by hour.
-The most useful thing in that log was an error in it. The first hourly demand profile had a clean dip in the middle of the day. It was my lunch break. The series counted calls I had handled and I was reading it as calls customers had made, and those diverge wherever my own availability varies — breaks, shift boundaries, and more subtly the time spent on long calls, during which genuinely busy periods register as quiet ones. The correction was to change the denominator from clock hours to minutes actually available and to drop buckets with partial coverage. A small fix, but the kind of error that survives into a decision if nobody goes looking for it, and it set the standard I held the rest of the work to.
-The reporting pipeline. It runs each morning and rebuilds a seven-tab KPI pack: agent-level conversion, revenue per call, average booking value, service revenue share, satisfaction and handling time, across two market groups and both queues, benchmarked against a peer site and scored against per-segment targets.
-Most of the engineering is not in the metrics. It is in everything around them:
-• Every figure is reconciled against the source system's own subtotals before publication, and a mismatch is reported rather than printed.
-• Cross-period consistency is checked per agent — a day cannot exceed its week, a week cannot exceed the month.
-• Missing, stale or unreadable source files surface as banners on the report instead of appearing as zeros.
-• Period boundaries are handled explicitly: ISO-week logic with an automatic Monday reset, and month rollover for the cumulative tabs.
-• An incremental archive lets the week-to-date daily view rebuild from single-day extracts, with source data always taking precedence over archived rows, so re-running the sync is idempotent.
-• The upstream republishes all six files under new identifiers every day, so files are resolved by folder and name rather than by identifier, with format conversion and timezone-safe date parsing — and an audit log recording exactly which file version produced each figure.
-Why the controls matter more than the metrics. A reporting tool that is right ninety-five percent of the time is worse than no tool, because the wrong five percent is indistinguishable from the rest and people act on it anyway. The rule I settled on is that the pipeline should fail visibly rather than publish a plausible number. In practice that means a missing source file produces a flagged gap, not a quiet zero, and a figure that will not reconcile against its own source stops the figure, not the check.
-The call-timing model. Outbound welcome calls need a schedule, and the naive answer — call when past calls were answered most — overfits badly when each weekday-hour cell holds only a handful of observations. I modelled outcomes per cell as Dirichlet–multinomial, which shrinks sparse cells toward the overall rate, with exponential decay so older months count for less as calling patterns drift. Slots are then ranked by expected value, weighing contact likelihood against the cost of reaching someone at a bad moment, rather than by raw contact rate.
-What this work is. It is analytics engineering: building and owning the pipeline, the data model and the controls that stand between raw operational exports and a figure somebody makes a decision on. It sits close to the model validation work I have done elsewhere, and for the same reason — the discipline is not building the thing, it is being able to say precisely why you trust its output, and being willing to publish nothing when you cannot.
+**Programming:** Python (pandas, NumPy, SciPy, scikit-learn, PyTorch/TensorFlow), SQL, SAS (incl. macros), R, MATLAB, VBA / VBScript, JavaScript (incl. Google Apps Script), C++, C#, HTML/CSS, Lua, Pine Script
 
+**Data and platforms:** ETL pipeline design, exchange and broker REST APIs, Power BI (incl. DAX, MDX, Python), Excel (add-ins, automation), Google Sheets / Slides / Forms automation, Azure, Databricks, Supabase, Bloomberg, MSCI, Sustainalytics, Microsoft Navision and Dynamics, AS400 / IBM i
 
+**Quantitative methods:** Probability and statistical inference, stochastic processes and SDE simulation (GBM, Ornstein–Uhlenbeck, CIR, Heston, Merton jump-diffusion, Hawkes), Monte Carlo and MCMC, time series (ARIMA/GARCH, stationarity and mean-reversion tests, variance ratios, Hurst exponent), Markov chains and Hidden Markov Models, Bayesian modelling, VaR/CVaR and stress testing, option pricing with stochastic volatility, limit-order-book microstructure, agent-based modelling, mean-field games
 
+**Practice:** Data quality and reconciliation, model and performance validation, walk-forward testing, test design, KPI design, stakeholder and client reporting, teaching
 
-Contact-Centre Analytics & Reporting Automation
+---
 
-Write-up of the combined complaints / first-call-resolution / outbound-calls reporting system, in two forms: short bullets for a CV, and a longer README for a portfolio repository.
+## Experience
 
-Part 1 — CV
-Role header
+### Konecta — Customer Service Representative, Danish Market (Center Parcs account)
+**London · May 2026 – Present**
+*Management-information and reporting development alongside the representative role*
 
-Keep the official job title and carry the engineering work in a subtitle line, so the title matches what a background check returns:
+**Representative role**
+- Handle inbound sales and service for the Danish market, plus overflow from the English-speaking foreign markets and outbound welcome calls, on the AS400 / IBM i booking system and the PVCP (Polo) booking platform.
+- Highest booking retention in the Danish queue (every booking I have made has stayed booked), sales conversion above the European benchmark, and service handling time around one minute faster than the campaign standard.
+- Rated 90–100% on listening, empathy, clarity and problem resolution in quality audits; 86.1% on the most recent service evaluation against a 75% target.
+- Became a regular point of contact for Danish and Dutch colleagues on AS400 navigation, cancellation and modification rules, and call handling. Codified the most common rules into a shared booking calculator that derives cancellation fees, modification fees and refund entitlement from booking date, arrival date, add-ons and insurance status.
 
-Customer Service Advisor (Danish Market) — Konecta, London Management-information and reporting development alongside the advisor role
+**Management information and reporting automation (self-initiated)**
+- **Call-reason taxonomy.** With no agent-level call-reason reporting available, hand-logged every call (category, timestamp, note), derived a structured taxonomy of around a dozen reasons from the free text, and profiled inbound demand and outbound contact windows by hour — correcting for censoring caused by my own breaks, shift boundaries and long calls before using the results.
+- **KPI reporting pipeline.** Replaced an AI-assisted (NotebookLM) reporting process that produced unreliable figures with a deterministic script-based pipeline. It reads six daily BI exports (daily, week-to-date and month-to-date across sales and service queues), rebuilds a seven-tab agent-level KPI pack for the Benelux and Danish markets, benchmarks against peer sites and scores conversion against target with RAG flags. In daily use by the account's management team.
+- **Data quality controls.** Every published figure is reconciled against the source system's own subtotals, with cross-period checks (daily ≤ week-to-date ≤ month-to-date). Missing, stale or unreadable source files are flagged on the report rather than published as zeros, and an audit log records which source version produced each figure. Reports reset automatically at week and month boundaries.
+- **Resilient ingestion.** Source files are republished daily under new identifiers, so they are resolved by folder and name, with automatic format conversion, timezone-safe date parsing and an incremental archive that rebuilds the week-to-date daily view from single-day extracts.
+- **Welcome-call MI and client reporting.** Automated the daily import of the client's Excel extract from email, with de-duplication and dialling-format normalisation, feeding team and per-agent KPI tables and a weekly auto-generated slide used in client presentations to Center Parcs.
+- **Best-time-to-call model.** Bayesian (Dirichlet–multinomial) model of outbound call outcomes by weekday and hour, with decay on older observations, ranking slots by expected value — contact likelihood weighed against negative customer reaction.
+- **First-call-resolution and complaints analytics.** Built single-click repeat-call and complaint logging with access control and undo, feeding dashboards of reasons, trends and per-agent patterns. Consolidated the complaint, repeat-call and outbound-call tools into one Apps Script project (~2,000 lines, four modules) with a shared menu, an idempotent setup routine and isolated triggers.
+- **Automated client slides.** Designed an idempotent daily slide export that tags its own output and redraws it in place, so repeated or failed runs never duplicate slides and slides are still found after the reader reorders the deck.
+- **Testing.** Validated each tool before go-live against simulated test environments, including a strict mock of the Google Apps Script API (74 assertions across 8 scenarios), and an independent Python recalculation of every published figure from the raw data.
 
-Bullets (full version)
-Built and maintain the contact-centre's management-information layer in Google Apps Script: KPI ingestion, complaint and repeat-call analytics, and an automated daily export of client-facing slides — roughly 2,000 lines of tested, documented code across four modules.
-Consolidated three separate reporting tools into one project with a shared menu, a single idempotent setup routine, and isolated refresh triggers, so a rebuild of one dashboard cannot stall or corrupt another.
-Designed an idempotent slide generator that tags its own output and redraws it in place: repeated, retried or partially-failed runs never duplicate slides, and slides stay stable when the audience reorders the deck.
-Rebuilt the complaints dashboard around a single parameterised refresh with period-over-period comparison, replacing four duplicated macro functions and a row of drawn buttons.
-Hardened ingestion against real-world spreadsheet data: locale-misparsed dates recovered by cross-checking a second timestamp column, category names grouped case-insensitively, and unmapped market codes surfaced rather than silently dropped.
-Validated the system against a strict mock of the Google Apps Script API — 74 assertions over 8 scenarios — plus an independent recalculation of every published figure from the raw rows, and headless-browser rendering to check layout before release.
-Bullets (short version, 3 lines)
-Built the contact-centre's management-information layer in Google Apps Script (~2,000 lines): complaint and repeat-call analytics dashboards plus an automated daily export of client-facing slides.
-Designed the export to be idempotent and self-locating, so repeated or failed runs never duplicate output and slides survive being reordered by their reader.
-Tested against a strict mock of the Google Apps Script API (74 assertions, 8 scenarios), with every published figure independently recalculated from the raw data.
-Skills line
+*Tools: Google Apps Script (JavaScript), Google Sheets / Slides / Forms, Python, AS400 / IBM i (5250), data reconciliation and QA, KPI design, Bayesian modelling*
 
-Google Apps Script · JavaScript · Python · Google Sheets / Slides APIs · Data pipeline design · Data quality & reconciliation · Test design · Dashboard & report design
+---
 
-Part 2 — Portfolio README
+### Tomorrow Capital Research — Founder, Quantitative Developer & Researcher
+**Remote (Copenhagen, then London) · January 2024 – Present**
+*Independent research venture building systematic trading strategies, live execution infrastructure and the research behind them. Working towards a proprietary trading firm.*
 
-Written generically. See Before you publish at the end.
+**Live trading infrastructure**
+- **Liquidity-gap mean-reversion bot (LiqGapMR).** Built a ~2,000-line Python trading system for crypto spot markets, first on Crypto.com and then ported to Revolut X behind a separate exchange-adapter layer, so the strategy, sizing, state machine and reporting stayed unchanged.
+  - *Signal:* each minute, scans the most liquid spot pairs and tests every combination of 1/5/15/30/60-minute price drops against 0.3/0.5/1.0% thresholds. A trade needs both a qualifying drop and a last closed one-minute candle whose volume sits in the bottom 20% of the previous 200 candles — a sharp move on thin participation that is expected to revert.
+  - *Positions and risk:* at most one position per asset, a fixed share of equity per position under a portfolio-level cap; exits at the pre-drop reversion target or after a maximum holding period; per-asset cool-downs.
+  - *Costs:* entries must clear maker/taker fees, a configurable fee buffer and the exchange's whole-cent settlement rounding, so a signal is only taken if it pays after costs.
+  - *Operational safety:* separate paper and live modes with their own state and journals; persisted state with atomic commits; reconciliation of local positions against the exchange (UUID client order IDs, a grace period for lagging order listings, tolerance for fees taken in the base asset); single-instance lock; graceful shutdown; Ed25519 API authentication; a supervisor script that restarts the bot after any exit.
+  - *Reporting:* CSV trade journal and Telegram notifications for every entry and exit, plus scheduled portfolio summaries.
+- **Deployment.** Runs on a dedicated machine. Live operation began in September 2026 with the aim of building a 12-month live trading log of returns and drawdowns.
 
-Reporting automation for a contact-centre operation
+<!-- CHECK before using live wording externally: which strategy/version is live, start date, capital (keep it as "small own capital" unless you want the number public), and results with fees included. Fill the results ledger in the TMRW workbook first. -->
 
-An analytics layer for a multi-market contact centre, built entirely inside Google Workspace. Three separate logging tools feed two self-refreshing dashboards and one automated daily export into the slide deck used for client reviews.
+**Quantitative research**
+- **Mean-reversion and trend diagnostics** on 2.5–3.5 million one-minute crypto bars (BTC, with ETH, XRP and SOL for cross-asset work): ADF and KPSS stationarity tests, Hurst exponent, half-life estimation, Lo–MacKinlay variance ratios, Mann–Kendall trend tests and OLS slopes with HAC errors, run per period to separate mean-reverting from trending regimes. Decile studies of past against future returns at horizons up to 100 bars, with roughly 242,000 observations per decile.
+- **Market-state fingerprinting.** Encoded recent price paths as discrete states (return-sign sequences, candle ranges, distances to moving averages, moving-average slopes and volume) over 12-hour, 24-hour, 3-day and 7-day windows, and mapped each state to empirical up/down probabilities 1 and 3 hours ahead. Earlier versions estimated Markov up/down-sequence tables and checked their accuracy on data not used to build them.
+- **Statistical screening across assets.** Correlation and cointegration screens, cross-correlation, autocorrelation and partial-autocorrelation analysis, and empirical distributions of mean-reversion size and duration on hourly Binance data (2021–2024) for around 30 crypto pairs; calendar effects (monthly up/down probabilities, behaviour after yearly highs and lows).
+- **Model exploration.** Hidden Markov Models for latent regimes, gradient boosting (XGBoost), LSTM forecasting and wavelet analysis, each compared against simple statistical baselines.
+- **Strategy prototypes.** Bollinger and z-score mean reversion, local min/max reversion, trend following on rolling mean returns and positive/negative counters, 2σ breakouts, technical-indicator strategies (RSI, Fisher RSI, stochastic oscillator, ADX, MACD, Supertrend) and a combined multi-signal engine. Each was backtested with fees and scored on Sharpe ratio, drawdown and return.
+- **Adaptive multi-strategy design.** Designed a layered system in which volatility and order-book regime classifiers allocate capital across options market making, mean reversion, pairs trading and follow-the-leader strategies, with a Greek-budget overlay and bandit-style online learning.
 
-The problem
+**Theory and working papers**
+- **Aggregation Theory: A Multiscale Theory of Matching, Equilibrium and Control** (working paper, July 2026, 45 pp.). Models how individual order matching aggregates into market-level equilibria and trends. It separates three questions: what the market environment, agents and rules are; how to estimate a shifting equilibrium; and how an agent should act optimally within it. It covers mean-field games and mean-field control, open systems with agents entering and leaving, temporal aggregation and merging populations. It also states testable hypotheses (equilibrium restoration against migration) with a walk-forward test design on 279,120 one-minute BTC/USDT bars from January–July 2026.
+- **A Multi-Layered Model of Financial Markets** (white paper, October 2025, 20 pp.). The market is modelled as an assets-and-venues graph, an agents graph, a hierarchy of rules, and a valuation surface running from fundamental value to traded price, all evolving over time. Applications include AI-driven strategies, systemic-risk and contagion modelling, and linking macro and micro analysis.
+- **Research conjectures** (December 2025). *Path switching:* how to move optimally between strategies when the model of the market changes mid-trade. *Central pricing:* a multi-asset model splitting next-period prices into immediate order-flow impact and historical dependence, with mean-field effects from other participants.
+- **Firm design.** Wrote the TMRW business plan. It sets out a four-layer operating model (business strategy, portfolio management, trading strategies, execution and market impact) and a pod-based organisation in which investment, risk, research, technology and operations each have a central function, with independent model validation, internal audit and infrastructure review.
 
-Three tools had grown up independently: a complaint logger, a repeat-call (first-call-resolution) logger, and an outbound-call tracker. Each wrote to its own tab and drew its own dashboard, and the reporting line out of them was manual — someone rebuilt the same tables and charts into slides before every client review.
+**Websites and education**
+- Building three connected sites: [Tomorrow Capital Research](https://tomorrowcapitalresearch.github.io/) (the research business), [Tomorrow Markets](https://tomorrowmarkets.github.io/) (a multiplayer trading and portfolio-challenge game built on a JavaScript order-book engine, with a Supabase back end) and [Tomorrow Library](https://tomorrowlibrary.github.io/) (an open quantitative-finance reading room for students and early-career quants).
 
-Three constraints shaped the design:
+*Tools: Python (pandas, NumPy, SciPy, statsmodels, scikit-learn, XGBoost, TensorFlow), REST exchange APIs (Binance, Crypto.com, Revolut X), SQL, C++, JavaScript, Supabase, LaTeX*
 
-Google Workspace only. No external hosting, no database, no direct connection to the telephony or booking systems. Apps Script and Sheets.
-The audience is the client. The exported slides may contain operational figures, but no agent-level statistics.
-One maintainer. Anything that needs babysitting after a failed run will not get babysat. Correct-on-rerun was a hard requirement, not a nicety.
-What it does
-Module	Responsibility
-Main.gs	Single menu, one-click idempotent setup, trigger installation
-Complaints.gs	Complaint ingestion, aggregation and dashboard
-FCR_Analytics.gs	Repeat-call logging form, aggregation and dashboard
-SlidesExport.gs	Daily export of four slides into the client deck
+---
 
-Dashboards refresh on new submissions, on a period change, and hourly, so "Today" rolls over without anyone touching the sheet. Each one offers six reporting periods and compares against the matching earlier window — month to date against the same days of the previous month, not the whole of it.
+### Freelance Software Developer & Quantitative Consultant
+**Self-employed · Remote · May 2024 – Present**
 
-The daily export writes four slides per run: a complaints overview, a per-market breakdown, a first-call-resolution summary, and a copy of the latest outbound-calls slide. It runs on a timer after the shift ends.
+- **Web and game development (Jul – Sep 2026):** Built the website and web app for [Club Clue](https://www.clubclue.com/), a puzzle game for a colleague in which players solve romance-and-intrigue mysteries from clues (inspired by Murdle, re-themed around relationship drama).
+- **Sports betting research (Oct – Nov 2025):** Designed probabilistic models for European football markets (1X2, goals and more) using historical performance, league effects and matchup dynamics. Modelled micro-events (shots, shots on target, corners, cards, fouls) with Poisson, negative binomial, Gamma, Normal and empirical distributions and conditional probabilities, with separate behaviour by team, league and competition stage. Built data intake for weather, line-ups, historical and player data, with a correlated model setup and bet-ordering across multiple bookmakers.
+- **Strategy performance validation (Sep – Oct 2025):** Validated trading-book data for price integrity, transaction costs and execution consistency; recalculated CAGR, absolute and cumulative returns, volatility and Sharpe ratio from raw trades; documented methodological issues in backtesting assumptions and execution logic.
+- **Low-latency crypto trading (Dec 2024 – Feb 2025):** Built a low-latency system for clients trading newly launched tokens as they reached the Raydium market.
+- **Algorithmic scripting (May – Jul 2024):** Pine Script strategy on TradingView triggering trades on custom signals (session-time setups, exchange opening times, multi-day mean reversion).
+- **Web development (May – Jul 2024):** Static HTML/CSS/JavaScript portfolio website for a hobby photographer.
+- **Excel integrations (occasional):** Workbook enhancements in Python, C#, VBA and VBScript — dashboards, financial calculations and inter-application automation.
 
-Design decisions worth calling out
+<!-- Raydium note (yours, kept private): built in Denmark around pump.fun launches; pump.fun isn't available in the UK. You've since researched other ways to use the same effect — if that becomes a TMRW strategy, record it there, not here. -->
 
-Idempotent, self-locating output. The generator writes a hidden tag into the alt-text of each slide's title element and finds its own slides by that tag on the next run. So a rerun redraws in place rather than appending; a slide the reader has moved is still found; a slide the reader has deleted is recreated in its correct position. The alternative — tracking slide IDs in script properties — breaks the moment anyone edits the deck by hand, which they will.
+*Tools: Python, Excel, VBA, C#, Pine Script, HTML/CSS/JavaScript*
 
-Shapes rather than native tables. Google Slides pads every table row to a minimum height and will not size columns, so a 13-row table does not fit on one slide. The tables are drawn as positioned shapes and grouped, so each block still moves as one piece when the reader edits it. Layout is expressed in points against a 720×405 page and scaled at draw time, so the same code renders correctly on a widescreen deck.
+---
 
-Separate locks per concern. The export takes a different lock from the dashboard refreshes, so a slow export does not block an agent's submission from updating a dashboard.
+### LD Pensions (LD Fonde) — Junior Quantitative Developer
+**Copenhagen, Denmark · August 2023 – May 2024**
+*Part-time student position, 15–35 hours per week, year-round. Danish pension fund managing and investing pension assets on behalf of its members.*
 
-Backwards compatibility as a first-class requirement. The rewrite kept every previously-exposed function name, tolerated both old and new tab names, and removed the superseded triggers and drawn buttons as part of setup. The system stayed live throughout; nobody had to be told to stop using it for a day.
+**Data pipelines and infrastructure**
+- Built automated, scheduled Python ETL jobs (run through Windows Task Scheduler) that ingested, cleaned and unified data from Nykredit, Nordea, Danske Bank, Morgan Stanley, Bloomberg, MSCI and Sustainalytics into the fund's central database, so analytics were current at the start of each workday without manual collection.
+- Integrated third-party APIs — the legacy Bloomberg API, MSCI ESG and Sustainalytics — into one Python environment covering market data, ESG metrics and analytics for equity and bond portfolios.
+
+**Internal Python library ("LDF")**
+- Developed the fund's on-premises Python package for quantitative analysis, risk modelling and data management, available only on LD's internal network.
+- Refactored it from a functional to an object-oriented design, making the code easier to reuse, extend and maintain.
+- Built an Excel add-in that exposed the library's functions inside Excel, so colleagues without Python could run the same analytics.
 
-Data quality. Three failure modes seen in the real data, all handled at ingestion:
+**Risk analytics and stress testing**
+- Built modules for VaR, CVaR, credit, interest-rate, currency and derivatives risk, including fixed-income and yield-curve analytics, with particular focus on margin-call frameworks for currency futures and interest-rate-sensitive portfolios.
+- Built stress-testing tools using quantile returns, drawdown analysis and log returns, giving portfolio managers scenario views of their mandates.
+- **CIO project:** worked with the Chief Investment Officer to interpret Morgan Stanley's profit-forecasting data. Reverse-engineered the VaR, CVaR and waterfall-model calculations, built a local scenario simulator using geometric Brownian motion and square-root diffusion, and presented the findings to senior leadership.
 
-Dates entered as DD/MM/YYYY but interpreted by the sheet as MM/DD/YYYY. Detected by cross-checking against the submission timestamp and swapping the components back when the two disagree by more than two days.
-The same category typed with different casing or spacing, which split one category into several rows. Grouped case-insensitively, keeping the first spelling seen.
-Market codes outside the configured set, which the previous version dropped silently. Now collected into an explicit "Other" column, so a miscoded entry is visible rather than invisible.
-Testing
-
-The interesting part, and the reason the rewrite could be delivered against a live system I could not run locally.
-
-A strict mock of the Apps Script API. Every service used — Spreadsheet, Slides, Properties, Lock, Script, Utilities — is reimplemented in Node.js behind a proxy that throws on any property that is not implemented. Calling a method that does not exist in the real API fails loudly in testing instead of passing silently and breaking in production. The mock also enforces the real API's constraints: range bounds, matching dimensions on bulk writes, overlapping merges, valid colour and enum values.
-
-74 assertions across 8 scenarios, covering first-time setup, repeated setup, dashboard interactions, old tab names, malformed rows, repeated exports in a single day, multi-day sequences, deleted and reordered slides, month rollover, an empty reporting period, missing source tabs, a widescreen deck, and execution with no UI available (as a timed trigger runs). The suite runs in both module load orders, to catch dependencies on declaration order.
-
-Independent recalculation. A separate Python script recomputes every published figure — counts per category and market, period-over-period deltas, weekly and monthly series, percentages — directly from the raw rows, using its own date parsing, and compares against what the scripts actually wrote. It caught one genuine discrepancy: a half-up rounding convention in the display layer that the checker had implemented as round-half-even.
-
-Visual rendering. Recorded slide and dashboard geometry is replayed as HTML and screenshotted with headless Chromium, so layout is reviewed before release rather than discovered in the client deck. This caught label-to-bar association errors and an overflow that no assertion was looking for.
-
-What I would do differently with fewer constraints
-
-A warehouse and a BI tool rather than Sheets; the spreadsheet is the integration point here only because it is the one surface the organisation already has. The design would survive the move largely intact: ingestion, aggregation and presentation are already separate, and the aggregation functions are pure functions over plain rows with no platform calls in them — which is precisely what made them testable.
-
-
-
-## Quantitative Developer & Researcher 
-
-### QUANTITATIVE RESEARCHER & DEVELOPER
-**2024 – Now**\
-WTECH, Copenhagen, Denmark\
-*Led the development of an algorithmic trading startup focused on creating innovative trading strategies and software solutions for financial markets.*
-- Company Formation & Leadership
-  - Spearheaded legal incorporation, secured funding, and established a sustainable business model.
-  - Oversaw recruitment and team-building efforts, aligning talent with core mission and strategic objectives.
-- IT Infrastructure & Architecture
-  - Designed and implemented robust hardware setups, communication channels, and documentation workflows.
-  - Built a scalable software architecture for algorithmic trading, incorporating industry-standard security and reliability measures.
-- Technical Innovations
-  - Backtesting System: Developed a high-performance platform to rigorously test and validate trading strategies against historical market data.
-  - Forecasting Engine: Engineered advanced predictive models to anticipate market movements, leveraging statistical and financial indicators.
-  - ETL Pipelines: Created a comprehensive data pipeline—integrating multiple APIs, data sources, and databases—to ensure accurate, real-time inputs for trading algorithms.
-- Research & Development
-  - Conducted extensive statistical and financial research to identify and refine profitable trading algorithms.
-  - Pioneered new methodologies for analyzing market patterns, enabling data-driven insights and robust strategy development
-
-**Tomorrow Capital Research | Remote | January 2024 – Present** \
-● Research & Development o Market State Detection: Investigated advanced detection methods—including custom market-state classifiers, Hidden Markov Models (HMM), decision-tree frameworks, autocorrelation analyses, and stationarity tests. 
-o Trend & Reversion Analysis: Explored trend detection techniques using Markov chains, local reversion triggers, resistance-level identification, and various regression methods. 
-o Strategy Choice AI: Built a prototype engine that dynamically selects among trend-following, mean-reversion, or event-driven reversion strategies based on real-time market conditions. 
-o Algorithmic Exploration: Conducted in-depth statistical and financial research to identify and refine profitable trading algorithms; introduced novel methodologies for analyzing market patterns and enabling data-driven insights. o Continuous Learning: Enriched expertise by attending research lectures (Daniel Lacker’s mean-field theory, Peter Cotton’s hierarchical risk parity, CQF Institute portfolio management conference), engaging with online communities (Wilmott’s forum, Quantnet, Quant Finance Stack Exchange), and acquiring specialized academic texts on risk management, mean-field games, advanced linear modeling, credit risk modeling, and computational finance. 
-● Technical Innovations o Backtesting System: Developed a high-performance framework to test trading strategies against both historical market data and simulated environments—ensuring rigorous validation and stress testing. 
-o Forecasting Engine: Engineered predictive models leveraging Markov Chain Monte Carlo, Monte Carlo simulations, ARIMA/GARCH processes, and other statistical/financial indicators to anticipate price movements. 
-o ETL Pipelines: Created a robust data pipeline integrating multiple APIs and databases—encompassing real-time price feeds, order book depth, options chains, macroeconomic metrics, and news sentiment data. 
-● IT Infrastructure & Architecture o Scalable Architecture: Designed and implemented resilient hardware setups, communication channels, and systematic documentation workflows to support algorithmic trading operations. o Multi-Asset Integration: Incorporated connectivity across multiple exchanges, diverse data flows, and a variety of asset classes, enabling the platform to handle crypto, equities, and more. o Software Development: Progressed from an initial prototype to faster, more generalized versions using Python, SQL, and C++. Employed web scraping, data cleaning, OOP, and modular design to build distinct modules for risk monitoring, PnL tracking, and on-demand backtesting. Key Tools & Skills: Python, SQL, C++, algorithmic trading, crypto markets, quantitative research, Monte Carlo methods, Hidden Markov Models, dynamic market-state detection, ARIMA/GARCH, data engineering, OOP, modular architecture, risk monitoring, backtesting. 
-
-## Freelance Software Developer 
-**2023 – Now**\
-Self-employed, Remote\
-*Developing various trading, investing or finance-oriented software*		     
-- Developed a high frequency trading system to trade emerging meme coins as soon as they hit the raydium market.
-- Developed a trading algorithm in Pinescript to indicate and initiate trades based on a few predefined trade signals
-- Developed a website in HTML for an acquaintance looking to expand his hobby photography.
-- Developed various smaller Excel workbook projects with added VBA/VBScript features
-
-**Self-Employed | Remote | May 2024 – Now** \
-● High-Frequency Trading Solutions (December 2024 – February 2025) o Developed a low-latency trading system to exploit meme-coin IPOs, guiding clients from sub-penny coins to mid-cap altcoins on the Raydium market. 
-● Algorithmic Scripting & Web Projects (May 2024 – July 2024) o Created a Pine Script algorithm on TradingView to trigger trades based on custom signals (e.g., “silver bullet,” exchange opening times, and multi-day mean reversions). o Designed a static HTML/CSS/JavaScript website for a hobby photographer, focusing on aesthetic layout and user-friendly navigation. 
-● Data-Driven Excel Integrations (sporadically) o Built multiple Excel workbook enhancements with Python, C#, VBA, and VBScript, enabling dashboards, financial calculations, inter-application automation, and data visualization. 
-● Model Validation of Strategy Performance (Sep – Oct 2025) 
-o Conducted detailed validation of trading book data, verifying price integrity, transaction costs, and execution consistency. o Audited and recalculated key performance indicators — including CAGR, absolute returns, volatility, Sharpe ratio, and cumulative returns — ensuring alignment between reported results and raw trading data. o Identified and documented methodological issues in backtesting assumptions, model validation procedures, and algorithmic execution logic. ● Sports Betting Quantitative Research (Oct – Nov 2025) o Designed and implemented probabilistic models for European football betting markets (1X2 outcomes, Goals, and more), integrating historical performance, league effects, and matchup dynamics. o Developed advanced statistical frameworks for micro-events (shots, shots on target, corners, cards, fouls), using Poisson, Gamma, Empiricial, Normal and negative binomial distributions with conditional probabilities to capture team-specific, bracket-specific, and situational dependencies. o Built multi-layered, adaptive models capable of differentiating between teams, leagues, and competition stages to improve predictive accuracy. o Developed data-intake for weather, lineups, historical data, and player specific data. With a correlated model setup and bet-ordering system to place bets on multiple bet-sites(Bet365, SkyBet, UniBet, BetFair, Paddypower etc.) Key Tools & Skills: Python, Excel, VBA, Pine Script, web technologies (HTML/CSS/JS), batch scripting, automation, solution design. 
-
-A range of these projects go unpaid because of the "unpaid, due to "I want to earn money first before I pay you"" excuse you'll get from random contracts, you'll ask for money on a piece delivered and than they'll come up and hit you with "no payment until I earn money on this".
-
-
-## TRAIN STATION SERVICE EMPLOYEE
-**2024 – Now**\
-DSB, Copenhagen, Denmark\
-*Danish train service company*
-- **Maintained cleanliness and a safe environment** at multiple train stations in the Copenhagen area.
-- **Assisted passengers—including those with disabilities** by helping them board and exit trains, find routes, and address other travel needs.
-- **Handled ad-hoc service tasks**, such as collaborating with police and security personnel in unique situations, escorting customers to safety during incidents, and managing specialized cleaning challenges.\
-
-- *DSB - Course in psychological first aid for trauma and shock*
-- *DSB - Course in proper use of cleaning chemicals*
-- *DSB - Course in safety concerns at the train tracks*
-
-## (Student Intern) - Likely title: Junior Quantitative Developer 
-**LD Pensions | Copenhagen, Denmark | August 2023 – May 2024** \
-● Comprehensive Data Pipelines o Automated ETL processes and scheduled scripts (via Python and task scheduler) to ingest, clean, and unify data from multiple sources (Nykredit, Nordea, Bloomberg, MSCI, Sustainalytics, Morgan Stanley, Danske Bank). o Ensured teams received up-to-date analytics at the start of each workday, minimizing data lag and manual overhead. ● Modular Python Framework o Built a robust Python package for on-prem use, providing functionalities for quantitative analysis, risk modeling, and data management. o Evolved the framework from functional to object-oriented design, accelerating code reusability and maintainability. o Created an Excel add-in integrating the library’s functionalities—empowering less technical users to access Python-driven analytics within Excel. ● Risk Analytics & Stress Testing o Developed modules for VaR, CVaR, credit risk, interest rate risk, currency risk, and derivatives risk, with special emphasis on margin call frameworks for currency futures and interest-rate-sensitive portfolios. o Partnered with the Chief Investment Officer to interpret Morgan Stanley’s profit forecasting data. Reverse-engineered VaR and CVaR calculations, built scenario simulators (Geometric Brownian motion, square-root diffusion), and presented findings to C-level leadership. ● ESG & Portfolio Framework o Designed a Modular Portfolio Framework ▪ Multi-Tier Portfolio Hierarchy: Created a system to consolidate multiple ETFs and diverse asset classes (equities, bonds, etc.) into unified portfolios—grouped under “low risk,” “medium risk,” and “high risk” mandates. Linked numerous database tables via asset IDs, ensuring seamless cross-referencing from individual holdings up through multiple portfolio-level structures. ▪ ROI & Risk Monitoring: Developed a robust return-on-investment module and risk framework—tracking exposures across daily intervals. Incorporated advanced market, interest rate, and currency risk analytics that aggregate performance metrics from the individual asset level to the overarching mandate. ▪ Key Data Visualizations: ▪ Asset Allocation Plots: Displayed real-time allocations against compliance thresholds, enabling proactive limit checks. ▪ Net Asset Value Graph: Compared each portfolio’s NAV trajectory against benchmarks or peer portfolios, simplifying performance evaluations. ▪ VaR Plot: Delivered visual risk assessments (e.g., Value at Risk) to highlight potential drawdowns under adverse market conditions. o Extended the Python library to conduct ESG analytics (Weighted Average Carbon Intensity, Total Financed Emissions) via data from MSCI, Bloomberg, and Sustainalytics. o Incorporated key governance and social KPIs for expanded ESG insights, aligning with industry best practices. ● Analytics & Productivity Tools o Enhanced business intelligence by introducing Python-based data manipulation in Power BI dashboards, improving executive decision-making through clear, real-time visuals. o Deployed VBA macros and specialized Excel add-ins, automating budgeting tasks, email workflows, and smaller ad-hoc processes—leading to significant time savings. o Streamlined stress testing with advanced quantile-based returns, drawdown analysis, and log-return calculations, offering robust scenario modeling for portfolio managers. Key Tools & Skills: Python, SQL, ETL frameworks, risk modeling (VaR/CVaR), scenario simulations, ESG data, Excel–Python integration, Power BI, geometric Brownian motion, SSE-Simulations, Quantitative Analysis, Portfolio Construction & Optimization. \
-*A Danish pension fund that manages and invests pension assets on behalf of members.*
-- **Developed a modular Python package** (internally named “LDF”)—accessible only on LD’s local network—to support a broad range of quantitative analyses, risk modeling, and data management needs.
-- **Automated data workflows** by creating scripts that run at scheduled times, ensuring teams have up-to-date analytics upon starting their workday.
-- **Implemented ETL pipelines** to unify disparate data sources into the company’s central database, strengthening data consistency and reliability.
-- **Integrated third-party APIs**, including legacy Bloomberg, MSCI ESG, and Sustainalytics, within the Python ecosystem to streamline market data, ESG metrics, and analytics for equity and bond portfolios.
-- **Focused on comprehensive risk management**, building functionalities for market, interest rate, and currency risk exposures—providing real-time insights for portfolio monitoring.
-- **Collaborated with the Chief Investment Officer** to interpret Morgan Stanley’s profit forecasting datasets—reverse-engineering Value at Risk (VaR), Conditional VaR (CVaR), and the “waterfall model.” Extended this work by developing a basic local simulator featuring Geometric Brownian motion and square root diffusion for scenario testing.
-- **Enhanced business intelligence** by incorporating Python-driven data manipulation and visualization in Power BI dashboards, improving executive-level decision-making.
-- **Augmented efficiency** through a suite of VBA macros and Excel add-ins, reducing manual efforts and elevating overall productivity.
-
-Some weeks I worked 35 hours, some weeks I worked 15. Unlike UK, Studentinterns work all year around, they are essentially a part time employee
-
-## (Student Intern) - Likely title: Data Quality Analyst 
-**Lån & Spar Bank | Copenhagen, Denmark | January 2023 – August 2023** \
-● Assessed and documented data quality indicators for the upcoming IRB system (scheduled for 2025 launch), producing in-depth analyses of PD/PC, LGD/LGC, EAD, and DoD procedures to enhance data integrity and reporting accuracy. o Running through data quality dimensions: Accuracy, completeness, consistency, validity, uniqueness, integrity o convened with stakeholders, head of IRB, IRB analysts and model validators to make sure our process was considering the correct variables o Produced data quality reports, presented them to stakeholders and developed a database mapping o Mapped and visually represented complex database architectures, illustrating relationships among SAS tables for credit evaluation, IRB, and transactional systems. ● Conducted comprehensive reviews of the "high-risk customer evaluation process" o conducted codereview of the codebase and documented the database mapping related to the process o Presented my findings to the head of credit, head of IT and head of internal review. ● Engineered and maintained a SAS macro-driven solution for data warehouse quality analysis, ensuring reliable and precise data quality reporting. o The macro solution had the ability to run through data quality dimensions on database tables: The dimensions testable were completeness, consistency, validity, uniqueness and integrity o The macro would run through tables in forward order, the current table, the tables producing this table and the tables producing that table and so on. Checking for integrity in the data as well. ● Work-related courses o Lån&Spar course in basic SAS with SAS institute o Lån&spar course in basic SQL with SAS institute Key Tools & Skills: SAS, SQL, IRB framework (PD/PC, LGD/LGC, EAD), data governance, data quality reporting, scrum methodology. \
-Some weeks I worked 35 hours, some weeks I worked 15. Unlike UK, Studentinterns work all year around, they are essentially a part time employee
-Lån&Spar, Copenhagen, Denmark	        
-*A medium sized loan and savings bank in Denmark. My work was appreciated by the head of Credit and the head of analysis.*
-- **Assessed and documented** data quality indicators for the upcoming IRB system (scheduled for 2025 launch), producing in-depth analyses of PD/PC, LGD/LGC, EAD, and DoD procedures to **enhance data integrity** and **reporting accuracy**.
-- **Conducted comprehensive reviews** of high-risk customer evaluation processes, contributing to improved **risk management** strategies.
-- **Mapped and visually represented** complex database architectures, illustrating relationships among SAS tables for **credit evaluation, IRB, and transactional systems.**
-- **Engineered and maintained** macro-driven solutions for **data warehouse quality control**, ensuring reliable and precise data management.
-- **Led system documentation, code reviews, and testing** activities—presenting findings and recommendations to stakeholders—to **strengthen data governance** and **streamline the IRB model implementation**.
-- Lån&Spar course in basic sas with sas institute
-- lån&spar course in basic SQL with sas institute
-
-## VBA & Python Course Instructor 
-**DJØF | Copenhagen, Denmark | January 2023 till August 2023** \
-● Curriculum Design & Delivery: o Organized Excel, VBA, and Python coursework for audiences from beginners to advanced, teaching automation, data manipulation, and best practices. ● Practical Project Focus: o Incorporated real-world tasks (e.g., automating daily processes, analyzing data sets) into the curriculum, enhancing learners’ job readiness. ● Pedagogical Techniques: o Utilized interactive learning (Q&A sessions, breakout workshops), and refined course material based on participant feedback. o Completed a 3-day training on professional teaching methodologies, emphasizing clarity and structured presentation. Key Tools & Skills: Teaching, Python, VBA, Excel automation, pedagogical presentation strategies. 
-Danish Association of Lawyers and Economists, Copenhagen, Denmark\
-*An association for Danish law, social science and economics employees and students.*
-- **Designed and delivered** courses in Excel, VBA, and Python for both online and in-person sessions, catering to students at the beginner through advanced levels.
-- **Developed advanced VBA coursework**, covering topics such as nested macros, complex function creation, and cross-application integration within the Windows environment (VBA/VBS).
-- **Facilitated interactive learning** by demonstrating real-world applications of Excel automation and Python scripting, enabling participants to apply these skills in professional settings.
-- 3-day Course on Pedagogical presentation in teaching
-
-## Data Analyst & Developer        
-**Statistics Denmark | Copenhagen, Denmark | August 2021 till August 2023** \ 
-● Timesheet & Budgeting System o Administered a comprehensive timesheet and budgetting platform, performing in-depth analyses of hours worked, salary payment updates, and budget distribution across multiple departments. o Ran monthly data extractions in SAS/SQL, providing budgetting and salary forecasts, employee hour estimates, and “borrowed hours” reallocation to ensure accurate resource planning. o Performed code reviews with colleagues to maintain coding standards and validate data integrity. o Integrated multiple platforms for seamless data flow and reporting: combined Microsoft Navision (bookkeeping), Microsoft Dynamics (CRM), and legacy budget solutions with SAS/SQL pipelines to enhance accuracy and visibility across finance, CRM, and project management functions. ● Donations Management o Assisted in the management of the end-to-end Donations System, incorporating C#, SQL, and Excel to maintain reliability and scalability of financial tracking. o Developed an API solution to integrate data from the legacy donations platform, enabling real-time monitoring of income streams, expenses, and project usage. o Delivered enhanced analytical capabilities that gave the finance team a clear view of donation flows and forecasted future budget movements. ● Project Financing & Analysis o Led the development of a robust software ecosystem—using Excel, VBA/VBS, SAS, and SQL—to consolidate and analyze multifaceted project data (employee hours, overhead, CRM costs, external expenditures). o Enabled dynamic project classifications by profitability, lead ownership, or expense flows, enhancing transparency in resource allocation and ROI. o Automated email notifications to project leaders, prompting regular updates or closure on completed/annual projects. ● Business Intelligence & Executive Reporting o Created Power BI dashboards providing executive-level insights into fund allocation, project performance metrics, and key analytics—directly influencing C-suite decision-making. o Conducted ad-hoc data analysis in SAS, SQL, and Excel to investigate funding surpluses or shortfalls, employee utilization, and returns on major organizational initiatives. o Collaborated with cross-departmental stakeholders to support policy decisions through data-driven evidence, streamlining internal processes and improving departmental efficiency. ● Work-related courses o Statistics Denmark, SAS programmer course series, with SAS institute o Internal company course on "Statistics with R I" o Internal company course on "Statistics with R II" o Internal company course on "Introduction to demographical statistics" ● Passed a round of security checks regarding my criminal record. Key Tools & Skills: SAS, SQL, C#, Excel (VBA/VBS), data analysis, ETL pipelines, business intelligence (Power BI), budgeting systems (Navision/Dynamics), code reviews, and cross-departmental collaboration. \
-Some weeks I worked 50 hours, some weeks I worked 15. Unlike UK, Studentinterns work all year around, they are essentially a part time employee. I was extremely dedicated to this job and would work overtime and leave it outside of the worktime registry.
-Statistics Denmark, Copenhagen, Denmark					         
-*Denmark’s national and central statistics authority.*
-- **Developed and maintained** a robust software ecosystem—integrating Excel, VBA/VBS, SAS, and SQL—to **streamline data consolidation** and **analyze multifaceted project information.**
-- **Optimized workflows** for email processing, data retrieval, and dashboard creation, facilitating **efficient project management and real-time insights.**
-- **Led end-to-end management** of the Donations System—encompassing documentation, development, and maintenance—using **C#, SQL, and Excel** to ensure **reliability** and **scalability.**
-- **Created and supervised** Power BI dashboards that provided **executive-level insights** into fund allocation, project analytics, and performance metrics, **guiding strategic decision-making.**
-- **Administered the timesheets system** and conducted **in-depth analyses** to enhance resource allocation and reporting.
-- **Collaborated on data analysis and program development** initiatives for **business intelligence**, primarily leveraging **SAS, SQL, and VBA** to inform policy decisions and **drive efficiency**.
-- Statistics Denmark, SAS programmer course series, with SAS institute
-- Internal company course on "Statistics with R I"
-- Internal company course on "Statistics with R II"
-- Internal company course on "Introduction to demographical statistics"
-
-
-## Senior Mentor – Physics, Mathematics & Science 
-MentorDenmark | Copenhagen, Denmark | Aug 2017 – Aug 2021 • Delivered individualized tutoring in mathematics, physics, and general science to students aged 7–23. • Prepared students for oral and written exams through curriculum review, mock examinations, and targeted skill development. • Simulated examiner scenarios to build students’ confidence and accurately reflect real exam conditions. \
-THis was my first reasonable job, after doing store clerk work and having a paper route. I would work 
-
-MentorDenmark, Copenhagen, Denmark\
-*The largest homework tutor and subject matter tutor company in denmark*
-- Top-5 Senior Mentor with four years of experience and over 1,000 hours of tutoring. Successfully prepared more than 50 students for math exams, earning an average satisfaction rating of 4.7 out of 5. My teaching methods consistently helped students achieve above-average or significantly above-average grades.
-- 2-day course on MentorDenmark - Course on pedagogical presentation in teaching
-
-### DATA ANALYSIS INTERN		           	            	  
-**2019 March – 2019 May**\
-Thomas Lystlund Studio, Copenhagen, Denmark\
-*Single project internship*	 						          
-- **Analyzed cash flows and projected ROI to evaluate forex bot products**, identifying potential scams and advising client on safer investment alternatives by leveraging in-depth knowledge of currency trading and expected returns.
-unpaid, due to "I want to earn money first before I pay you"
-
-# EDUCATION 
-
-##B.Sc. in Mathematical Statistics
-**University of Copenhagen | Copenhagen, Denmark | 2021-2025 (Unfinished)**
-● Thesis: “Option Pricing with Stochastic Volatility in the Heston Model” ● Relevant coursework: Mathematical Statistics, Stochastic processes I & II, Life insurance, General Insurance, Advanced probability theory ● Gained fundamental proficiency in probability theory, statistical inference, and time series analysis, forming a strong basis for quantitative trading research. B.Sc. in Mathematical Physics University of Copenhagen | Copenhagen, Denmark | 2019-2021(Resigned) ● First year project: “Estimations of dark matter density for rotational galaxies” ● Relevant coursework: Complex analysis, Quantum Mechanics, Astrophysics. 
-
-# EXTRACURRICULAR COURSES 
-
-
-
-**DONE**
-- 2025 [Forage Citi - Markets Quantitative Analysis](https://forage-uploads-prod.s3.amazonaws.com/completion-certificates/8eNRcRqBZM9HLvwGw/fAuNBibfF4dzrgtDY_8eNRcRqBZM9HLvwGw_nCjQg8GM2BpQ9yNYB_1736301928896_completion_certificate.pdf)
-- 2025 [Forage Standard Bank - Risk Management](https://forage-uploads-prod.s3.amazonaws.com/completion-certificates/kkKXfgG5FckTX8Toc/9ud3PRZGf8w6NeHgh_kkKXfgG5FckTX8Toc_nCjQg8GM2BpQ9yNYB_1736293804035_completion_certificate.pdf)
-- 2025 [Forage Goldman Sachs - Risk](https://forage-uploads-prod.s3.amazonaws.com/completion-certificates/MBA4MnZTNFEoJZGnk/ETGMhLB5eCrYjcH8o_MBA4MnZTNFEoJZGnk_nCjQg8GM2BpQ9yNYB_1736298583661_completion_certificate.pdf)
-- 2025 [Forage Standard Chartered - Credit Analyst](https://forage-uploads-prod.s3.amazonaws.com/completion-certificates/ZsgybEFo5RxyHxwXL/TwxTEuyPugfgMGm8H_ZsgybEFo5RxyHxwXL_nCjQg8GM2BpQ9yNYB_1736299213999_completion_certificate.pdf)
-- 2025 [Forage Lloyds Banking Group - Data Science](https://forage-uploads-prod.s3.amazonaws.com/completion-certificates/Zbnc2o4ok6kD2NEXx/EuvC8GPjkZ6xaiP9p_Zbnc2o4ok6kD2NEXx_nCjQg8GM2BpQ9yNYB_1736293191281_completion_certificate.pdf)
-- 2025 [Forage Goldman Sachs - Excel Skills for Business](https://forage-uploads-prod.s3.amazonaws.com/completion-certificates/MBA4MnZTNFEoJZGnk/eLeZHcwX7CqLhhps7_MBA4MnZTNFEoJZGnk_nCjQg8GM2BpQ9yNYB_1736289958952_completion_certificate.pdf)
-- 2025 [Forage Citi - Finance](https://forage-uploads-prod.s3.amazonaws.com/completion-certificates/8eNRcRqBZM9HLvwGw/Cf35qdHjFPqLFRhgy_8eNRcRqBZM9HLvwGw_nCjQg8GM2BpQ9yNYB_1736291737128_completion_certificate.pdf)
-- 2025 [Forage J.P.Morgan Chase & Co - Software Engineering](https://forage-uploads-prod.s3.amazonaws.com/completion-certificates/Sj7temL583QAYpHXD/E6McHJDKsQYh79moz_Sj7temL583QAYpHXD_nCjQg8GM2BpQ9yNYB_1736293037192_completion_certificate.pdf)
-- 2025 [Forage quantium - Software Engineering](https://forage-uploads-prod.s3.amazonaws.com/completion-certificates/32A6DqtsbF7LbKdcq/jhiG2W9K8KLZK8nXP_32A6DqtsbF7LbKdcq_nCjQg8GM2BpQ9yNYB_1736292440025_completion_certificate.pdf)
-- 2025 [Forage Goldman Sachs - Software Engineering](https://forage-uploads-prod.s3.amazonaws.com/completion-certificates/MBA4MnZTNFEoJZGnk/NPdeQ43o8P9HJmJzg_MBA4MnZTNFEoJZGnk_nCjQg8GM2BpQ9yNYB_1736289909624_completion_certificate.pdf)
-- 2025 [Forage Standard Bank - Software Engineering](https://forage-uploads-prod.s3.amazonaws.com/completion-certificates/kkKXfgG5FckTX8Toc/JMcJbndBmiDBvy9pj_kkKXfgG5FckTX8Toc_nCjQg8GM2BpQ9yNYB_1736293158178_completion_certificate.pdf)
-- 2025 [Forage Commonwealth Bank - Software Development](https://forage-uploads-prod.s3.amazonaws.com/completion-certificates/2sNmYuurxgpFYawco/xv8eSGu7nksKNiCQj_2sNmYuurxgpFYawco_nCjQg8GM2BpQ9yNYB_1736292703452_completion_certificate.pdf)
-- 2025 [Forage Citi - Investment Banking](https://forage-uploads-prod.s3.amazonaws.com/completion-certificates/8eNRcRqBZM9HLvwGw/amBSJDTDDFcYiKq9Z_8eNRcRqBZM9HLvwGw_nCjQg8GM2BpQ9yNYB_1736289659348_completion_certificate.pdf)
-
-
-### 2024
-
--	2024 [Forage J.P.Morgan Chase & Co - Quantitative Research Job Simulation](https://forage-uploads-prod.s3.amazonaws.com/completion-certificates/J.P.%20Morgan/bWqaecPDbYAwSDqJy_JPMorgan%20Chase%20&%20Co._nCjQg8GM2BpQ9yNYB_1706747633338_completion_certificate.pdf?trk=public_profile_see-credential)
--	2024 [Forage Standard Bank - Actuarial Job Simulation](https://forage-uploads-prod.s3.amazonaws.com/completion-certificates/Standard%20Bank%20/wf8DwPiWqcRzs3KDF_Standard%20Bank%20_nCjQg8GM2BpQ9yNYB_1706747691149_completion_certificate.pdf)
--	2024 [Forage PGIM - Fixed Income Job Simulation](https://forage-uploads-prod.s3.amazonaws.com/completion-certificates/PGIM/5tB9veyHmFh4egh65_PGIM_nCjQg8GM2BpQ9yNYB_1706747334656_completion_certificate.pdf?trk=public_profile_see-credential)
--	2024 [Forage Cognizant - Artificial Intelligence Job Simulation](https://forage-uploads-prod.s3.amazonaws.com/completion-certificates/Cognizant/5N2ygyhzMWjKQmgCK_Cognizant_nCjQg8GM2BpQ9yNYB_1706744853085_completion_certificate.pdf?trk=public_profile_see-credential)
--	2024 [Fundamentals of Quantitative Modelling](https://coursera.org/share/29d2b0531431e672bbbc3716439bee9d)
--	2024 [Forage AIG - Underwriting Job Simulation](https://forage-uploads-prod.s3.amazonaws.com/completion-certificates/AIG/6miFEe83Y7PdzWJD6_AIG_nCjQg8GM2BpQ9yNYB_1706744611697_completion_certificate.pdf?trk=public_profile_see-credential)
-- 2024 [Forage Bank of America - Investment Banking](https://forage-uploads-prod.s3.amazonaws.com/completion-certificates/Bank%20of%20America/Hi8MJQE5T3MeTRWQR_Bank%20of%20America_nCjQg8GM2BpQ9yNYB_1706743366428_completion_certificate.pdf)
-- 2024 [Forage J.P.Morgan Chase & Co - Investment Banking](https://forage-uploads-prod.s3.amazonaws.com/completion-certificates/JPMorgan%20Chase/YD2kY95RQxQtXxFTS_JPMorgan%20Chase_nCjQg8GM2BpQ9yNYB_1706743099951_completion_certificate.pdf)
-- 2024 [Forage Commonwealth Bank - Introduction to Data Science](https://forage-uploads-prod.s3.amazonaws.com/completion-certificates/Commonwealth%20Bank/smwfytX3mcLboA9bf_Commonwealth%20Bank_nCjQg8GM2BpQ9yNYB_1706744285551_completion_certificate.pdf)
-- 2024 [Forage Quantium - Data Analytics](https://forage-uploads-prod.s3.amazonaws.com/completion-certificates/Quantium/NkaC7knWtjSbi6aYv_Quantium_nCjQg8GM2BpQ9yNYB_1706744085389_completion_certificate.pdf)
-- 2024 [Forage BCG - Data Science](https://forage-uploads-prod.s3.amazonaws.com/completion-certificates/BCG%20/Tcz8gTtprzAS4xSoK_BCG_nCjQg8GM2BpQ9yNYB_1706744880479_completion_certificate.pdf)
-- 2024 [Forage accenture - Data Analytics and Visualization](https://forage-uploads-prod.s3.amazonaws.com/completion-certificates/Accenture%20North%20America/hzmoNKtzvAzXsEqx8_Accenture%20North%20America_nCjQg8GM2BpQ9yNYB_1706742179438_completion_certificate.pdf)
-- 2024 [Forage J.P.Morgan Chase & Co - Software Engineering](https://forage-uploads-prod.s3.amazonaws.com/completion-certificates/J.P.%20Morgan/R5iK7HMxJGBgaSbvk_J.P.%20Morgan_nCjQg8GM2BpQ9yNYB_1706746848174_completion_certificate.pdf)
-- 2024 [Forage Standard Bank - Software Engineering](https://forage-uploads-prod.s3.amazonaws.com/completion-certificates/Standard%20Bank%20/8Mgcdiuo2mfSRCfjc_Standard%20Bank%20_nCjQg8GM2BpQ9yNYB_1706746105628_completion_certificate.pdf)
--	2024 [CME Group, Introduction to futures](https://github.com/CtoL95/Test/blob/main/CME%20Introduction%20to%20Futures.pdf)
-- 2024 [CME Group, Introduction to Treasuries](https://github.com/CtoL95/Test/blob/main/CME%20Introduction%20to%20Treasuries.pdf)
--	2024 [CME Group, Long Options: Underlying and Volatility impact](https://github.com/CtoL95/Test/blob/main/CME%20Long%20Options_%20Underlying%20and%20Volatility%20Impact.pdf)
--	2024 [CME Group, Understanding Futures Spreads](https://github.com/CtoL95/Test/blob/main/CME%20Understanding%20Futures%20Spreads.pdf)
--	[Trinity College London - GESE 2 / CEFR Level A1](https://certificates.trinitycollege.com/3c9b7eda-0793-41d5-94e4-8d4f58dd8967#acc.H0LPcsja)
--	[LanguageCert - ESOL International B2 English Communicator](https://github.com/CtoL95/Test/blob/main/LanguageCert%20-%20ESOL%20Written.pdf)
-
-### 2021
-
--	[GARP - Foundations of Financial Risk](https://github.com/CtoL95/Test/blob/main/Foundations_of_Financial_Risk.pdf)
-- [Copenhagen Airport, security Awareness certificate](https://github.com/CtoL95/Test/blob/main/Security%20Awareness%20K%C3%B8benhavns%20Lufthavn%2C%20DK%20version.pdf)
--	[CFI - introduction to banking](https://credentials.corporatefinanceinstitute.com/524a2a7e-2bf8-4ae9-a0ac-2603b9e59645#acc.Nipz3Xqa)
--	[CFI - Fundamentals of Credit](https://credentials.corporatefinanceinstitute.com/c7e5e7e2-ecec-49db-82bd-eadece36b10a#acc.pKbN1mSr)
-
-### 2020
-
-- [Linkedin Learning Path - Become a Data Scientist](https://www.linkedin.com/learning/certificates/ec62ce4f36d64dbe064544533519c3f65ca19e95424d11f8246ea5c23d2e5ade?lipi=urn%3Ali%3Apage%3Ad_flagship3_profile_view_base_certifications_details%3BE9b3Vn7vTYaxQD6EhCthHA%3D%3D)
-- [Linkedin Learning Path - Advance Your Skills in Python](https://www.linkedin.com/learning/certificates/498fc9d230524f23060c80e10b39104e1de568572852418d855a60d268472534?lipi=urn%3Ali%3Apage%3Ad_flagship3_profile_view_base_certifications_details%3BE9b3Vn7vTYaxQD6EhCthHA%3D%3D)
-- [Linkedin Learning Path - Advance Your Python Skills For Data Science](https://www.linkedin.com/learning/certificates/797299e19c57fa257790df3a6f985a4778ea1f72d68304b8162bbdc6ab9780af?lipi=urn%3Ali%3Apage%3Ad_flagship3_profile_view_base_certifications_details%3BE9b3Vn7vTYaxQD6EhCthHA%3D%3D)
-- [Linkedin Learning Path - Getting Started with R for Data Science](https://www.linkedin.com/learning/certificates/db08e02f98cf05df162bea2ee2e05252d2a241a3aa05ed7ceff79e1b84c54d61?lipi=urn%3Ali%3Apage%3Ad_flagship3_profile_view_base_certifications_details%3BE9b3Vn7vTYaxQD6EhCthHA%3D%3D)
--	[Microsoft edX - Professional Certificate in Data analysis: Essential Skills](https://credentials.edx.org/credentials/5470fff383e1445f86fb1174a0dbab5a/?trk=public_profile_see-credential)
--	[University of Columbia edX - Professional Certificate in Corporate Finance](https://credentials.edx.org/credentials/c3f74af6ade049a2857e2f30ef81c4c2/?trk=public_profile_see-credential)
--	[IMF edX - Macroeconometric Forecasting](https://courses.edx.org/certificates/8bf91f734bf7464c881c9ff61edd1d8c?_gl=1*17qmxac*_gcl_au*OTEyNjc5NDcyLjE3MzYyNjUzNjE.*_ga*ODA2MDY4NjMuMTczNjI2NTM2MQ..*_ga_D3KS4KMDT0*MTczNjI2NTM2MS4xLjEuMTczNjI2NTcxMC41OS4wLjA.)
--	[IMF edX - Macroeconometric Diagnostics](https://courses.edx.org/certificates/02e1984556594aa79033f8b14cc5c1db?_gl=1*17qmxac*_gcl_au*OTEyNjc5NDcyLjE3MzYyNjUzNjE.*_ga*ODA2MDY4NjMuMTczNjI2NTM2MQ..*_ga_D3KS4KMDT0*MTczNjI2NTM2MS4xLjEuMTczNjI2NTcxMC41OS4wLjA.)
--	[IMF edX, Financial Market Analysis](https://courses.edx.org/certificates/f7994f95d3554a4791bff62b770f6d54?_gl=1*17qmxac*_gcl_au*OTEyNjc5NDcyLjE3MzYyNjUzNjE.*_ga*ODA2MDY4NjMuMTczNjI2NTM2MQ..*_ga_D3KS4KMDT0*MTczNjI2NTM2MS4xLjEuMTczNjI2NTcxMC41OS4wLjA.)
--	[NYIF edX, Risk management and Credit Principles](https://courses.edx.org/certificates/f2a38a40301f46d18aeaf269a54a0878?_gl=1*g8q36d*_gcl_au*OTEyNjc5NDcyLjE3MzYyNjUzNjE.*_ga*ODA2MDY4NjMuMTczNjI2NTM2MQ..*_ga_D3KS4KMDT0*MTczNjI2NTM2MS4xLjEuMTczNjI2NTcxMC41OS4wLjA.)
--	[NYIF edX, Ratio Analysis](https://courses.edx.org/certificates/2e9cb658318348d4a1ba75fa1acdce80?_gl=1*17qmxac*_gcl_au*OTEyNjc5NDcyLjE3MzYyNjUzNjE.*_ga*ODA2MDY4NjMuMTczNjI2NTM2MQ..*_ga_D3KS4KMDT0*MTczNjI2NTM2MS4xLjEuMTczNjI2NTcxMC41OS4wLjA.)
--	[WorldBank edX, The Future of Work: Preparing for Disruption](https://courses.edx.org/certificates/5c696f67576c420989d859d6a201aaf0?_gl=1*17qmxac*_gcl_au*OTEyNjc5NDcyLjE3MzYyNjUzNjE.*_ga*ODA2MDY4NjMuMTczNjI2NTM2MQ..*_ga_D3KS4KMDT0*MTczNjI2NTM2MS4xLjEuMTczNjI2NTcxMC41OS4wLjA.)
--	[WorldBank edX, Unlocking Investment and Finance in Emerging Markets and Developing Economies](https://courses.edx.org/certificates/98f9428afa2b42aa93cf316d13935ff2?_gl=1*17qmxac*_gcl_au*OTEyNjc5NDcyLjE3MzYyNjUzNjE.*_ga*ODA2MDY4NjMuMTczNjI2NTM2MQ..*_ga_D3KS4KMDT0*MTczNjI2NTM2MS4xLjEuMTczNjI2NTcxMC41OS4wLjA.)
-- [Linkedin Learning Path - Master Key Financial Analyst Skills](https://www.linkedin.com/learning/certificates/8312aa1bbbf8b237d63388ca7edc710f81d29bb911b31576d7a6f0f2f6e589ce?lipi=urn%3Ali%3Apage%3Ad_flagship3_profile_view_base_certifications_details%3BE9b3Vn7vTYaxQD6EhCthHA%3D%3D)
-- [Linkedin Learning Path - Getting Started in Finance and Accounting](https://www.linkedin.com/learning/certificates/8d831a982becf9f943394377e6eb85abb2a4ffffe8cac39b1317106e8db398ba?lipi=urn%3Ali%3Apage%3Ad_flagship3_profile_view_base_certifications_details%3BE9b3Vn7vTYaxQD6EhCthHA%3D%3D)
-- [Linkedin Learning Path - Getting Started in Finance & Bookkeeping](https://www.linkedin.com/learning/certificates/8d00d39513032ae2ec43bfb350fc7d6522aa23b3c7657ceffa62d104896fdf88?lipi=urn%3Ali%3Apage%3Ad_flagship3_profile_view_base_certifications_details%3BE9b3Vn7vTYaxQD6EhCthHA%3D%3D)
-- [Linkedin Learning Path - Getting Started as a Business Analyst](https://www.linkedin.com/learning/certificates/41455540e531d4b8d086b9686f6c65ef60d52f3881ab38a004c2c9b1d315795a?lipi=urn%3Ali%3Apage%3Ad_flagship3_profile_view_base_certifications_details%3BE9b3Vn7vTYaxQD6EhCthHA%3D%3D)
-
-### 2019
-
-- [Linkedin Learning Path - Master Microsoft Word](https://www.linkedin.com/learning/certificates/048c0b30fe9eed3001e98d79c426b5cd4f65d4bda95b29ebad50dbe5d66d451d?lipi=urn%3Ali%3Apage%3Ad_flagship3_profile_view_base_certifications_details%3BE9b3Vn7vTYaxQD6EhCthHA%3D%3D)
-- [Linkedin Learning Path - Master In-Demand Professional Soft skills](https://www.linkedin.com/learning/certificates/45e07396af21f07548621605ef6b1db8f3206557b6d2c3fda9526929e573f971?lipi=urn%3Ali%3Apage%3Ad_flagship3_profile_view_base_certifications_details%3BE9b3Vn7vTYaxQD6EhCthHA%3D%3D)
-- [Linkedin Learning Path - Improve Your Organizational Skills](https://www.linkedin.com/learning/certificates/137a5099ab65aa75e21b4e03c7522bf0fc59447a5711d4d4f6f16604938365b2?lipi=urn%3Ali%3Apage%3Ad_flagship3_profile_view_base_certifications_details%3BE9b3Vn7vTYaxQD6EhCthHA%3D%3D)
-- [Linkedin Learning Path - Improve Your Interoffice Politics Skills](https://www.linkedin.com/learning/certificates/ec61e527b5d2a1bab29a7e2a5aa8a9c07b7a81f141f5e46a9784fa03771560f0?lipi=urn%3Ali%3Apage%3Ad_flagship3_profile_view_base_certifications_details%3BE9b3Vn7vTYaxQD6EhCthHA%3D%3D)
-- [Linkedin Learning Path - Advance Your Career as an Individual Contributor](https://www.linkedin.com/learning/certificates/00d00324e1197ecb6c154fb51e5179790876b1a0dbd42846c58096f20272a9d9?lipi=urn%3Ali%3Apage%3Ad_flagship3_profile_view_base_certifications_details%3BE9b3Vn7vTYaxQD6EhCthHA%3D%3D)
-
-
-EXTRACURRICULAR COURSES
-2026
-C++ course
-statistical learning course
-AI course
-Interest rate course
-Derivatives course
-
-2025
-Forage Citi - Markets Quantitative Analysis
-Forage Standard Bank - Risk Management
-Forage Goldman Sachs - Risk
-Forage Standard Chartered - Credit Analyst
-Forage Lloyds Banking Group - Data Science
-Forage Goldman Sachs - Excel Skills for Business
-Forage Citi - Finance
-Forage J.P.Morgan Chase & Co - Software Engineering
-Forage quantium - Software Engineering
-Forage Goldman Sachs - Software Engineering
-Forage Standard Bank - Software Engineering
-Forage Commonwealth Bank - Software Development
-Forage Citi - Investment Banking
-2024
-Forage J.P.Morgan Chase & Co - Quantitative Research Job Simulation
-Forage Standard Bank - Actuarial Job Simulation
-Forage PGIM - Fixed Income Job Simulation
-Forage Cognizant - Artificial Intelligence Job Simulation
-Fundamentals of Quantitative Modelling
-Forage AIG - Underwriting Job Simulation
-Forage Bank of America - Investment Banking
-Forage J.P.Morgan Chase & Co - Investment Banking
-Forage Commonwealth Bank - Introduction to Data Science
-Forage Quantium - Data Analytics
-Forage BCG - Data Science
-Forage accenture - Data Analytics and Visualization
-Forage J.P.Morgan Chase & Co - Software Engineering
-Forage Standard Bank - Software Engineering
-CME Group, Introduction to futures
-CME Group, Introduction to Treasuries
-CME Group, Long Options: Underlying and Volatility impact
-CME Group, Understanding Futures Spreads
-Trinity College London - GESE 2 / CEFR Level A1
-LanguageCert - ESOL International B2 English Communicator
-2021
-GARP - Foundations of Financial Risk
-CFI - introduction to banking
-CFI - Fundamentals of Credit
-2020
-Linkedin Learning Path - Become a Data Scientist
-Linkedin Learning Path - Advance Your Skills in Python
-Linkedin Learning Path - Advance Your Python Skills For Data Science
-Linkedin Learning Path - Getting Started with R for Data Science
-Microsoft edX - Professional Certificate in Data analysis: Essential Skills
-University of Columbia edX - Professional Certificate in Corporate Finance
-IMF edX - Macroeconometric Forecasting
-IMF edX - Macroeconometric Diagnostics
-IMF edX, Financial Market Analysis
-NYIF edX, Risk management and Credit Principles
-NYIF edX, Ratio Analysis
-MentorDenmark - Course on pedagogical presentation in teaching
-WorldBank edX, The Future of Work: Preparing for Disruption
-WorldBank edX, Unlocking Investment and Finance in Emerging Markets and Developing Economies
-Linkedin Learning Path - Master Key Financial Analyst Skills
-Linkedin Learning Path - Getting Started in Finance and Accounting
-Linkedin Learning Path - Getting Started in Finance & Bookkeeping
-Linkedin Learning Path - Getting Started as a Business Analyst
-2019
-Linkedin Learning Path - Master Microsoft Word
-Linkedin Learning Path - Master In-Demand Professional Soft skills
-Linkedin Learning Path - Improve Your Organizational Skills
-Linkedin Learning Path - Improve Your Interoffice Politics Skills
-Linkedin Learning Path - Advance Your Career as an Individual Contributor
-NOTABLE ACTIVITIES
-Partaking in various courses, lectures, webinars, conferences and more with relation to quantitative finance
-13/2/2025 - Oxford Mathematical and Computational Finance - Eghbal Rahimikia - Revisiting Large Language Models in Finance
-27/2/2025 - Quant Insider – Andrey Chirikhin – Introduction to Credit Derivatives
-8/3/2025 - Bangalore Quant Club - Peter Cotton - Machine Learning for Hierarchical Portfolio Optimization Using Schur Complements
-11/3/2025 - Imperial College - Daniel Lacker - Non asymptomatic perspectives on mean field approximations and stochastic control
-12/3/2025 - CQF Institute - Portfolio Management in Quant Finance Conference
-8/4/2025 – CQF Institute - Wim Schoutens - Omnipresent Model Risk
-7/5/2025 – CQF Institute - Laura Ballotta - The Term Structure of Implied Correlations Between S&P and VIX Markets
-4/6/2025 – CQF Institute - Volatility and Risk in Quant Finance Conference
-10/6/2025 – CQF Institute - Financial Reasoning Agents: In-Context Reinforcement Learning and Test-Time Compute
-9/7/2025 – CQF Institute - Optimization of Strategic and Tactical Asset Allocation for Multi-Asset Portfolios
-12/8/2025 – CQF Institute - Modelling Non-Maturing Deposits
-9/9/2025 – CQF Institute - How to Add Currencies to a Portfolio: Currency Benchmarks and Active Currency Management
-17/9/2025 – CQF Institute – AI and Machine Learning in Quant Finance Conference
-14/10/2025 – LQG – Instability: Debt, Inflation an AI’s Impact on Investing
-4/11/20205 till 5/11/2025 - CQF - Annual Quant Insights Conference 
-6/11/2025 till 7/11/2026 - 9th London-Paris Bachelier Workshop
-12/11/2025 - CQF Generating Realistic Economic Scenarios for Stress Testing Portfolios Using Generative AI' with Samit Ahlawat
-19/11/2025 - CQF - London Society Meeting: Market Microstructure talk
-3/12/2025 - CQF - The Quant’s AI Advantage: Leveraging AI for Natural Language Assistance in Trading Analytics - Peter Simpson and Alexander Serechenko
-9/12/2025 - CQF - Why So Much Science Doesn’t Hold Up and What Quantitative Minds Can Do About It' with Stephen Weston
-16/12/2025 - LQG Annual Debate - Ed Fishwick & Henry Neville
-15/01/2026 - LQG -  Limits to (Machine) Learning - Semyon Malamud
-11/02/2026 - CQF Trade Wars to Market Wars: Quantifying Geopolitical Impact on Equity Returns' with Professor Lorne Switzer
-17/02/2026 - LQG - What we learned about risk - Edward Fishwick
-26/02/2026 - SP Global - London Quant intelligence forum 2026
-11/3/2026 - CQF - Portfolio Management in Quant finance Conference
-18/03/2026 - CQF - American Option Pricing by the Finite Difference Method: Tips and Tricks from the Trenches - Leif Andersen
-18/03/2026 - DefconQ x Squarepoint - KDB developers meetup
-14/04/2026 - LQG - Better Together: Fundamental and systematic views in credit investing - Simon Polbennikov
-29/04/2026 - CQF - ESG Investing and Portfolio Selection - Dr. John Guerard
-12/05/2026 - LQG - Adventures in high-dimensional space - Robert Macrae
-09/06/2026 - LQG - Making sense of this (...) World and the resurgent chinese empire - Brunello Rosa
-I have stopped noting down for a long while
-14/07/2026 - Alternative data, traditional expertise and Ownership - Maxime Bonelli
-13/09/2026 - Bloomberg data and tech summit
-13/10/2026 - LQG - The anatomy of the treasury market - Manav Chaudhary  
-\
-Ranked in the top 10% (2800 out of more than 36,000 participants) in Børsen stock-picking challenge 2023
-Ranked in the top 1% (107 out of more than 12,000 teams) in the IMF Prosperity 3 algorithmic trading challenge
-Ranked in the top 1% (468 out of an average of 47,000 participants) in Børsen stock-picking challenge 2024
-Ranked in the top 6.3% (1809 out of an average of 28,500 participants) in Børsen stock-picking challenge 2026
-Ranked in the top 11.4% (741 out of 6,500 active teams, 22,000 registered teams) in the IMC Prosperity 4 algorithmic trading challenge
-Ranked in the top 20% (920 out of 5,700 active teams) In the Wunderfund RNN challenge 2026: Connectome
-MENSA member (2018-present), Membership No. 2018170 with assessed IQ≥158
-Active Chess player elo(330), Team fight tactics (gold player) and High achiever in real-time strategy game Starcraft II (Mid masters player).
-Member of Willmotts forum, CQF institute, ML-quant and Quantpedia
-Member of UNF (Danish Youth Foundation of Natural Science) (2013–2017)
-Member of ATU (Danish Academy of Talented Youths) (2014–2016). 
-UNF Physics Camp participant (2015)
-Design for Change Awardee (2010). An international competition on innovative solutions for everyday problems. Newspaper article 1, Newspaper article 2, Official Video
-Passed LinkedIn Skill Assessments in R, Python, VBA, Excel, and MATLAB.
-I earned an excess of 200+ € on Steam marketplace, buying and selling Counter Strike skin cases, initially adding 100€ to my account for this particular trading idea, earning an estimated 200+€ from my investment(100€ to 300€) over a period of 3 years.
-Avid fitness enthusiast, building muscle and doing my best to keep physically sharp, to keep in good physical health to improve physical and mental health.
-
-# PROJECTS 
-
-## Ctrl+Alt+DefeatTheMarket 
-- IMC Prosperity Unofficial Guide Python, pandas, NumPy, SciPy, networkx, backtesting frameworks Objective & Scope Developed a comprehensive research and trading framework focused on high-frequency market microstructure analysis and systematic strategy design, with emphasis on order book dynamics, signal extraction, and execution logic. The project bridges theoretical modeling (stochastic processes, signal decomposition) with practical trading system implementation, enabling rapid prototyping and evaluation of alpha strategies. Key Achievements Market Microstructure Research ● Designed and analysed features derived from limit order books, including imbalance, order flow, VWAP/microprice, and liquidity-weighted fair values. ● Built signal pipelines to study price formation mechanisms, decomposing movements into order flow, drift, and mean-reversion components. Strategy Development & Alpha Discovery ● Implemented and tested market-making, mean-reversion, and drift-aware strategies under realistic constraints (inventory limits, spread dynamics). ● Developed hybrid execution logic combining passive liquidity provision and aggressive taking based on mispricing signals. ● Explored multi-signal blending frameworks (trend, imbalance, order flow) to dynamically adjust quoting and inventory targets. Backtesting & Simulation Infrastructure ● Built custom backtesting tools for tick-level simulation, enabling evaluation of strategies on high-frequency data. ● Conducted experiments on signal robustness, including detrending, Z-score normalization, and rolling regression-based forecasting. ● Implemented scenario-based testing to assess performance under varying volatility, spread, and liquidity regimes. Execution & Risk Management ● Developed inventory-aware quoting systems with dynamic skewing and risk constraints, aligning position targets with market signals. ● Integrated execution logic for trade classification, order placement, and fill simulation, reflecting realistic trading conditions. Technical Highlights ● Core Stack: Python (pandas, NumPy, SciPy), data visualization (matplotlib, plotly) ● Quant Techniques: ○ Order book analytics (imbalance, microprice, order flow) ○ Rolling regression and short-horizon forecasting ○ Mean reversion and trend signal modeling ○ Stochastic process intuition (OU-style dynamics, drift/diffusion decomposition) ● System Design: Modular trading engine with components for data processing, signal generation, strategy logic, and execution Research Direction Focused on building a unified framework for “Data → Dynamics → Decision”, aiming to model financial markets as interacting systems where price evolves from the aggregation of microstructural signals and agent behaviour. Ongoing work explores multi-agent dynamics, regime detection, and adaptive strategy selection. TMRW — Comprehensive Algorithmic Trading & AI Initiative Dates: 2019–Present (Ongoing) ● Objective & Scope o Developed an end-to-end research and trading framework that unifies quantitative modeling, AI-driven market analysis, and real-world deployment. o Emphasizes robust mathematical foundations (e.g., Ornstein–Uhlenbeck processes, Markov models, VaR) and advanced infrastructure (Python-based data pipelines, HPC simulations). ● Key Achievements o Infrastructure & Backtesting: Built Python ecosystems for automated data ingestion (Bloomberg, MSCI, crypto APIs) and advanced backtesting, enabling live tests with configurable signals (mean reversion, trend-following, pairs trading). o Strategy Development: Delivered multiple simulation engines (Monte Carlo, scenario testing) to stress-test strategies against black-swan scenarios; achieved 13% short-term return on real-time deployment. o AI & Machine Learning: Explored Markov chain approaches, deep learning for short-horizon forecasts, mean-field game theory, and adaptive reinforcement agents—enhancing strategy decisions based on evolving market states. o Risk Management: Integrated VaR/CVaR stops, dynamic position sizing, and advanced hedging in a multi-asset environment. o Long-Term Vision: Continually refining multi-layer AI architectures and searching for new alpha signals to outperform across diverse market conditions. ● Technical Highlights o Core Tech: Python (NumPy, pandas, scikit-learn, TensorFlow/PyTorch), R/C++ for specialized tasks. o Notebooks:  ▪ mean-reversion-strategy.ipynb (Z-score, Bollinger Band analysis), ▪ Strategy.ipynb (Binance integration, local min/max triggers), ▪ research.ipynb (Markov modeling, multi-strategy synergy). o Data & APIs: Yahoo Finance, Binance, Bloomberg, Sustainalytics, and more for real-time analytics. Physics Simulations (Galaksim) Dates: 2018–Present (Ongoing) ● Complementary project modeling spiral galaxy rotation with multi-particle astrophysics and quantum-mechanics-inspired numerical techniques, reinforcing TMRW’s high-level competence in complex simulation and scientific rigor. 
+**Portfolio framework**
+- **Multi-tier hierarchy:** consolidated ETFs and asset classes (equities, bonds and others) into portfolios grouped under low-, medium- and high-risk mandates, linking database tables by asset ID so every holding could be traced through each portfolio level up to the mandate.
+- **Return and risk monitoring:** return-on-investment and risk modules tracking daily exposures, aggregating market, interest-rate and currency risk from individual assets up to mandate level.
+- **Visualisations:** asset allocation against compliance limits for proactive limit checks; each portfolio's NAV against its benchmark and peer portfolios; VaR plots showing potential drawdowns under adverse conditions.
 
+**ESG analytics**
+- Extended the library to calculate Weighted Average Carbon Intensity and Total Financed Emissions from MSCI, Bloomberg and Sustainalytics data, and added governance and social KPIs.
 
+**Reporting and productivity**
+- Added Python-based data preparation to Power BI dashboards used for executive reporting.
+- Built VBA macros and Excel add-ins that automated budgeting tasks, email workflows and smaller recurring processes.
 
+*Tools: Python, SQL, VBA, Power BI, Bloomberg/MSCI/Sustainalytics APIs, Windows Task Scheduler, VaR/CVaR, scenario simulation (GBM, square-root diffusion), portfolio construction*
 
+<!-- To make this section stronger still, add whatever you can answer:
+- Rough size of the data: how many sources/feeds, rows per day, number of instruments or mandates.
+- Who used LDF and the add-in (how many people, which teams), and what they did manually before.
+- Assets under management of the mandates you covered (only if public / allowed).
+- Yield-curve work: what exactly — curve construction, duration/convexity, key-rate sensitivities?
+- Margin-call framework: what it calculated and who acted on it.
+- Anything that went live and stayed in use after you left. -->
+
+---
+
+### Lån & Spar Bank — Data Quality Analyst
+**Copenhagen, Denmark · January 2023 – August 2023**
+*Part-time student position, 15–35 hours per week, year-round. Danish retail bank.*
+
+- Assessed and documented data-quality indicators for the bank's upcoming IRB system (2025 launch), analysing PD/PC, LGD/LGC, EAD and default-definition procedures across accuracy, completeness, consistency, validity, uniqueness and integrity.
+- Worked with the head of IRB, IRB analysts and model validators to confirm the right variables were covered; produced data-quality reports and presented them to stakeholders.
+- Mapped and diagrammed the SAS table architecture linking credit evaluation, IRB and transactional systems.
+- Reviewed the code and data lineage of the high-risk customer evaluation process and presented findings to the heads of Credit, IT and Internal Audit.
+- Built a SAS macro tool that tests database tables on five data-quality dimensions and traces upstream through every table that feeds them, checking referential integrity along the way.
+
+*Tools: SAS, SQL, IRB framework (PD, LGD, EAD), data governance, Scrum*
+*Training: SAS Institute courses in SAS and SQL*
+
+---
+
+### DJØF — VBA & Python Course Instructor
+**Copenhagen, Denmark · January 2023 – August 2023**
+*Danish Association of Lawyers and Economists.*
+
+- Designed and taught Excel, VBA and Python courses, online and in person, from beginner to advanced level.
+- Built advanced VBA material covering nested macros, custom functions and cross-application automation (VBA/VBScript).
+- Based exercises on real tasks — automating routine processes, analysing datasets — and used Q&A sessions, breakout workshops and participant feedback to refine the material.
+
+*Training: 3-day course in pedagogical presentation*
+
+---
+
+### Statistics Denmark (Danmarks Statistik) — Data Analyst & Developer
+**Copenhagen, Denmark · August 2021 – August 2023**
+*Part-time student position, 15–50 hours per week, year-round. Denmark's national statistics authority.*
+
+**Timesheet and budgeting system**
+- Administered the organisation's timesheet and budgeting platform, analysing hours worked, salary payments and budget distribution across departments.
+- Ran the monthly SAS/SQL extractions behind budget and salary forecasts, employee-hour estimates and the reallocation of hours borrowed between departments and projects, used for resource planning.
+- Integrated Microsoft Navision (bookkeeping), Microsoft Dynamics (CRM) and the legacy budget systems into SAS/SQL pipelines, giving finance, CRM and project management a consistent view of the same data.
+- Took part in code reviews with colleagues to keep coding standards and data integrity consistent.
+
+**Donations system**
+- Helped manage the end-to-end donations system (C#, SQL, Excel), including documentation, development and maintenance.
+- Built an API integration with the legacy donations platform so income, expenses and project usage could be monitored in close to real time.
+- Gave the finance team a clear view of donation flows and forecasts of future budget movements.
+
+**Project finance and analysis**
+- Led development of a toolset in Excel, VBA/VBScript, SAS and SQL that consolidated project data — employee hours, overhead, CRM costs and external spending — into one place.
+- Classified projects by profitability, project lead and expense flow, making resource allocation and returns on projects visible.
+- Automated email reminders prompting project leaders to update or close completed and annual projects.
+- Streamlined email processing, data retrieval and dashboard production around the project portfolio.
+
+**Business intelligence and executive reporting**
+- Built and maintained Power BI dashboards for senior management on fund allocation, project performance and key metrics, used in executive decision-making.
+- Ran ad-hoc analyses in SAS, SQL and Excel of funding surpluses and shortfalls, employee utilisation and returns on major organisational initiatives.
+- Worked with stakeholders across departments to support policy decisions with data and simplify internal processes.
+
+**Other**
+- Passed security vetting, including a criminal-record check.
+
+*Tools: SAS, SQL, C#, VBA/VBScript, Excel, Power BI, Microsoft Navision, Microsoft Dynamics, ETL pipelines*
+*Training: SAS Institute programmer course series; internal courses in Statistics with R I & II and Introduction to Demographic Statistics*
+
+<!-- To make this section stronger still, add whatever you can answer:
+- Scale: number of employees/departments/projects covered by the timesheet and budget work; size of the annual budget it fed.
+- Which forecasts you produced (salary, hours) and what method — trend, seasonal, regression?
+- How many projects the project-finance toolset tracked; what changed after it (time saved, projects closed, overspend caught).
+- Who used the Power BI dashboards (director level, board?) and a decision they informed.
+- What the donations API replaced (manual exports?) and how often it ran. -->
+
+---
+
+### MentorDenmark — Senior Mentor, Physics, Mathematics & Science
+**Copenhagen, Denmark · August 2017 – August 2021**
+*Denmark's largest tutoring company.*
+
+- Top-5 senior mentor: over 1,000 hours tutoring mathematics, physics and science to students aged 7–23, with an average satisfaction rating of 4.7/5; students consistently reached above-average grades.
+- Prepared more than 50 students for oral and written mathematics exams through curriculum review, mock exams and simulated examiner scenarios.
+
+*Training: 2-day course in pedagogical presentation*
+
+---
+
+### Thomas Lystlund Studio — Data Analysis Intern
+**Copenhagen, Denmark · March 2019 – May 2019**
+*Single-project internship (unpaid).*
+
+- Analysed cash flows and projected returns of forex trading bots the client was considering, identified likely scams and recommended safer alternatives.
+
+---
+
+## Other Employment
+
+| Period | Role | Employer |
+|---|---|---|
+| Jul 2025 – Oct 2025 | Short-let cleaner (Soho, Waterloo, Mile End) | Coopy Properties, London |
+| May 2024 – Jan 2025 | Train station service personnel — passenger assistance incl. disabled travellers, station safety and cleaning | DSB, Copenhagen |
+| Aug 2021 – Aug 2022 | Store clerk, Copenhagen Airport | WHSmith |
+| Sep 2020 – Mar 2021 | Home and school cleaner | Self-employed, Copenhagen |
+| Apr 2019 – Aug 2020 | Store clerk (incl. forklift and pallet-jack operation) | Lidl, Copenhagen |
+| Oct 2016 – Dec 2018 | Night-shift store manager, supervising two staff | MinKøbmand, Copenhagen |
+
+*Training: Psychological first aid for trauma and shock, chemical safety, track safety (DSB); Copenhagen Airport Security Awareness (WHSmith)*
+
+---
+
+## Education
+
+### BSc Mathematical Statistics — University of Copenhagen
+**2021 – 2025 (not completed)**
+- Bachelor project: *Option Pricing with Stochastic Volatility in the Heston Model.* An R/C++ package, developed with a company that now uses it commercially, covering Heston pricing by numerical integration of the characteristic function, Black–Scholes benchmarks, implied-volatility root-finding, model volatility surfaces fitted to AAPL option data, and Longstaff–Schwartz least-squares Monte Carlo for American options.
+- First-year project: *Event Study in the Stock Market* (Apple's announced acquisition of AuthenTec).
+- Relevant courses: Mathematical Statistics, Stochastic Processes I & II, Advanced Probability Theory, Life Insurance, General Insurance, Differential Geometry.
+
+### BSc Mathematical Physics — University of Copenhagen
+**2019 – 2021 (withdrew)**
+- First-year project: *Estimating Dark Matter Density from Spiral Galaxy Rotation Curves*.
+- Relevant courses: Mechanics I & II, Thermodynamics, Electrodynamics, Quantum Mechanics I & II, Galactic Astrophysics, Complex Analysis I & II.
+
+### Upper secondary (STX) — KNORD Lyngby
+Physics A, Mathematics A, English A, Danish A, Chemistry B.
+
+---
 
 ## Projects
 
-### 2022 - Now (Ongoing)
-[**Algorithmic trading**](https://github.com/CopenhagenToLondon/WTech) \
-A research-focused project dedicated to the development and evaluation of trading algorithms that leverage rigorous mathematical methods for profitable market participation. Key areas of exploration include:
+### Featured: Concursus
+**2023 – Present** · [Repository](https://github.com/MarkBrezina/Concursus) · *Python (NumPy, SciPy, pandas, matplotlib); installable package `stochastics` v0.5*
 
-- **Mathematical Models** - Investigating advanced patterns in asset price movements, incorporating stochastic processes, time series analysis, and statistical optimization to identify high-probability trading opportunities.
-- **Algorithmic Strategies** - Designing, testing, and refining algorithmic approaches—such as mean reversion, momentum, and pattern detection—aimed at capturing market inefficiencies and enhancing risk-adjusted returns.
-- **Data-Driven Insights** - Employing comprehensive data analysis to validate algorithm performance under various market conditions, emphasizing reproducibility and robust quantitative frameworks.
+A simulation library built on one idea: stochastic processes, population dynamics, finance and physics are all simulation problems, so they belong in one package with shared conventions. I designed the architecture, API, models and validation approach; large parts of the code were written with AI assistance, as the repository states. The package grew out of three earlier pieces of my own work (a 2023 stochastic-process class, galaxy-rotation and particle-swarm simulations, and an insurance model), kept in `legacy/`.
 
-By bridging in-depth mathematical research with practical algorithmic trading techniques, the project aspires to unlock scalable, evidence-based solutions for navigating the complexities of modern financial markets.
+- **Baseline processes:** random walk, Wiener, arithmetic and geometric Brownian motion, Ornstein–Uhlenbeck, CIR, Poisson and compound Poisson, Brownian bridge, Merton jump-diffusion, Heston, fractional Brownian motion, Hawkes, regime switching and GARCH, plus general Euler–Maruyama and Milstein SDE solvers. Exact transition sampling is used wherever it exists, and every generator returns its theoretical mean, variance and terminal density so simulation can be checked against theory.
+- **Finance:**
+  - a price-time-priority limit order book;
+  - an agent-based exchange simulating a full trading day with market makers, trend followers and noise traders;
+  - market models of increasing complexity (single Heston path → correlated stream ensembles → internal-value streams with traders → news jumps);
+  - draft trader profiles described by psychology (resilience, greed, patience) rather than strategy class;
+  - an insurance module covering claim arrivals (Poisson, renewal, Hawkes), severity distributions, premium principles and Monte Carlo ruin probabilities.
+- **Real-data benchmark:** scores each market model against real series (S&P 500, EUR/USD, one-minute BTC) on a fingerprint of twelve scale-free stylised facts — tail shape, volatility clustering, leverage effect, variance ratios. Errors are measured in units of the real series' own bootstrap sampling noise. Models are calibrated by simulated method of moments and checked out of sample on a holdout half. The benchmark also maps the trade-off between model fidelity and compute cost (Pareto frontier).
+- **Population dynamics:** agent-based ecosystem (grass → rabbits → wolves), spatial SEIR epidemics with infection trees, rock–paper–scissors cyclic competition, wealth-exchange economies and Schelling segregation, with per-agent traits and conserved-quantity bookkeeping.
+- **Physics:**
+  - gravity and electromagnetism with velocity-Verlet integration, collisions, mergers and an exact energy ledger, so any energy drift is traced to the integrator or to a specific rule;
+  - a "policy lab" in which the interaction laws themselves are designed and checked against Coulomb and Newtonian gravity as reference cases.
+- **Quality:** around 175 unit tests across the subpackages, and eight showcase notebooks.
 
+### Ctrl+Alt+DefeatTheMarket — IMC Prosperity unofficial guide
+**2025 – Present** · [Repository](https://github.com/MarkBrezina/Ctrl-Alt-DefeatTheMarket) · *Python, pandas, NumPy, SciPy, networkx, matplotlib, plotly*
 
-### 2019 - Now	(Ongoing)
-[**Personal python package**](https://github.com/CopenhagenToLondon/TMRW) \
-A multi-functional Python library designed to streamline data workflows by integrating data extraction, transformation, and analysis features into one cohesive toolkit. Organized into distinct folders for each module, this package demonstrates modular design, ensuring maintainability and clarity in complex data projects. Key highlights include:
+Research and trading framework for high-frequency market microstructure and systematic strategy design, built around the IMC Prosperity competition.
+- **Microstructure:** order-book features (imbalance, order flow, VWAP, microprice, liquidity-weighted fair value); decomposition of price moves into order-flow, drift and mean-reversion components.
+- **Strategies:** market-making, mean-reversion and drift-aware strategies under inventory and spread constraints; hybrid execution combining passive quoting with aggressive taking on mispricing; multi-signal blending to adjust quotes and inventory targets.
+- **Testing:** tick-level backtester; robustness checks (detrending, z-scores, rolling regression forecasts); scenario tests across volatility, spread and liquidity regimes.
+- **Execution and risk:** inventory-aware quoting with dynamic skew; trade classification, order placement and fill simulation.
 
-- **Data Extraction** - Automated scripts that retrieve and preprocess data from various sources, showcasing robust data-gathering techniques.
-- **Analysis & Visualization** - Functions for statistical analysis, exploratory data analysis (EDA), and visual representations, helping derive actionable insights.
-- **Reusability & Scalability** - Well-structured modules with clear documentation, making it easy to extend functionalities and adapt to new data use cases.
+### WunderConnectome — limit-order-book sequence prediction
+**2026** · [Repository](https://github.com/MarkBrezina/WunderConnectome)
 
-By consolidating these features into a single package, this project provides a practical demonstration of skills essential to a Data Analyst or Data Scientist—namely, the ability to build and maintain efficient data pipelines while providing accurate and insightful analysis.
+Entry for the Wunder Fund Alpha Connectome competition: a GRU network trained on roughly 10,000 order-book sequences to predict two short-horizon targets. Finished in the top 20% of 5,700 active teams.
 
+### TMRW — personal trading and analytics library
+**2019 – Present** · [Repository](https://github.com/MarkBrezina/TMRW)
 
-### 2022 - Now	(Ongoing)
-[**Stochastic simulation package for Quantitative Finance**](https://github.com/CopenhagenToLondon/GoldenDice) \
-A personal project featuring a suite of classes, functions, and scripts designed to showcase the implementation and application of stochastic processes in a finance and investment context. By incorporating Monte Carlo techniques alongside Brownian motion, square-root diffusion, and Ornstein–Uhlenbeck models, this package provides:\
+The research library behind Tomorrow Capital Research:
+- data extraction from Yahoo Finance, Binance, Bloomberg, MSCI and Sustainalytics;
+- technical and statistical indicators, Markov up/down tables and trend detection;
+- portfolio metrics (VaR, CVaR, drawdown, annualised return);
+- backtesting with configurable signals (mean reversion, trend following, pairs trading);
+- Monte Carlo and scenario stress testing.
 
-- Path generation and simulation for a variety of financial instruments, aimed at pricing and risk analysis.
-- Scenario testing and sensitivity analyses, leveraging advanced models to capture market volatility and mean-reversion behaviors.
-- Flexible codebase for easy integration into broader quantitative strategies, including portfolio optimization and derivatives pricing.
+<!-- The "13% short-term return on real-time deployment" claim stays out. Add it back only with period, capital base, costs and whether gross or net. -->
 
-This repository underscores a hands-on approach to quantitative finance—demonstrating how robust stochastic methods can help model, forecast, and manage uncertainty in real-world investment environments.
+### Algorithmic trading research
+**2022 – Present** · [Repository](https://github.com/MarkBrezina/WTech)
 
-### 2023 - Now (Ongoing)
-[**Accumulation of mathematics and Finance resources**](https://github.com/CtoL95/Knowledgebase)
-A curated repository of finance and mathematics study materials aimed at building a robust knowledge base for students, professionals, and enthusiasts. Designed to evolve into a book or eBook in the future, it encompasses:
+Development and evaluation of trading algorithms — mean reversion, momentum and pattern detection — using stochastic processes, time-series analysis and statistical optimisation, with emphasis on reproducible testing across market conditions.
 
-- **Conceptual Overviews** – Clear explanations and theoretical insights into core finance and math concepts.
-- **Practical Problem-Solving** – Step-by-step walkthroughs and examples that bring complex topics to life.
-- **Supplementary References** – Links to external resources and additional reading to broaden learning horizons.
-By consolidating these resources in one place, the project strives to be an accessible, in-depth educational tool—supporting continuous skill development and knowledge acquisition in quantitative finance and mathematics.
+### Knowledgebase — mathematics and finance resources
+**2023 – Present** · [Repository](https://github.com/MarkBrezina/Knowledgebase)
 
-### 2018 - 2025 (Finished)
-[**Physics Simulations**](https://github.com/CtoL95/Galaksim)\
-A personal research project focused on simulating the rotational dynamics of spiral galaxies, blending core concepts from astrophysics and numerical analysis. The goal is to explore how large-scale gravitational interactions can be modeled in a multi-particle system, providing insights into galactic rotation curves and potential underlying physical phenomena. This ongoing work involves:\
+Curated study material in finance and mathematics — concept overviews, worked problems and references — intended to grow into a book and feeding the Tomorrow Library site.
 
-- Particle-based modeling of galaxy structures and orbital mechanics.
-- Numerical methods adapted from quantum mechanics principles to refine simulation accuracy.
-- Interactive analysis and visualization of rotation curves, mass distribution, and emergent spiral patterns.
+<!-- Not yet listed:
+- Market-States-Regimes, Foundational-Quantitative-Research, QPM, KB, BasicIT, Personal — add once each has a README that says what it shows.
+- CONTROL (AI for trading) — still empty; leave off until there's code.
+- GoldenDice and Galaksim are now superseded by Concursus (legacy/). Consider archiving GoldenDice or pointing its README at Concursus.
+- ETL package (Yahoo, Alpha Vantage, Binance, Jupiter) — link pending.
+- Event-study code — link pending. -->
 
-By unifying ideas from both astronomy and quantum theory, Galaksim aims to offer a deeper understanding of the forces governing galactic behavior, while also serving as a sandbox for experimenting with algorithmic and physics-based simulations.
+---
 
-### 2024 - Now (Ongoing)	
-[**AI for Trading**](https://github.com/CopenhagenToLondon/CONTROL) \
-Empty at the moment, code will arrive soon. \
-The repository will hold my code on a novel AI system, I’m intending to use for trading equity and cryptocurrency. It’ll be made up of a series of layers and a structural diagram will be published soon.
+## Competitions and Recognition
 
-### 2023 - Now (Ongoing)
-[**ETL Project**](https://github.com/CtoL95) * link is coming \
-Connect to Yahoo, alphaVantage, Binance, Jup.ag and more with only one python package?
+- **IMC Prosperity 3** algorithmic trading challenge — rank 107 of 12,000+ teams (top 1%)
+- **IMC Prosperity 4** algorithmic trading challenge — rank 741 of 6,500 active teams (top 11.4%; 22,000 registered)
+- **Wunder Fund Alpha Connectome** (2026) — rank 920 of 5,700 active teams (top 20%)
+- **Børsen stock-picking challenge** — top 10% in three separate years: rank 2,800 of 36,000+ (2023); rank 468 of ~47,000 (2024, top 1%); rank 1,809 of ~28,500 (2026, top 6.3%)
+- **Design for Change** awardee (2010) — international competition for innovative solutions to everyday problems
+- **MENSA** member since 2018 (assessed IQ ≥ 158)
+- LinkedIn skill assessments passed: R, Python, VBA, Excel, MATLAB
+- **Games:** StarCraft II (mid Masters league), Teamfight Tactics (Gold), active chess player
+- **Steam marketplace trading:** grew €100 to ~€300 over three years trading Counter-Strike cases
+- Strength training and fitness
 
-### 2022 - 2022 (Finished)
-**R package for pricing of Options with Stochastic volatility** \
-Project I did for my bachelor degree.\
-Heston model for pricing Options, the work will be unavailable as it was made in collaboration with a company, which now uses it in its products and sales to insurance comapanies and investment companies in Denmark.
+<!-- MENSA membership no. 2018170. The IQ figure and the games line are fine in this master record; leave them off most employer CVs (games can stay for trading firms that like StarCraft/chess).
+Chess rating left out on purpose — 330 reads as a beginner rating; say "active chess player" unless you have a stronger figure. -->
 
-### 2020 - 2020 (Finished)
-[**Event study in the stock market**](https://github.com/CtoL95) * link is coming \
-Project I did on my first year as a mathematics student at UCPH.\
-Studying the effects of an announcement by apple to buy AuthenTec.
+---
 
+## Professional Development
 
+### Lectures and conferences
 
+| Date | Organiser | Talk / event |
+|---|---|---|
+| 2025-02-13 | Oxford Mathematical and Computational Finance | Eghbal Rahimikia — Revisiting Large Language Models in Finance |
+| 2025-02-27 | Quant Insider | Andrey Chirikhin — Introduction to Credit Derivatives |
+| 2025-03-08 | Bangalore Quant Club | Peter Cotton — Machine Learning for Hierarchical Portfolio Optimization Using Schur Complements |
+| 2025-03-11 | Imperial College London | Daniel Lacker — Non-asymptotic Perspectives on Mean-Field Approximations and Stochastic Control |
+| 2025-03-12 | CQF Institute | Portfolio Management in Quant Finance Conference |
+| 2025-04-08 | CQF Institute | Wim Schoutens — Omnipresent Model Risk |
+| 2025-05-07 | CQF Institute | Laura Ballotta — The Term Structure of Implied Correlations Between S&P and VIX Markets |
+| 2025-06-04 | CQF Institute | Volatility and Risk in Quant Finance Conference |
+| 2025-06-10 | CQF Institute | Financial Reasoning Agents: In-Context Reinforcement Learning and Test-Time Compute |
+| 2025-07-09 | CQF Institute | Optimization of Strategic and Tactical Asset Allocation for Multi-Asset Portfolios |
+| 2025-08-12 | CQF Institute | Modelling Non-Maturing Deposits |
+| 2025-09-09 | CQF Institute | How to Add Currencies to a Portfolio: Currency Benchmarks and Active Currency Management |
+| 2025-09-17 | CQF Institute | AI and Machine Learning in Quant Finance Conference |
+| 2025-10-14 | London Quant Group | Instability: Debt, Inflation and AI's Impact on Investing |
+| 2025-11-04/05 | CQF Institute | Annual Quant Insights Conference |
+| 2025-11-06/07 | London–Paris Bachelier Workshop | 9th London–Paris Bachelier Workshop |
+| 2025-11-12 | CQF Institute | Samit Ahlawat — Generating Realistic Economic Scenarios for Stress Testing Portfolios Using Generative AI |
+| 2025-11-19 | CQF Institute | London Society Meeting: Market Microstructure |
+| 2025-12-03 | CQF Institute | Peter Simpson & Alexander Serechenko — The Quant's AI Advantage: Leveraging AI for Natural Language Assistance in Trading Analytics |
+| 2025-12-09 | CQF Institute | Stephen Weston — Why So Much Science Doesn't Hold Up and What Quantitative Minds Can Do About It |
+| 2025-12-16 | London Quant Group | Annual Debate — Ed Fishwick & Henry Neville |
+| 2026-01-15 | London Quant Group | Semyon Malamud — Limits to (Machine) Learning |
+| 2026-02-11 | CQF Institute | Lorne Switzer — Trade Wars to Market Wars: Quantifying Geopolitical Impact on Equity Returns |
+| 2026-02-17 | London Quant Group | Edward Fishwick — What We Learned About Risk |
+| 2026-02-26 | S&P Global | London Quant Intelligence Forum 2026 |
+| 2026-03-11 | CQF Institute | Portfolio Management in Quant Finance Conference |
+| 2026-03-18 | CQF Institute | Leif Andersen — American Option Pricing by the Finite Difference Method: Tips and Tricks from the Trenches |
+| 2026-03-18 | DefconQ × Squarepoint | KDB Developers Meetup |
+| 2026-04-14 | London Quant Group | Simon Polbennikov — Better Together: Fundamental and Systematic Views in Credit Investing |
+| 2026-04-29 | CQF Institute | John Guerard — ESG Investing and Portfolio Selection |
+| 2026-05-12 | London Quant Group | Robert Macrae — Adventures in High-Dimensional Space |
+| 2026-06-09 | London Quant Group | Brunello Rosa — Making Sense of This World and the Resurgent Chinese Empire |
+| 2026-07-14 | — | Maxime Bonelli — Alternative Data, Traditional Expertise and Ownership |
+| 2026-09-13 | Bloomberg | Bloomberg Data and Tech Summit |
+| 2026-10-13 | London Quant Group | Manav Chaudhary — The Anatomy of the Treasury Market |
 
+<!-- CHECK: 2026-06-09 title had "(...)" in your notes — fill in the full title. 2026-07-14 organiser missing. 2026-09-13 is a Sunday — confirm the date. Your note says you stopped logging for a while, so there may be gaps between June and October 2026. -->
 
+### Certificates
 
+**2025**
+- [Citi — Markets Quantitative Analysis](https://forage-uploads-prod.s3.amazonaws.com/completion-certificates/8eNRcRqBZM9HLvwGw/fAuNBibfF4dzrgtDY_8eNRcRqBZM9HLvwGw_nCjQg8GM2BpQ9yNYB_1736301928896_completion_certificate.pdf) (Forage)
+- [Standard Bank — Risk Management](https://forage-uploads-prod.s3.amazonaws.com/completion-certificates/kkKXfgG5FckTX8Toc/9ud3PRZGf8w6NeHgh_kkKXfgG5FckTX8Toc_nCjQg8GM2BpQ9yNYB_1736293804035_completion_certificate.pdf) (Forage)
+- [Goldman Sachs — Risk](https://forage-uploads-prod.s3.amazonaws.com/completion-certificates/MBA4MnZTNFEoJZGnk/ETGMhLB5eCrYjcH8o_MBA4MnZTNFEoJZGnk_nCjQg8GM2BpQ9yNYB_1736298583661_completion_certificate.pdf) (Forage)
+- [Standard Chartered — Credit Analyst](https://forage-uploads-prod.s3.amazonaws.com/completion-certificates/ZsgybEFo5RxyHxwXL/TwxTEuyPugfgMGm8H_ZsgybEFo5RxyHxwXL_nCjQg8GM2BpQ9yNYB_1736299213999_completion_certificate.pdf) (Forage)
+- [Lloyds Banking Group — Data Science](https://forage-uploads-prod.s3.amazonaws.com/completion-certificates/Zbnc2o4ok6kD2NEXx/EuvC8GPjkZ6xaiP9p_Zbnc2o4ok6kD2NEXx_nCjQg8GM2BpQ9yNYB_1736293191281_completion_certificate.pdf) (Forage)
+- [Goldman Sachs — Excel Skills for Business](https://forage-uploads-prod.s3.amazonaws.com/completion-certificates/MBA4MnZTNFEoJZGnk/eLeZHcwX7CqLhhps7_MBA4MnZTNFEoJZGnk_nCjQg8GM2BpQ9yNYB_1736289958952_completion_certificate.pdf) (Forage)
+- [Citi — Finance](https://forage-uploads-prod.s3.amazonaws.com/completion-certificates/8eNRcRqBZM9HLvwGw/Cf35qdHjFPqLFRhgy_8eNRcRqBZM9HLvwGw_nCjQg8GM2BpQ9yNYB_1736291737128_completion_certificate.pdf) (Forage)
+- [J.P. Morgan Chase & Co. — Software Engineering](https://forage-uploads-prod.s3.amazonaws.com/completion-certificates/Sj7temL583QAYpHXD/E6McHJDKsQYh79moz_Sj7temL583QAYpHXD_nCjQg8GM2BpQ9yNYB_1736293037192_completion_certificate.pdf) (Forage)
+- [Quantium — Software Engineering](https://forage-uploads-prod.s3.amazonaws.com/completion-certificates/32A6DqtsbF7LbKdcq/jhiG2W9K8KLZK8nXP_32A6DqtsbF7LbKdcq_nCjQg8GM2BpQ9yNYB_1736292440025_completion_certificate.pdf) (Forage)
+- [Goldman Sachs — Software Engineering](https://forage-uploads-prod.s3.amazonaws.com/completion-certificates/MBA4MnZTNFEoJZGnk/NPdeQ43o8P9HJmJzg_MBA4MnZTNFEoJZGnk_nCjQg8GM2BpQ9yNYB_1736289909624_completion_certificate.pdf) (Forage)
+- [Standard Bank — Software Engineering](https://forage-uploads-prod.s3.amazonaws.com/completion-certificates/kkKXfgG5FckTX8Toc/JMcJbndBmiDBvy9pj_kkKXfgG5FckTX8Toc_nCjQg8GM2BpQ9yNYB_1736293158178_completion_certificate.pdf) (Forage)
+- [Commonwealth Bank — Software Development](https://forage-uploads-prod.s3.amazonaws.com/completion-certificates/2sNmYuurxgpFYawco/xv8eSGu7nksKNiCQj_2sNmYuurxgpFYawco_nCjQg8GM2BpQ9yNYB_1736292703452_completion_certificate.pdf) (Forage)
+- [Citi — Investment Banking](https://forage-uploads-prod.s3.amazonaws.com/completion-certificates/8eNRcRqBZM9HLvwGw/amBSJDTDDFcYiKq9Z_8eNRcRqBZM9HLvwGw_nCjQg8GM2BpQ9yNYB_1736289659348_completion_certificate.pdf) (Forage)
 
+**2024**
+- [J.P. Morgan Chase & Co. — Quantitative Research](https://forage-uploads-prod.s3.amazonaws.com/completion-certificates/J.P.%20Morgan/bWqaecPDbYAwSDqJy_JPMorgan%20Chase%20&%20Co._nCjQg8GM2BpQ9yNYB_1706747633338_completion_certificate.pdf) (Forage)
+- [Standard Bank — Actuarial](https://forage-uploads-prod.s3.amazonaws.com/completion-certificates/Standard%20Bank%20/wf8DwPiWqcRzs3KDF_Standard%20Bank%20_nCjQg8GM2BpQ9yNYB_1706747691149_completion_certificate.pdf) (Forage)
+- [PGIM — Fixed Income](https://forage-uploads-prod.s3.amazonaws.com/completion-certificates/PGIM/5tB9veyHmFh4egh65_PGIM_nCjQg8GM2BpQ9yNYB_1706747334656_completion_certificate.pdf) (Forage)
+- [Cognizant — Artificial Intelligence](https://forage-uploads-prod.s3.amazonaws.com/completion-certificates/Cognizant/5N2ygyhzMWjKQmgCK_Cognizant_nCjQg8GM2BpQ9yNYB_1706744853085_completion_certificate.pdf) (Forage)
+- [AIG — Underwriting](https://forage-uploads-prod.s3.amazonaws.com/completion-certificates/AIG/6miFEe83Y7PdzWJD6_AIG_nCjQg8GM2BpQ9yNYB_1706744611697_completion_certificate.pdf) (Forage)
+- [Bank of America — Investment Banking](https://forage-uploads-prod.s3.amazonaws.com/completion-certificates/Bank%20of%20America/Hi8MJQE5T3MeTRWQR_Bank%20of%20America_nCjQg8GM2BpQ9yNYB_1706743366428_completion_certificate.pdf) (Forage)
+- [J.P. Morgan Chase & Co. — Investment Banking](https://forage-uploads-prod.s3.amazonaws.com/completion-certificates/JPMorgan%20Chase/YD2kY95RQxQtXxFTS_JPMorgan%20Chase_nCjQg8GM2BpQ9yNYB_1706743099951_completion_certificate.pdf) (Forage)
+- [Commonwealth Bank — Introduction to Data Science](https://forage-uploads-prod.s3.amazonaws.com/completion-certificates/Commonwealth%20Bank/smwfytX3mcLboA9bf_Commonwealth%20Bank_nCjQg8GM2BpQ9yNYB_1706744285551_completion_certificate.pdf) (Forage)
+- [Quantium — Data Analytics](https://forage-uploads-prod.s3.amazonaws.com/completion-certificates/Quantium/NkaC7knWtjSbi6aYv_Quantium_nCjQg8GM2BpQ9yNYB_1706744085389_completion_certificate.pdf) (Forage)
+- [BCG — Data Science](https://forage-uploads-prod.s3.amazonaws.com/completion-certificates/BCG%20/Tcz8gTtprzAS4xSoK_BCG_nCjQg8GM2BpQ9yNYB_1706744880479_completion_certificate.pdf) (Forage)
+- [Accenture — Data Analytics and Visualization](https://forage-uploads-prod.s3.amazonaws.com/completion-certificates/Accenture%20North%20America/hzmoNKtzvAzXsEqx8_Accenture%20North%20America_nCjQg8GM2BpQ9yNYB_1706742179438_completion_certificate.pdf) (Forage)
+- [J.P. Morgan Chase & Co. — Software Engineering](https://forage-uploads-prod.s3.amazonaws.com/completion-certificates/J.P.%20Morgan/R5iK7HMxJGBgaSbvk_J.P.%20Morgan_nCjQg8GM2BpQ9yNYB_1706746848174_completion_certificate.pdf) (Forage)
+- [Standard Bank — Software Engineering](https://forage-uploads-prod.s3.amazonaws.com/completion-certificates/Standard%20Bank%20/8Mgcdiuo2mfSRCfjc_Standard%20Bank%20_nCjQg8GM2BpQ9yNYB_1706746105628_completion_certificate.pdf) (Forage)
+- [Fundamentals of Quantitative Modeling](https://coursera.org/share/29d2b0531431e672bbbc3716439bee9d) (Coursera, Wharton)
+- [CME Group — Introduction to Futures](https://github.com/CtoL95/Test/blob/main/CME%20Introduction%20to%20Futures.pdf)
+- [CME Group — Introduction to Treasuries](https://github.com/CtoL95/Test/blob/main/CME%20Introduction%20to%20Treasuries.pdf)
+- [CME Group — Long Options: Underlying and Volatility Impact](https://github.com/CtoL95/Test/blob/main/CME%20Long%20Options_%20Underlying%20and%20Volatility%20Impact.pdf)
+- [CME Group — Understanding Futures Spreads](https://github.com/CtoL95/Test/blob/main/CME%20Understanding%20Futures%20Spreads.pdf)
+
+**2021**
+- [GARP — Foundations of Financial Risk](https://github.com/CtoL95/Test/blob/main/Foundations_of_Financial_Risk.pdf)
+- [CFI — Introduction to Banking](https://credentials.corporatefinanceinstitute.com/524a2a7e-2bf8-4ae9-a0ac-2603b9e59645#acc.Nipz3Xqa)
+- [CFI — Fundamentals of Credit](https://credentials.corporatefinanceinstitute.com/c7e5e7e2-ecec-49db-82bd-eadece36b10a#acc.pKbN1mSr)
+- [Copenhagen Airport — Security Awareness](https://github.com/CtoL95/Test/blob/main/Security%20Awareness%20K%C3%B8benhavns%20Lufthavn%2C%20DK%20version.pdf)
+
+**2020**
+- [Microsoft (edX) — Professional Certificate in Data Analysis: Essential Skills](https://credentials.edx.org/credentials/5470fff383e1445f86fb1174a0dbab5a/)
+- [Columbia University (edX) — Professional Certificate in Corporate Finance](https://credentials.edx.org/credentials/c3f74af6ade049a2857e2f30ef81c4c2/)
+- [IMF (edX) — Macroeconometric Forecasting](https://courses.edx.org/certificates/8bf91f734bf7464c881c9ff61edd1d8c)
+- [IMF (edX) — Macroeconomic Diagnostics](https://courses.edx.org/certificates/02e1984556594aa79033f8b14cc5c1db)
+- [IMF (edX) — Financial Market Analysis](https://courses.edx.org/certificates/f7994f95d3554a4791bff62b770f6d54)
+- [NYIF (edX) — Risk Management and Credit Principles](https://courses.edx.org/certificates/f2a38a40301f46d18aeaf269a54a0878)
+- [NYIF (edX) — Ratio Analysis](https://courses.edx.org/certificates/2e9cb658318348d4a1ba75fa1acdce80)
+- [World Bank (edX) — The Future of Work: Preparing for Disruption](https://courses.edx.org/certificates/5c696f67576c420989d859d6a201aaf0)
+- [World Bank (edX) — Unlocking Investment and Finance in Emerging Markets and Developing Economies](https://courses.edx.org/certificates/98f9428afa2b42aa93cf316d13935ff2)
+- [LinkedIn Learning — Become a Data Scientist](https://www.linkedin.com/learning/certificates/ec62ce4f36d64dbe064544533519c3f65ca19e95424d11f8246ea5c23d2e5ade)
+- [LinkedIn Learning — Advance Your Skills in Python](https://www.linkedin.com/learning/certificates/498fc9d230524f23060c80e10b39104e1de568572852418d855a60d268472534)
+- [LinkedIn Learning — Advance Your Python Skills for Data Science](https://www.linkedin.com/learning/certificates/797299e19c57fa257790df3a6f985a4778ea1f72d68304b8162bbdc6ab9780af)
+- [LinkedIn Learning — Getting Started with R for Data Science](https://www.linkedin.com/learning/certificates/db08e02f98cf05df162bea2ee2e05252d2a241a3aa05ed7ceff79e1b84c54d61)
+- [LinkedIn Learning — Master Key Financial Analyst Skills](https://www.linkedin.com/learning/certificates/8312aa1bbbf8b237d63388ca7edc710f81d29bb911b31576d7a6f0f2f6e589ce)
+- [LinkedIn Learning — Getting Started in Finance and Accounting](https://www.linkedin.com/learning/certificates/8d831a982becf9f943394377e6eb85abb2a4ffffe8cac39b1317106e8db398ba)
+- [LinkedIn Learning — Getting Started in Finance and Bookkeeping](https://www.linkedin.com/learning/certificates/8d00d39513032ae2ec43bfb350fc7d6522aa23b3c7657ceffa62d104896fdf88)
+- [LinkedIn Learning — Getting Started as a Business Analyst](https://www.linkedin.com/learning/certificates/41455540e531d4b8d086b9686f6c65ef60d52f3881ab38a004c2c9b1d315795a)
+
+**2019**
+- [LinkedIn Learning — Master Microsoft Word](https://www.linkedin.com/learning/certificates/048c0b30fe9eed3001e98d79c426b5cd4f65d4bda95b29ebad50dbe5d66d451d)
+- [LinkedIn Learning — Master In-Demand Professional Soft Skills](https://www.linkedin.com/learning/certificates/45e07396af21f07548621605ef6b1db8f3206557b6d2c3fda9526929e573f971)
+- [LinkedIn Learning — Improve Your Organizational Skills](https://www.linkedin.com/learning/certificates/137a5099ab65aa75e21b4e03c7522bf0fc59447a5711d4d4f6f16604938365b2)
+- [LinkedIn Learning — Improve Your Interoffice Politics Skills](https://www.linkedin.com/learning/certificates/ec61e527b5d2a1bab29a7e2a5aa8a9c07b7a81f141f5e46a9784fa03771560f0)
+- [LinkedIn Learning — Advance Your Career as an Individual Contributor](https://www.linkedin.com/learning/certificates/00d00324e1197ecb6c154fb51e5179790876b1a0dbd42846c58096f20272a9d9)
+
+**Language certificates**
+- [LanguageCert — ESOL International B2 (English)](https://github.com/CtoL95/Test/blob/main/LanguageCert%20-%20ESOL%20Written.pdf)
+- [Trinity College London — GESE Grade 2 (CEFR A1)](https://certificates.trinitycollege.com/3c9b7eda-0793-41d5-94e4-8d4f58dd8967#acc.H0LPcsja)
+
+<!-- The GESE A1 certificate is a visa requirement; leave it off employer-facing CVs, since it understates your English next to the B2. -->
+
+---
+
+## Memberships
+
+- CQF Institute, Wilmott Forum, ML-Quant, Quantpedia
+- MENSA (2018 – present)
+- UNF — Danish Youth Association for Natural Science (2013 – 2017); UNF Physics Camp (2015)
+- ATU — Danish Academy of Talented Youth (2014 – 2016)
+
+---
+
+## Languages
+
+- **Danish:** native
+- **English:** fluent (LanguageCert B2)
+- **Swedish, Norwegian:** conversational
+- **German, Dutch:** good comprehension, basic spoken
+
+---
+
+<!--
+OPEN ITEMS — resolve before cutting targeted CVs from this file
+
+1. University dates conflict:
+   - This file: Physics 2019–2021, Statistics 2021–2025.
+   - Hospitality CV: Physics 2017–2019.
+   - Your project list says the 2020 event study was your "first year as a mathematics student",
+     which fits Statistics starting 2019, not 2021.
+2. Student-role titles at LD Pensions, Lån & Spar and Statistics Denmark: confirm against contracts or references.
+3. TCR live trading: confirm which strategy is live, the start date and results (fees included) before quoting any of it.
+4. Lectures table: 2026-06-09 full title, 2026-07-14 organiser, 2026-09-13 date (a Sunday).
+5. LD Pensions / Statistics Denmark: answer the prompts under each section to add scale and outcomes.
+
+Resolved in this update:
+- Konecta title → Customer Service Representative (your edit).
+- Prosperity 4 → 741 of 6,500 active teams.
+- GitHub → all project links now point to github.com/MarkBrezina.
+- Statistics degree → shown as "not completed" (same meaning as "dropped out", reads more neutrally).
+
+Kept out on purpose:
+- WTECH incorporation / funding / recruitment claims, and the "13% short-term return".
+- Notes about unpaid clients, unrecorded overtime and managers' appreciation.
+- The mortality-modelling R files (Lee–Carter, CBD, P-splines) in R_programs.zip — they are companion code from
+  Macdonald, Richards & Currie's textbook, not your own work.
+- Costa-specific profile text from the service CVs.
+-->
