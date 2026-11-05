@@ -550,6 +550,45 @@ Chess rating left out on purpose — 330 reads as a beginner rating; say "active
 
 ---
 
+
+LanguageCert Level 1 Certificate in ESOL International (Listening, Reading, Writing, 
+Speaking) (Communicator B2) - 2024 
+• Listening 49/50 
+• Reading 41/50 
+• Writing 30/50 
+• Speaking 50/50 
+Mensa Denmark Certificate - since 2018 
+I have been tested by Mensa Denmark to have a score in the upper 1% of the danish population, 
+with 42/45 correct on the test. Online tested to have IQ ≥158 
+I'm the investment advisor and custodian for my aunt Jeannette Brezina, since 2024 
+Member: Mensa, Wilmott Forum, CQF institue, London quant group, Oxford-man, ML-quant, 
+Quantpedia 
+Reviewer and donator(2024–2025) for Anton Vorobets’s upcoming book on portfolio 
+construction and risk management. 
+Fitness enthusiast: committed to working out and maintaining an active lifestyle. 
+Active creative: I enjoy painting nature and drawing people in my pastime. It has come to good 
+use in graphics design for resumes and websites 
+UNF (Danish Youth Foundation of Natural Science) member (2010–2013) 
+ATU (Danish Academy of Talented Youths) member (2014–2016). 
+Awards 
+• Top 0.5% (#107 of 12.5K team) ranking in IMC Prosperity 3 Algorithmic-Trading 
+challenge. 2025 
+• Top 2% (#456 of 47K individuals) ranking in Børsen stock trading challenge 2024. 
+• Top 10% (#4000 of 42K individuals) ranking in Børsen stock trading challenge 2023. 
+• StarCraft II: Ranked Masters League player 
+• Passed LinkedIn Skill Assessments in R, Python, VBA, Excel, and MATLAB. 
+• I was a participant at the 2015 UNF Fysik Camp. I was one of 50 participants out of 
+everyone (expected more than 1000) who sought to participate. 
+• Participant and north zealand runner-up for European business games 2014 
+• Design for Change Awardee (2010) for a design competition. Crowdbins was a project 
+for the Design For change competition in Denmark, my group was awarded and won the 
+danish competition with Crowdbins. An app and trashbin interconnected system to 
+inform and relieve sanitation workers. 
+o Newspaper article 1 - link unattached at the moment 
+o Newspaper article 2 - link unattached at the moment 
+o Official Video - link unattached at the moment 
+
+
 <!--
 OPEN ITEMS — resolve before cutting targeted CVs from this file
 
