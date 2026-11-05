@@ -499,3 +499,134 @@ I enjoy the salary, the rest is just a facade to make people enjoy my work and b
 - How long you are willing to remain.
 
 I would ideally leave as soon as possible, but I am willing to switch my strategy entirely if I simply can’t get a better job here in London. I would ideally look to save money and abandon everything, if I can’t get a better job within 1 year.
+
+
+Øvelsesark
+Videoer
+Quizzer
+Cheat sheets
+Hjælp til LinkedIn assessments
+Hjælp til videre læring
+
+Emner
+
+Basis Python - løbende øvelser og ekstra øvelser
+https://colab.research.google.com/drive/1n7Kna-15sQX8aWGXQWNlvsDysa2Mqsjj#scrollTo=OydUErZcmKlN
+
+
+Intro til Python og IDLE.
+
+Print funktionen.
+
+Dataformatter
+Liste, tuple, range, seq osv
+
+Transformeringer
+
+Lister
+sorted(lst)
+
+Basis funktioner
+
+Help funktionen
+
+If-statements
+
+Loops
+
+Nesting
+
+
+Projekt 1 print latex format
+Projekt 2 data cleanup
+
+Quiz
+Cheatsheet til slut
+
+
+Avanceret Python - løbende øvelser og ekstra øvelser
+https://colab.research.google.com/drive/1ZUH2mg4poNgo9wyw4FsvtEvOBQNe0gIO
+
+Gentagelse af forrige
+
+Lambda funktioner
+
+Nesting og funktioner
+
+Libraries
+Pip install
+Pip upgrade
+Import
+Import as
+From xxx import
+
+Math
+Sqrt, cos, sin, isnan
+
+Numpy
+Arrays, mean, std, skew osv
+
+Pandas
+Dataframes, locators, excel, csv, json mm.
+
+Matplotlib
+Plots, plottyper, sidebyside plots, farver mm.
+
+Projekt 1 statistisk auto kørsel
+Projekt 2 data cleanup 2
+
+Quiz
+Cheatsheet til slut
+
+Statistik og sandsynlighed - løbende øvelser og ekstra øvelser
+https://colab.research.google.com/drive/1G5rqx_cdH5_MtsqkM1dKSo82CUVi-9OZ#scrollTo=YRp2aDP7wWJM
+
+Gentagelse af vigtige emner
+
+Scipy
+
+Stats
+
+Numpy
+
+Projekt 1 Regressions automatisering
+Projekt 2 machine learning.
+
+
+Quiz
+Cheatsheet til slut
+
+
+
+
+
+OOP og klasse strukturer
+Gentagelse af funktioner
+Klasse strukturer
+Inheritance
+Indlæsning fra libraries
+
+Python pakker og hvordan man laver dem
+Struktureret gennemgang af udvikling af pakkens interne funktionalitet
+Hvordan man uploader en pakke
+
+
+Forbindelser til API og database
+Python pakker til database forbindelser
+Hvordan man forbinder sig til en database
+Basale SQL statements
+Operationer på databaser
+
+Python pakker til apier
+API formatter
+Operationer på apier
+
+AI og machine learning
+Support vector machine
+k-means clustering
+Decision trees
+
+Simpel NLP
+ 
+
+
