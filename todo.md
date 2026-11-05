@@ -351,4 +351,277 @@ Read more it allows you to borrow someone else’s brain
 
 
 
+Søge job frem til 4. marts (første mandag I marts)
+
+	Søge referencer og jobsøgningshjælp
+		Bedømmere
+			Petra 
+				Bedømmelser incorporated
+			Julia
+				Bedømmelser incorporated
+					For mange tegn på en linje
+					Vælg kun 1 font og den skal være læsebar
+					Det skal for guds skyld være læseligt
+			Oskar
+				Bedømmelser incorporated
+				Work experience på første side og alt på 1 side
+				Kompetencer er for generiske og lange
+				Vis I work experience at du kan gøre det du siger
+				Virksomheder skal have fed tekst eller beskrivelse.
+			Send mail til Andrea
+				Sagde ja/nej til at bedømme CV
+				Sagde ja/nej til reference
+			Send mail til Claus IRB
+				Sagde ja/nej til at bedømme CV
+				Sagde ja/nej til reference
+			Send mail til Peter Cotton
+				Sagde ja/nej til at bedømme CV
+				
+			Tina
+				Sagde ja til reference
+				Reference incorporated
+			Jonas hal
+				Sagde ja/nej til reference
+				Reference incorporated 
+			Anton Vorobets
+				Sagde ja/nej til reference
+				Reference incorporated
+			Ewelina
+				UK phone, UK email, UK address
+				Write "UK RIGHT TO WORK" in header with phone etc.
+			
+		Skrivere
+			Find nogen der kan give et forsøg på at ansøge et job jeg gerne vil søge.
+			Find nogen der kan kommentere på det grammatiske I mit cv.
+			Find nogen der ved præcist hvordan man skal udføre ansøgningsprocessen.
+			
+		Eksperter
+			Jonas hal ( Market risk og Credit risk)
+				Hvilke opgaver får mig til at stå ud og blive en god kandidat som quant developer
+			Daniel Duffy ( C++ og quant developer)
+				Hvilke opgaver får mig til at stå ud og blive en god kandidat som quant developer
+			Anton Vorobets ( Portfolio performance og portfolio risk)
+				Hvilke opgaver får mig til at stå ud og blive en god kandidat som quant developer
+			Peter Cotton ( AI og predictive analysis)
+				Hvilke opgaver får mig til at stå ud og blive en god kandidat som quant developer
+			Alejandro Rodriguez ( R&D, research)
+				Hvilke opgaver får mig til at stå ud og blive en god kandidat som quant developer
+			Peter's Far ( C++ og programmering)
+				Hvilke opgaver får mig til at stå ud og blive en god kandidat som quant developer
+			Claus IRB ( IRB og bank)
+				Hvilke opgaver får mig til at stå ud og blive en god kandidat som quant developer
+			Eventuelle andre?
+	
+	
+	Jobsøgningsprocessen
+		1. Undersøge jobopslaget og noter relevante informationer
+			i. Noter key skills og responsibilities
+			ii. Skriv til hiring manager omkring uddybbelse af responsibilities og company values
+			iii. Ret I CV.
+			iv. Efter en uge, send opfølgningsmail omkring feedback mm.
+	
+
+Søge uddannelse sideløbende fremtil marts.
+
+	Undersøge muligheder for online uddannelse I Danmark.
+		
+		UCL er eneste mulighed
+		
+	Undersøge muligheder om dispensation for ECTs point via projekter og merit fra tidligere uddannelser
+		
+		Skriv til uddannelses vejledere på uddannelserne
+		
+		Ingen muligheder hos EASV, kun at møde op og tage datamatiker, for så at tage softwareudvikler.
+
+
+
+Uddannelse i england
+
+Apprenticeships?
+	
+	Actuarial technician?
+	
+	Risk apprentice hos lloyds
+	https://www.lloydsbankinggroup.com/careers/job-search/workday-job.106315.html
+	
+	Chubb apprenticeships
+	https://fa-ewgu-saasfaprod1.fa.ocs.oraclecloud.com/hcmUI/CandidateExperience/en/sites/CX_2001/pages/4020
+
+
+	Undersøge muligheder for funding til uddannelse I england og sverige
+	
+	Undersøge muligheder for online uddannelse I england og sverige
+	
+	Undersøge muligheder om dispensation for ECTs point via projekter og merit fra tidligere uddannelser I england og sverige
+
+Opstart af egen virksomhed
+
+Tage fat i Peters far mht. program struktur og programmering.
+Tage fat i Jonathan mht. webapp udvikling.
+Tage fat i Faber mht. trend following.
+Samle envisionrisk og fortitudo produkter.
+
+
+	Danmark
+		Business plan
+			Afgør kundesegment
+			Vigtige processer og service tilbud
+		Business funding
+			Find funding til den fundamentale infrastruktur
+		Produkter udviklet
+			Find ud af produkterne som skal sælges
+			Udvikle og wrap-up produkter til salg
+		Virksomhedens bankkonto
+		Salg af produkter
+		Profit? - meme
+	
+	England
+		Business plan
+			Afgør kundesegment
+			Vigtige processer og service tilbud
+		Business funding
+			Find funding til den fundamentale infrastruktur
+		Start-up VISA
+			Sørg for at du overhovedet kan komme ind I landet
+			Sørg for ret til at kunne sælge dine produkt og have en virksomhed I UK
+		Produkter udviklet
+			Find ud af produkterne som skal sælges
+			Udvikle og wrap-up produkter til salg
+		Virksomhedens bankkonto
+		Salg af produkter
+		Profit? - meme
+	
+Visa muligheder - løbende analyse
+	Marriage VISA - 
+		Hvilke krav er der her?
+			§ you’ve been in a relationship for at least 2 years when you apply but you cannot live together, for example because you’re working or studying in different places, or it’s not accepted in your culture.
+			-Document this.
+		
+			§ Have good knowledge of english, take IELTS english test, 1000kr
+			https://www.languagecert.org/en/language-exams/english/languagecert-international-esol/b1-achiever-2279
+			PASSED
+			
+			§ Can financially support yourself and partner
+			-Save up to have 3000£ in savings account. 21000dkk
+				MentorDenmark - 145kr/time, med 2 timer per uge per elev
+				
+			
+			
+			https://www.gov.uk/uk-family-visa/partner-spouse
+			115£ to apply
+			2587.50£ healthcare surcharge
+			1846£ for visa
+			3000£ savings
+			64162dkk
+			
+	Student VISA - depends on university
+		Hvilke krav er der her?
+	Skilled worker VISA - 2000£ -
+		Hvilke krav er der her?
+	Start - up VISA - dunno, this changed
+		Hvilke krav er der her?
+
+Øvrige - ASAP 
+	1. Ændre adresse
+	2. Læge besøg omkring knæ
+	3. Tandlæge besøg omkring tænder og tandpleje
+	4. Frisør - 400kr
+	5. Briller - 3000kr
+	6. Forårs og sommer jakke - 2000kr
+	7. Løbesko - 1000kr
+	8. Fitness abonnement - 300kr / måned
+		1. Meld dig ind i PureGym
+		2. Udbyg en træningsplan
+	9. Check on information about UK property types
+
+
+2 Python packages with patreon
+1 website with xxx
+1 program with xyz
+1 book with guides
+
+
+Belief 1.
+Good things come to those who work hard, smart and long
+Belief 2. 
+The goal is optimising: Conservation of energy vs reaction of environment?
+	Least effort from employer, with most positive reaction
+	~Positive reaction = kæreste brev ideen
+	~least effort = keep it simple stupid
+
+
+	2024-PRESENT, xyz, Lead developer & Strategist.
+Algorithmic trading
+
+2023-PRESENT, xyz, quant developer.
+Machine learning, quant development, IRB, Insurance.
+- Galaxy simulations
+- Mister Morgan game, simulations
+- Analytics engine for loans, IRB, insurance and pension
+- Stock market simulation
+- Concentration risk measurements
+- Book sales
+
+2023-2024, LD, Data analyst.
+Buy-side investing quant development
+
+2023-2024, Lån&spar, data quality analyst.
+Banking data pipelines, IRB, model validation
+
+2023-2024, DJØF, instructor
+VBA, Python, Excel
+
+2021-2023, DST, Student intern
+Software development
+
+
+
+Plan B
+
+	1. Søge ekstra arbejde
+		a. Studentermedhjælper
+		b. Fuldtid
+		c. Butik
+		
+		Målet er minimum 13.000kr / måned efter skat
+
+	2. Finde lejlighed eller andet(max 7.000kr / måned)
+	
+	3. Spare op til at
+		a.  flytte til Julia under sommeren.
+		b. Tage en kort uddannelse I London/England
+		
+	4. Søge data analytiker job I London
+	
+	5. Hvis alt failer, så komme tilbage til danmark og tage den der fra.
+	
+	
+De gamles plan
+	1. Sundhed
+		a. Sund spise
+		b. Grønnere spise, mindre kød
+		c. Mere motion
+	2. Rejser, men billigere
+		a. Rejser til Caribbien
+		b. Ture til vildmarken, I camping
+		
+	3. Spare op og Investeringer - pensionsopsparing
+		a. Spare op og finde gode muligheder for lejligheder
+		b. Investeringsmuligheder
+Plan A
+Stage 1	Søge UK jobs	Søge DK jobs og spare op	Søge Uddannelse	Risks
+Fremtil Marts/April/Maj	Tage frie kurser	7000£ 64000 dkk		
+	Samle Python, R	
+	Og C++ pakker	Låne 2000£/18000dkk fra familie
+		Låne 2000£/18000dkk fra Julia
+		
+Stage 2	Søge kun UK jobs	Tage IELTS prøve, søge VISA og flytte til London	Afvente svar.	
+Fra Maj til September
+Stage 3	HVIS UK JOB OG VISA	HVIS UK VISA AND NO JOB	HVIS NO UK VISA AND NO JOB. RETURN TO DK TO STUDY	Losing Julia
+	KEEP GOING, DROP SCHOOL	CONSIDER RETURNING or REMOTING
+
+
+
+
+
 <img width="554" height="2607" alt="image" src="https://github.com/user-attachments/assets/5ddebc20-3b04-4ced-9462-972018f65278" />
