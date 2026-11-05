@@ -17,6 +17,6 @@ If I don't do any of those on my saturday deadline, I have reached 0% of my goal
 
 
 
-Random websites
-[graphemica · l♥ve letters](https://graphemica.com/)
+Random websites \
+[graphemica · l♥ve letters](https://graphemica.com/) \
 [J∆ƒƒ∆Ǥ∆ʓ∆ɲI∆ɳ • Cool Characters & Symbols (tumblr.com)](https://jaffagazanian.tumblr.com/post/5528389956/cool-characters-symbols)
