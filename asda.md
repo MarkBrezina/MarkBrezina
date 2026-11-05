@@ -247,6 +247,87 @@ Curated study material in finance and mathematics — concept overviews, worked 
 - Tomorrow Markets, Tomorrow Quant Archive website
 - Wunder Fund Alpha Connectome competition entry -->
 
+# PROJECTS 
+
+## Ctrl+Alt+DefeatTheMarket 
+- IMC Prosperity Unofficial Guide Python, pandas, NumPy, SciPy, networkx, backtesting frameworks Objective & Scope Developed a comprehensive research and trading framework focused on high-frequency market microstructure analysis and systematic strategy design, with emphasis on order book dynamics, signal extraction, and execution logic. The project bridges theoretical modeling (stochastic processes, signal decomposition) with practical trading system implementation, enabling rapid prototyping and evaluation of alpha strategies. Key Achievements Market Microstructure Research ● Designed and analysed features derived from limit order books, including imbalance, order flow, VWAP/microprice, and liquidity-weighted fair values. ● Built signal pipelines to study price formation mechanisms, decomposing movements into order flow, drift, and mean-reversion components. Strategy Development & Alpha Discovery ● Implemented and tested market-making, mean-reversion, and drift-aware strategies under realistic constraints (inventory limits, spread dynamics). ● Developed hybrid execution logic combining passive liquidity provision and aggressive taking based on mispricing signals. ● Explored multi-signal blending frameworks (trend, imbalance, order flow) to dynamically adjust quoting and inventory targets. Backtesting & Simulation Infrastructure ● Built custom backtesting tools for tick-level simulation, enabling evaluation of strategies on high-frequency data. ● Conducted experiments on signal robustness, including detrending, Z-score normalization, and rolling regression-based forecasting. ● Implemented scenario-based testing to assess performance under varying volatility, spread, and liquidity regimes. Execution & Risk Management ● Developed inventory-aware quoting systems with dynamic skewing and risk constraints, aligning position targets with market signals. ● Integrated execution logic for trade classification, order placement, and fill simulation, reflecting realistic trading conditions. Technical Highlights ● Core Stack: Python (pandas, NumPy, SciPy), data visualization (matplotlib, plotly) ● Quant Techniques: ○ Order book analytics (imbalance, microprice, order flow) ○ Rolling regression and short-horizon forecasting ○ Mean reversion and trend signal modeling ○ Stochastic process intuition (OU-style dynamics, drift/diffusion decomposition) ● System Design: Modular trading engine with components for data processing, signal generation, strategy logic, and execution Research Direction Focused on building a unified framework for “Data → Dynamics → Decision”, aiming to model financial markets as interacting systems where price evolves from the aggregation of microstructural signals and agent behaviour. Ongoing work explores multi-agent dynamics, regime detection, and adaptive strategy selection. TMRW — Comprehensive Algorithmic Trading & AI Initiative Dates: 2019–Present (Ongoing) ● Objective & Scope o Developed an end-to-end research and trading framework that unifies quantitative modeling, AI-driven market analysis, and real-world deployment. o Emphasizes robust mathematical foundations (e.g., Ornstein–Uhlenbeck processes, Markov models, VaR) and advanced infrastructure (Python-based data pipelines, HPC simulations). ● Key Achievements o Infrastructure & Backtesting: Built Python ecosystems for automated data ingestion (Bloomberg, MSCI, crypto APIs) and advanced backtesting, enabling live tests with configurable signals (mean reversion, trend-following, pairs trading). o Strategy Development: Delivered multiple simulation engines (Monte Carlo, scenario testing) to stress-test strategies against black-swan scenarios; achieved 13% short-term return on real-time deployment. o AI & Machine Learning: Explored Markov chain approaches, deep learning for short-horizon forecasts, mean-field game theory, and adaptive reinforcement agents—enhancing strategy decisions based on evolving market states. o Risk Management: Integrated VaR/CVaR stops, dynamic position sizing, and advanced hedging in a multi-asset environment. o Long-Term Vision: Continually refining multi-layer AI architectures and searching for new alpha signals to outperform across diverse market conditions. ● Technical Highlights o Core Tech: Python (NumPy, pandas, scikit-learn, TensorFlow/PyTorch), R/C++ for specialized tasks. o Notebooks:  ▪ mean-reversion-strategy.ipynb (Z-score, Bollinger Band analysis), ▪ Strategy.ipynb (Binance integration, local min/max triggers), ▪ research.ipynb (Markov modeling, multi-strategy synergy). o Data & APIs: Yahoo Finance, Binance, Bloomberg, Sustainalytics, and more for real-time analytics. Physics Simulations (Galaksim) Dates: 2018–Present (Ongoing) ● Complementary project modeling spiral galaxy rotation with multi-particle astrophysics and quantum-mechanics-inspired numerical techniques, reinforcing TMRW’s high-level competence in complex simulation and scientific rigor. 
+
+
+
+
+
+## Projects
+
+### 2022 - Now (Ongoing)
+[**Algorithmic trading**](https://github.com/CopenhagenToLondon/WTech) \
+A research-focused project dedicated to the development and evaluation of trading algorithms that leverage rigorous mathematical methods for profitable market participation. Key areas of exploration include:
+
+- **Mathematical Models** - Investigating advanced patterns in asset price movements, incorporating stochastic processes, time series analysis, and statistical optimization to identify high-probability trading opportunities.
+- **Algorithmic Strategies** - Designing, testing, and refining algorithmic approaches—such as mean reversion, momentum, and pattern detection—aimed at capturing market inefficiencies and enhancing risk-adjusted returns.
+- **Data-Driven Insights** - Employing comprehensive data analysis to validate algorithm performance under various market conditions, emphasizing reproducibility and robust quantitative frameworks.
+
+By bridging in-depth mathematical research with practical algorithmic trading techniques, the project aspires to unlock scalable, evidence-based solutions for navigating the complexities of modern financial markets.
+
+
+### 2019 - Now	(Ongoing)
+[**Personal python package**](https://github.com/CopenhagenToLondon/TMRW) \
+A multi-functional Python library designed to streamline data workflows by integrating data extraction, transformation, and analysis features into one cohesive toolkit. Organized into distinct folders for each module, this package demonstrates modular design, ensuring maintainability and clarity in complex data projects. Key highlights include:
+
+- **Data Extraction** - Automated scripts that retrieve and preprocess data from various sources, showcasing robust data-gathering techniques.
+- **Analysis & Visualization** - Functions for statistical analysis, exploratory data analysis (EDA), and visual representations, helping derive actionable insights.
+- **Reusability & Scalability** - Well-structured modules with clear documentation, making it easy to extend functionalities and adapt to new data use cases.
+
+By consolidating these features into a single package, this project provides a practical demonstration of skills essential to a Data Analyst or Data Scientist—namely, the ability to build and maintain efficient data pipelines while providing accurate and insightful analysis.
+
+
+### 2022 - Now	(Ongoing)
+[**Stochastic simulation package for Quantitative Finance**](https://github.com/CopenhagenToLondon/GoldenDice) \
+A personal project featuring a suite of classes, functions, and scripts designed to showcase the implementation and application of stochastic processes in a finance and investment context. By incorporating Monte Carlo techniques alongside Brownian motion, square-root diffusion, and Ornstein–Uhlenbeck models, this package provides:\
+
+- Path generation and simulation for a variety of financial instruments, aimed at pricing and risk analysis.
+- Scenario testing and sensitivity analyses, leveraging advanced models to capture market volatility and mean-reversion behaviors.
+- Flexible codebase for easy integration into broader quantitative strategies, including portfolio optimization and derivatives pricing.
+
+This repository underscores a hands-on approach to quantitative finance—demonstrating how robust stochastic methods can help model, forecast, and manage uncertainty in real-world investment environments.
+
+### 2023 - Now (Ongoing)
+[**Accumulation of mathematics and Finance resources**](https://github.com/CtoL95/Knowledgebase)
+A curated repository of finance and mathematics study materials aimed at building a robust knowledge base for students, professionals, and enthusiasts. Designed to evolve into a book or eBook in the future, it encompasses:
+
+- **Conceptual Overviews** – Clear explanations and theoretical insights into core finance and math concepts.
+- **Practical Problem-Solving** – Step-by-step walkthroughs and examples that bring complex topics to life.
+- **Supplementary References** – Links to external resources and additional reading to broaden learning horizons.
+By consolidating these resources in one place, the project strives to be an accessible, in-depth educational tool—supporting continuous skill development and knowledge acquisition in quantitative finance and mathematics.
+
+### 2018 - 2025 (Finished)
+[**Physics Simulations**](https://github.com/CtoL95/Galaksim)\
+A personal research project focused on simulating the rotational dynamics of spiral galaxies, blending core concepts from astrophysics and numerical analysis. The goal is to explore how large-scale gravitational interactions can be modeled in a multi-particle system, providing insights into galactic rotation curves and potential underlying physical phenomena. This ongoing work involves:\
+
+- Particle-based modeling of galaxy structures and orbital mechanics.
+- Numerical methods adapted from quantum mechanics principles to refine simulation accuracy.
+- Interactive analysis and visualization of rotation curves, mass distribution, and emergent spiral patterns.
+
+By unifying ideas from both astronomy and quantum theory, Galaksim aims to offer a deeper understanding of the forces governing galactic behavior, while also serving as a sandbox for experimenting with algorithmic and physics-based simulations.
+
+### 2024 - Now (Ongoing)	
+[**AI for Trading**](https://github.com/CopenhagenToLondon/CONTROL) \
+Empty at the moment, code will arrive soon. \
+The repository will hold my code on a novel AI system, I’m intending to use for trading equity and cryptocurrency. It’ll be made up of a series of layers and a structural diagram will be published soon.
+
+### 2023 - Now (Ongoing)
+[**ETL Project**](https://github.com/CtoL95) * link is coming \
+Connect to Yahoo, alphaVantage, Binance, Jup.ag and more with only one python package?
+
+### 2022 - 2022 (Finished)
+**R package for pricing of Options with Stochastic volatility** \
+Project I did for my bachelor degree.\
+Heston model for pricing Options, the work will be unavailable as it was made in collaboration with a company, which now uses it in its products and sales to insurance comapanies and investment companies in Denmark.
+
+### 2020 - 2020 (Finished)
+[**Event study in the stock market**](https://github.com/CtoL95) * link is coming \
+Project I did on my first year as a mathematics student at UCPH.\
+Studying the effects of an announcement by apple to buy AuthenTec.
+
 ---
 
 ## Competitions and Recognition
@@ -302,7 +383,61 @@ Børsen 2026: 1,800/28,500 = 6.3%, rounded to "top 7%". -->
 | 2026-04-29 | CQF Institute | John Guerard — ESG Investing and Portfolio Selection |
 | 2026-05-12 | London Quant Group | Robert Macrae — Adventures in High-Dimensional Space |
 
-<!-- TODO: add events attended between Dec 2025 and now that are missing, and anything after May 2026. -->
+Partaking in various courses, lectures, webinars, conferences and more with relation to quantitative finance
+13/2/2025 - Oxford Mathematical and Computational Finance - Eghbal Rahimikia - Revisiting Large Language Models in Finance
+27/2/2025 - Quant Insider – Andrey Chirikhin – Introduction to Credit Derivatives
+8/3/2025 - Bangalore Quant Club - Peter Cotton - Machine Learning for Hierarchical Portfolio Optimization Using Schur Complements
+11/3/2025 - Imperial College - Daniel Lacker - Non asymptomatic perspectives on mean field approximations and stochastic control
+12/3/2025 - CQF Institute - Portfolio Management in Quant Finance Conference
+8/4/2025 – CQF Institute - Wim Schoutens - Omnipresent Model Risk
+7/5/2025 – CQF Institute - Laura Ballotta - The Term Structure of Implied Correlations Between S&P and VIX Markets
+4/6/2025 – CQF Institute - Volatility and Risk in Quant Finance Conference
+10/6/2025 – CQF Institute - Financial Reasoning Agents: In-Context Reinforcement Learning and Test-Time Compute
+9/7/2025 – CQF Institute - Optimization of Strategic and Tactical Asset Allocation for Multi-Asset Portfolios
+12/8/2025 – CQF Institute - Modelling Non-Maturing Deposits
+9/9/2025 – CQF Institute - How to Add Currencies to a Portfolio: Currency Benchmarks and Active Currency Management
+17/9/2025 – CQF Institute – AI and Machine Learning in Quant Finance Conference
+14/10/2025 – LQG – Instability: Debt, Inflation an AI’s Impact on Investing
+4/11/20205 till 5/11/2025 - CQF - Annual Quant Insights Conference 
+6/11/2025 till 7/11/2026 - 9th London-Paris Bachelier Workshop
+12/11/2025 - CQF Generating Realistic Economic Scenarios for Stress Testing Portfolios Using Generative AI' with Samit Ahlawat
+19/11/2025 - CQF - London Society Meeting: Market Microstructure talk
+3/12/2025 - CQF - The Quant’s AI Advantage: Leveraging AI for Natural Language Assistance in Trading Analytics - Peter Simpson and Alexander Serechenko
+9/12/2025 - CQF - Why So Much Science Doesn’t Hold Up and What Quantitative Minds Can Do About It' with Stephen Weston
+16/12/2025 - LQG Annual Debate - Ed Fishwick & Henry Neville
+15/01/2026 - LQG -  Limits to (Machine) Learning - Semyon Malamud
+11/02/2026 - CQF Trade Wars to Market Wars: Quantifying Geopolitical Impact on Equity Returns' with Professor Lorne Switzer
+17/02/2026 - LQG - What we learned about risk - Edward Fishwick
+26/02/2026 - SP Global - London Quant intelligence forum 2026
+11/3/2026 - CQF - Portfolio Management in Quant finance Conference
+18/03/2026 - CQF - American Option Pricing by the Finite Difference Method: Tips and Tricks from the Trenches - Leif Andersen
+18/03/2026 - DefconQ x Squarepoint - KDB developers meetup
+14/04/2026 - LQG - Better Together: Fundamental and systematic views in credit investing - Simon Polbennikov
+29/04/2026 - CQF - ESG Investing and Portfolio Selection - Dr. John Guerard
+12/05/2026 - LQG - Adventures in high-dimensional space - Robert Macrae
+09/06/2026 - LQG - Making sense of this (...) World and the resurgent chinese empire - Brunello Rosa
+I have stopped noting down for a long while
+14/07/2026 - Alternative data, traditional expertise and Ownership - Maxime Bonelli
+13/09/2026 - Bloomberg data and tech summit
+13/10/2026 - LQG - The anatomy of the treasury market - Manav Chaudhary  
+\
+Ranked in the top 10% (2800 out of more than 36,000 participants) in Børsen stock-picking challenge 2023
+Ranked in the top 1% (107 out of more than 12,000 teams) in the IMF Prosperity 3 algorithmic trading challenge
+Ranked in the top 1% (468 out of an average of 47,000 participants) in Børsen stock-picking challenge 2024
+Ranked in the top 6.3% (1809 out of an average of 28,500 participants) in Børsen stock-picking challenge 2026
+Ranked in the top 11.4% (741 out of 6,500 active teams, 22,000 registered teams) in the IMC Prosperity 4 algorithmic trading challenge
+Ranked in the top 20% (920 out of 5,700 active teams) In the Wunderfund RNN challenge 2026: Connectome
+MENSA member (2018-present), Membership No. 2018170 with assessed IQ≥158
+Active Chess player elo(330), Team fight tactics (gold player) and High achiever in real-time strategy game Starcraft II (Mid masters player).
+Member of Willmotts forum, CQF institute, ML-quant and Quantpedia
+Member of UNF (Danish Youth Foundation of Natural Science) (2013–2017)
+Member of ATU (Danish Academy of Talented Youths) (2014–2016). 
+UNF Physics Camp participant (2015)
+Design for Change Awardee (2010). An international competition on innovative solutions for everyday problems. Newspaper article 1, Newspaper article 2, Official Video
+Passed LinkedIn Skill Assessments in R, Python, VBA, Excel, and MATLAB.
+I earned an excess of 200+ € on Steam marketplace, buying and selling Counter Strike skin cases, initially adding 100€ to my account for this particular trading idea, earning an estimated 200+€ from my investment(100€ to 300€) over a period of 3 years.
+Avid fitness enthusiast, building muscle and doing my best to keep physically sharp, to keep in good physical health to improve physical and mental health.
+
 
 ### Certificates
 
@@ -393,9 +528,11 @@ Børsen 2026: 1,800/28,500 = 6.3%, rounded to "top 7%". -->
 ## Languages
 
 - **Danish:** native
+- **Swedish:** Conversational
+- **Norwegian:** Conversational
+- **German:** Ich bin Däne und spreche nicht gut deutsch, aber Ich vorstehe alles
+- **Dutch:** Ik ben Deens en spreek niet goed Nederlands. Maar ik begrijp het wel.
 - **English:** fluent (LanguageCert B2)
-
-<!-- Add any others (Czech, Swedish, Dutch?) with honest levels. -->
 
 ---
 
@@ -424,3 +561,5 @@ Removed from earlier drafts:
 - Konecta portfolio write-up and README — keep these as separate files (e.g. /portfolio/konecta.md).
 - Costa-specific profile text from the service CVs.
 -->
+
+
